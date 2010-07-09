@@ -1,5 +1,6 @@
 0.0200 July 9, 2010
  - Added the Facebook::Graph::Query API, which allows for powerful searching of Facebook data.
+ - Fixed a bunch of AccessToken and Authorize bugs.
  - Fixed a bunch of POD formatting problems.
  - Replaced URL with URI everywhere for consistency.
 
