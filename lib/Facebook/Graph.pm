@@ -75,9 +75,8 @@ Facebook::Graph - An interface to the Facebook Graph API.
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
- my $user = $fb->fetch('me');
- my $friends = $fb->fetch('me/friends');
  my $sarah_bownds = $fb->fetch('sarahbownds');
+ my $perl_page = $fb->fetch('16665510298');
  
 =head2 Building A Privileged App
 
