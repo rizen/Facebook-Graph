@@ -44,7 +44,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Facebook::Graph::AccessToken::Respponse - The Facebook access token request response.
+Facebook::Graph::AccessToken::Response - The Facebook access token request response.
 
 
 =head1 METHODS
@@ -60,6 +60,10 @@ Returns the time alotted to this token. If undefined then the token is forever.
 =head2 response ()
 
 Direct access to the L<HTTP::Response> object.
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
 

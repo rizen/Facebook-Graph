@@ -1,2 +1,6 @@
+0.0101 July 9, 2010
+ - Fixed a bunch of POD formatting problems.
+ - Replaced URL with URI everywhere for consistency.
+
 0.0100 July 8, 2010
  - Initial public release.

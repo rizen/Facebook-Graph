@@ -25,7 +25,7 @@ has code => (
     required=> 1,
 );
 
-sub to_url {
+sub uri_as_string {
     my ($self) = @_;
     return $self->uri
         ->path('oauth/access_token')
@@ -40,7 +40,7 @@ sub to_url {
 
 sub request {
     my ($self) = @_;
-    my $response = LWP::UserAgent->new->get($self->to_url);
+    my $response = LWP::UserAgent->new->get($self->uri_as_string);
     return Facebook::Graph::AccessToken::Response->new($response);
 }
 
@@ -55,8 +55,12 @@ Facebook::Graph::AccessToken - Acquire and access token from Facebook.
 
 =head1 METHODS
 
-=head2 to_url ()
+=head2 uri_as_string ()
 
 =head2 request ()
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut

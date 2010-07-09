@@ -35,7 +35,7 @@ sub set_display {
     return $self;
 }
 
-sub to_url {
+sub uri_as_string {
     my ($self) = @_;
     return $self->uri
         ->path('oauth/authorize')
@@ -76,10 +76,14 @@ Sets the display type for the authorization screen that a user will see.
 Defaults to C<page>. Valid types are C<page>, C<popup>, C<wap>, and C<touch>. See B<Dialog Form Factors> in L<http://developers.facebook.com/docs/authentication/> for details.
 
 
-=head2 to_url ( )
+=head2 uri_as_string ( )
 
-Returns a URL string to redirect the user back to Facebook.
+Returns a URI string to redirect the user back to Facebook.
 
 
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
