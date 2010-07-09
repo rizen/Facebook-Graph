@@ -1,18 +1,15 @@
-use strict;
-use warnings;
-package Facebook::Graph::Uri;
+package Facebook::Graph::Role::Uri;
 
-use Moose;
-use parent 'URI';
+use Moose::Role;
+use URI;
 
-sub BUILD {
-    my ($self) = @_;
-    $self->scheme('https');
-    $self->host('graph.facebook.com');
+sub uri {
+    return URI->new('https://graph.facebook.com')
 }
 
+
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+__PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 

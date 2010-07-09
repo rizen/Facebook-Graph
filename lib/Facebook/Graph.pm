@@ -1,5 +1,3 @@
-use strict;
-use warnings;
 package Facebook::Graph;
 
 use Moose;
@@ -56,15 +54,17 @@ sub authorize {
 sub fetch {
     my ($self, $object_name) = @_;
     my $url = Facebook::Graph::Uri->new;
+    warn $url->as_string;
     $url->path($object_name);
     if ($self->has_access_token) {
         $url->query_form(
             access_token    => $self->access_token,  
         );
     }
-    return JSON->new->parse(
-        LWP::UserAgent->new->get($url->as_string)->content
-    );
+    warn $url->as_string;
+    my $content = LWP::UserAgent->new->get($url->as_string)->content;
+    warn $content;
+    return JSON->new->decode($content);
 }
 
 

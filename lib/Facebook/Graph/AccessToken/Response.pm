@@ -1,5 +1,3 @@
-use strict;
-use warnings;
 package Facebook::Graph::AccessToken::Response;
 
 use Moose;
