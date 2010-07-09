@@ -41,6 +41,28 @@ has expires => (
     }
 );
 
-
 no Moose;
 __PACKAGE__->meta->make_immutable(inline_constructor => 0);
+
+=head1 NAME
+
+Facebook::Graph::AccessToken::Respponse - The Facebook access token request response.
+
+
+=head1 METHODS
+
+=head2 token ()
+
+Returns the token string.
+
+=head2 expires ()
+
+Returns the time alotted to this token. If undefined then the token is forever.
+
+=head2 response ()
+
+Direct access to the L<HTTP::Response> object.
+
+=cut
+
+
