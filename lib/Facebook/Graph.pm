@@ -3,6 +3,7 @@ package Facebook::Graph;
 use Moose;
 use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
+use Facebook::Graph::Query;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
 use JSON;
@@ -64,6 +65,15 @@ sub fetch {
     return JSON->new->decode($content);
 }
 
+sub query {
+    my ($self) = @_;
+    my %params;
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    return Facebook::Graph::Query->new(%params);
+}
+
 
 no Moose;
 __PACKAGE__->meta->make_immutable;
@@ -77,6 +87,16 @@ Facebook::Graph - An interface to the Facebook Graph API.
  my $fb = Facebook::Graph->new;
  my $sarah_bownds = $fb->fetch('sarahbownds');
  my $perl_page = $fb->fetch('16665510298');
+ 
+Or better yet:
+
+ my $sarah_bownds = $fb->query
+    ->find('sarahbownds')
+    ->include_metadata
+    ->select_fields(qw( id name picture ))
+    ->request
+    ->as_hashref;
+ 
  
 =head2 Building A Privileged App
 
@@ -128,7 +148,7 @@ Basically everything. It has hardly any tests, very little documentation, and ve
 
 See the SYNOPSIS for the time being.
 
-B<NOTE:> The C<fetch> method will likely go away and be replaced by individual object types. I just needed something quick and dirty for the time being to see that it works.
+B<NOTE:> The C<fetch> method is quick and dirty. Consider using C<query> (L<Facebook::Graph::Query>) instead.
 
 =head1 PREREQS
 

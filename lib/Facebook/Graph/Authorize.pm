@@ -14,8 +14,10 @@ has postback => (
 );
 
 has permissions => (
-    is      => 'rw',
-    default => sub { [] },
+    is          => 'rw',
+    lazy        => 1,
+    predicate   => 'has_permissions',
+    default     => sub { [] },
 );
 
 has display => (
@@ -37,15 +39,18 @@ sub set_display {
 
 sub uri_as_string {
     my ($self) = @_;
-    return $self->uri
-        ->path('oauth/authorize')
-        ->query_form(
-            client_id       => $self->app_id,
-            redirect_uri    => $self->postback,
-            scope           => join(',', @{$self->permissions}),
-            display         => $self->display,
-        )
-        ->as_string;
+    my $uri = $self->uri;
+    $uri->path('oauth/authorize');
+    my %query = (
+        client_id       => $self->app_id,
+        redirect_uri    => $self->postback,
+        display         => $self->display,
+    );
+    if ($self->has_permissions) {
+        $query{scope} = join(',', @{$self->permissions});
+    }
+    $uri->query_form(%query);
+    return $uri->as_string;
 }
 
 no Moose;
