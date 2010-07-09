@@ -1,7 +1,7 @@
 package Facebook::Graph::Authorize;
 
 use Moose;
-use Facebook::Graph::Uri;
+with 'Facebook::Graph::Role::Uri';
 
 has app_id => (
     is      => 'ro',
@@ -37,7 +37,7 @@ sub set_display {
 
 sub to_url {
     my ($self) = @_;
-    return Facebook::Graph::Uri->new
+    return $self->uri
         ->path('oauth/authorize')
         ->query_form(
             client_id       => $self->app_id,
@@ -49,7 +49,7 @@ sub to_url {
 }
 
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+__PACKAGE__->meta->make_immutable;
 
 
 =head1 NAME

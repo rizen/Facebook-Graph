@@ -3,7 +3,7 @@ package Facebook::Graph;
 use Moose;
 use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
-use Facebook::Graph::Uri;
+with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
 use JSON;
 
@@ -53,23 +53,20 @@ sub authorize {
 
 sub fetch {
     my ($self, $object_name) = @_;
-    my $url = Facebook::Graph::Uri->new;
-    warn $url->as_string;
+    my $url = $self->uri;
     $url->path($object_name);
     if ($self->has_access_token) {
         $url->query_form(
             access_token    => $self->access_token,  
         );
     }
-    warn $url->as_string;
     my $content = LWP::UserAgent->new->get($url->as_string)->content;
-    warn $content;
     return JSON->new->decode($content);
 }
 
 
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+__PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 

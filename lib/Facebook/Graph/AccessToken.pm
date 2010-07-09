@@ -2,7 +2,7 @@ package Facebook::Graph::AccessToken;
 
 use Moose;
 use Facebook::Graph::AccessToken::Response;
-use Facebook::Graph::Uri;
+with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
 
 has app_id => (
@@ -27,7 +27,7 @@ has code => (
 
 sub to_url {
     my ($self) = @_;
-    return Facebook::Graph::Uri->new
+    return $self->uri
         ->path('oauth/access_token')
         ->query_form(
             client_id       => $self->app_id,
@@ -45,7 +45,7 @@ sub request {
 }
 
 no Moose;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+__PACKAGE__->meta->make_immutable;
 
 
 =head1 NAME

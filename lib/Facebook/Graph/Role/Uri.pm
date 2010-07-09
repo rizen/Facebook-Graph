@@ -8,16 +8,15 @@ sub uri {
 }
 
 
-no Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 
-Facebook::Graph::Uri - The base URI for the Facebook Graph API.
+Facebook::Graph::Role::Uri - The base URI for the Facebook Graph API.
 
 =head1 DESCRIPTION
 
-Is a subclass of L<URI> with the scheme and host already filled in for the Facebook Graph API. Generally you never need to do anything with this module, it is used by the other modules in L<Facebook::Graph>.
+Provides a C<uri> method in any class which returns a URI object that points to the  Facebook Graph API. 
 
 =cut
 
