@@ -116,7 +116,7 @@ B<WARNING:> This module is experimental at best. The work on it has only just be
 
 =head1 TODO
 
-Basically everything. It has no tests, very little documentation, and very little functionality in it's present form.
+Basically everything. It has hardly any tests, very little documentation, and very little functionality in it's present form.
 
 
 =head1 METHODS
@@ -131,6 +131,7 @@ L<Moose>
 L<JSON>
 L<LWP>
 L<URI>
+L<Crypt::SSLeay>
 
 =head1 SUPPORT
 
