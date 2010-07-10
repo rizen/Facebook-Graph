@@ -179,7 +179,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Facebook::Graph::Query - Incredibly simple and fast searching of Facebook data.
+Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data.
 
 =head1 SYNOPSIS
 
@@ -203,8 +203,22 @@ Facebook::Graph::Query - Incredibly simple and fast searching of Facebook data.
     ->to_hashref;
 
 
-=head1 METHODS
+=head1 DESCRIPTION
 
+This module presents a programatic approach to building the queries necessary to search and retrieve Facebook data. It provides an almost SQL like way of writing queries using code. For example:
+
+ my $results = $fb
+    ->select_fields(qw(id name))
+    ->search('Dave','user')
+    ->where_since('yesterday')
+    ->limit_results(25)
+    ->request
+    ->to_hashref;
+    
+The above query, if you were read it like text, says: "Give me the user ids and full names of all users named Dave that have been created since yesterday, and limit the result set to the first 25."
+
+
+=head1 METHODS
 
 =head2 find ( id )
 
