@@ -37,7 +37,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Facebook::Graph::Query:Response - Handling of a Facebook::Graph::Query result set.
+Facebook::Graph::Query::Response - Handling of a Facebook::Graph::Query result set.
 
 
 =head1 METHODS

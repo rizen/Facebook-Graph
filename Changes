@@ -1,3 +1,6 @@
+0.0201 July 10, 2010
+ - Fixed another POD formatting problem.
+
 0.0200 July 9, 2010
  - Added the Facebook::Graph::Query API, which allows for powerful searching of Facebook data.
  - Fixed a bunch of AccessToken and Authorize bugs.
