@@ -63,7 +63,7 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Facebook::Graph - An interface to the Facebook Graph API.
+Facebook::Graph - A fast and easy way to integrate your apps with Facebook.
 
 =head1 SYNOPSIS
 
