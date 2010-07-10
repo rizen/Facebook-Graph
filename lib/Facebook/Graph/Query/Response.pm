@@ -18,9 +18,14 @@ has as_json => (
             return $response->content;
         }
         else {
-            confess [$response->code, 'Could not execute query: '.$response->message]
+            my $message = $response->message;
+            my $error = eval { JSON->new->decode($response->content) };
+            unless ($@) {
+                $message = $error->{error}{type} . ' - ' . $error->{error}{message};
+            }
+            confess [$response->code, 'Could not execute query ('.$response->request->uri->as_string.'): '.$message];
         }
-    }
+    },
 );
 
 has as_hashref => (
@@ -29,7 +34,7 @@ has as_hashref => (
     default => sub {
         my $self = shift;
         return JSON->new->decode($self->as_json);
-    }
+    },
 );
 
 no Moose;
@@ -39,16 +44,20 @@ __PACKAGE__->meta->make_immutable;
 
 Facebook::Graph::Query::Response - Handling of a Facebook::Graph::Query result set.
 
+=head1 DESCRIPTION
+
+You'll be given one of these as a result of calling the C<request> method on a C<Facebook::Graph::Query> object.
+
 
 =head1 METHODS
 
-=head2 token ()
+=head2 as_json ()
 
-Returns the token string.
+Returns the response from Facebook as a JSON string.
 
-=head2 expires ()
+=head2 as_hashref ()
 
-Returns the time alotted to this token. If undefined then the token is forever.
+Returns the response from Facebook as a hash reference.
 
 =head2 response ()
 
