@@ -61,11 +61,29 @@ __PACKAGE__->meta->make_immutable;
 
 Facebook::Graph::Authorize - Authorizing an app with Facebook
 
+
+=head1 SYNOPSIS
+
+ my $fb = Facebook::Graph->new(
+    secret      => $facebook_application_secret,
+    app_id      => $facebook_application_id,
+    postback    => 'https://www.yourapplication.com/facebook/postback',
+ );
+
+ my $uri = $fb->authorize
+    ->extend_permissions(qw( email publish_stream ))
+    ->set_display('popup')
+    ->uri_as_string;
+
+=head1 DESCRIPTION
+
+Get an authorization code from Facebook so that you can request an access token to make privileged requests. The result of this package is to give you a URI to redirect a user to Facebook so they can log in, and approve whatever permissions you are requesting.
+
 =head1 METHODS
 
 =head2 extend_permissions ( permissions )
 
-Ask for extra permissions for your app. Returns a reference to self for method chaining.
+Ask for extra permissions for your app. By default, if you do not request extended permissions your app will have access to only general information that any Facebook user would have. Returns a reference to self for method chaining.
 
 =head3 permissions
 

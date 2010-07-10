@@ -55,7 +55,11 @@ Facebook::Graph::AccessToken - Acquire an access token from Facebook.
 
 =head1 SYNOPSIS
 
- my $fb = Facebook::Graph->new;
+ my $fb = Facebook::Graph->new(
+    secret      => $facebook_application_secret,
+    app_id      => $facebook_application_id,
+    postback    => 'https://www.yourapplication.com/facebook/postback',
+ );
  my $token_response_object = $fb->request_access_token($code_from_authorize_postback);
 
  my $token_string = $token_response_object->token;
