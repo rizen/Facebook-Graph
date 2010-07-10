@@ -35,13 +35,7 @@ sub request_access_token {
         app_id          => $self->app_id,
     )->request;
     $self->access_token($token->token);
-    return $self;
-}
-
-sub set_access_token {
-    my ($self, $token) = @_;
-    $self->access_token($token);
-    return $self;
+    return $token;
 }
 
 sub authorize { 
@@ -122,7 +116,7 @@ Handle the Facebook authorization code postback:
  
 Or if you already had the access token:
 
- $fb->set_access_token($token);
+ $fb->access_token($token);
  
 Get some info:
 

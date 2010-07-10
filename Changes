@@ -1,5 +1,6 @@
 0.0201 July 10, 2010
  - Fixed another POD formatting problem.
+ - More cleanup.
 
 0.0200 July 9, 2010
  - Added the Facebook::Graph::Query API, which allows for powerful searching of Facebook data.
