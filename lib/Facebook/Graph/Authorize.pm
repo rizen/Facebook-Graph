@@ -1,6 +1,6 @@
 package Facebook::Graph::Authorize;
 
-use Moose;
+use Any::Moose;
 with 'Facebook::Graph::Role::Uri';
 
 has app_id => (
@@ -53,7 +53,7 @@ sub uri_as_string {
     return $uri->as_string;
 }
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 

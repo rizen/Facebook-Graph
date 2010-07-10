@@ -1,6 +1,6 @@
 package Facebook::Graph::Query::Response;
 
-use Moose;
+use Any::Moose;
 use JSON;
 
 has response => (

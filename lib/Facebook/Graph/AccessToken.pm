@@ -1,6 +1,6 @@
 package Facebook::Graph::AccessToken;
 
-use Moose;
+use Any::Moose;
 use Facebook::Graph::AccessToken::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
@@ -44,7 +44,7 @@ sub request {
     return Facebook::Graph::AccessToken::Response->new(response => $response);
 }
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 

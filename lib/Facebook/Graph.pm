@@ -1,6 +1,6 @@
 package Facebook::Graph;
 
-use Moose;
+use Any::Moose;
 use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
@@ -58,7 +58,7 @@ sub query {
 }
 
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
@@ -199,7 +199,7 @@ I still need to add publishing of content, deleting of content, access to pictur
 
 =head1 PREREQS
 
-L<Moose>
+L<Any::Moose>
 L<JSON>
 L<LWP>
 L<URI>

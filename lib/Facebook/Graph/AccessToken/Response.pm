@@ -1,6 +1,6 @@
 package Facebook::Graph::AccessToken::Response;
 
-use Moose;
+use Any::Moose;
 use URI;
 use URI::QueryParam;
 
@@ -39,7 +39,7 @@ has expires => (
     }
 );
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
