@@ -16,7 +16,7 @@ has token => (
         my $self = shift;
         my $response = $self->response;
         if ($response->is_success) {
-            return URI->new($response->content)->query_param('access_token');
+            return URI->new('?'.$response->content)->query_param('access_token');
         }
         else {
             confess [$response->code, 'Could not fetch access token: '.$response->message]
@@ -31,7 +31,7 @@ has expires => (
         my $self = shift;
         my $response = $self->response;
         if ($response->is_success) {
-            return URI->new($response->content)->query_param('expires');
+            return URI->new('?'.$response->content)->query_param('expires');
         }
         else {
             confess [$response->code, 'Could not fetch access token: '.$response->message]
