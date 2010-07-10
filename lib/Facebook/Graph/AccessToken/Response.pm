@@ -46,6 +46,9 @@ __PACKAGE__->meta->make_immutable;
 
 Facebook::Graph::AccessToken::Response - The Facebook access token request response.
 
+=head1 Description
+
+You'll be given one of these as a result of calling the C<request> method from a L<Facebook::Graph::AccessToken> object.
 
 =head1 METHODS
 
