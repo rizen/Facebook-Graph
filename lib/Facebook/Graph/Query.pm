@@ -27,7 +27,6 @@ has fields => (
 has metadata => (
     is          => 'rw',
     predicate   => 'has_metadata',
-    default     => 0,
 );
 
 has limit => (

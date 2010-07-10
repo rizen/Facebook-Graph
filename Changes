@@ -3,6 +3,7 @@
  - Fixed the AccessToken parsing problem.
  - Fixed another POD formatting problem.
  - More cleanup.
+ - Modified the fetch() method to use the Query module behind the scenes.
 
 0.0200 July 9, 2010
  - Added the Facebook::Graph::Query API, which allows for powerful searching of Facebook data.
