@@ -104,7 +104,7 @@ Get the user to authorize your app (only needed if you want to fetch non-public 
 
  my $uri = $fb
     ->authorize
-    ->add_permissions(qw(offline_access publish_stream))
+    ->extend_permissions(qw(offline_access publish_stream))
     ->uri_as_string;
 
  # redirect the user's browser to $uri
