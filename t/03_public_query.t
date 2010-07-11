@@ -13,7 +13,7 @@ isa_ok($sarah_query, 'Facebook::Graph::Query');
 is($sarah_query->uri_as_string, 'https://graph.facebook.com/sarahbownds?fields=name%2Cid&metadata=1', 'seems to generate uris correctly');
 
 my $sarah_response = $sarah_query->request;
-isa_ok($sarah_response, 'Facebook::Graph::Query::Response');
+isa_ok($sarah_response, 'Facebook::Graph::Response');
 my $sarah = eval{$sarah_response->as_hashref};
 
 die $@->[1] if $@;
@@ -27,5 +27,5 @@ is($sarah->{type}, 'user', 'she is a user');
 my $error_query = eval { $fb->query->select_fields('')->request->as_json };
 is(ref $@, 'ARRAY', 'exception thrown is an array');
 is($@->[0], 400, 'exception inherits http status code');
-is($@->[1], 'Could not execute query (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
+is($@->[1], 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
 

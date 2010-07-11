@@ -1,3 +1,7 @@
+0.0300 July 11, 2010
+ - Added convert_sessions method to make it easier for existing apps to use Facebook::Graph. Thanks to Rainer Größlinger for the idea.
+ - Converted Facebook::Graph::Query::Response into Facebook::Graph::Response, so it could be generically used and/or subclassed by other modules.
+
 0.0201 July 10, 2010
  - Better error messages on failed queries.
  - Fixed the AccessToken parsing problem.
