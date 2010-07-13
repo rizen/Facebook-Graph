@@ -1,6 +1,6 @@
 package Facebook::Graph::Query;
 
-use Moose;
+use Any::Moose;
 use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
@@ -173,7 +173,7 @@ sub request {
     return Facebook::Graph::Response->new(response => $response);
 }
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 

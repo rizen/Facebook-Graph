@@ -1,6 +1,6 @@
 package Facebook::Graph;
 
-use Moose;
+use Any::Moose;
 use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
@@ -69,7 +69,7 @@ sub query {
 }
 
 
-no Moose;
+no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
@@ -231,7 +231,7 @@ I still need to add publishing of content, deleting of content, access to pictur
 
 =head1 PREREQS
 
-L<Moose>
+L<Any::Moose>
 L<JSON>
 L<LWP>
 L<URI>
@@ -254,7 +254,7 @@ L<http://github.com/rizen/Facebook-Graph/issues>
 
 =head1 SEE ALSO
 
-If you're looking for a fully featured Facebook client in Perl I highly recommend L<WWW::Facebook:API>. It does just about everything, it just uses the old Facebook API.
+If you're looking for a fully featured Facebook client in Perl I highly recommend L<WWW::Facebook::API>. It does just about everything, it just uses the old Facebook API.
 
 =head1 AUTHOR
 
