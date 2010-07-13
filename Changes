@@ -1,6 +1,8 @@
 0.0400 July 13, 2010
+ - Added Facebook::Graph::Picture for accessing the pictures of any object.
  - Fixed POD docs thanks to Tim Heaney for the patch.
  - Migrated to Any::Moose for those people that want to use Mouse instead of Moose. Thanks to tehmoth for the patch.
+ - Added a note about using IO::Socket::SSL instead of Crypt::SSLeay. Thanks to Søren Lund for the idea.
 
 0.0300 July 11, 2010
  - Added convert_sessions method to make it easier for existing apps to use Facebook::Graph. Thanks to Rainer Größlinger for the idea.
