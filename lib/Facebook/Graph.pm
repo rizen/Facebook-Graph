@@ -222,7 +222,7 @@ L<http://github.com/rizen/Facebook-Graph/issues>
 
 =head1 SEE ALSO
 
-If you're looking for a fully featured Facebook client in Perl I highly recommend L<WWW::Facebook:API>. It does just about everything, it just uses the old Facebook API.
+If you're looking for a fully featured Facebook client in Perl I highly recommend L<WWW::Facebook::API>. It does just about everything, it just uses the old Facebook API.
 
 =head1 AUTHOR
 
