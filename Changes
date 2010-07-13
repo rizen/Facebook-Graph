@@ -1,3 +1,7 @@
+0.0400 July 13, 2010
+ - Fixed POD docs thanks to Tim Heaney for the patch.
+ - Migrated to Any::Moose for those people that want to use Mouse instead of Moose. Thanks to tehmoth for the patch.
+
 0.0300 July 11, 2010
  - Added convert_sessions method to make it easier for existing apps to use Facebook::Graph. Thanks to Rainer Größlinger for the idea.
  - Converted Facebook::Graph::Query::Response into Facebook::Graph::Response, so it could be generically used and/or subclassed by other modules.
