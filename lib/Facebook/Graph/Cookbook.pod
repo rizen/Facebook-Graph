@@ -1,6 +1,6 @@
 =head1 NAME
 
-Facebook::Graph Cookbook
+Facebook::Graph::Cookbook - A cookbook for Facebook::Graph
 
 =head1 DESCRIPTION
 

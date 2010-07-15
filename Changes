@@ -1,3 +1,6 @@
+0.0402 July 15, 2010
+ - Fixed a pod error.
+
 0.0401 July 14, 2010
  - Added a cookbook and the first recipe.
  - Made the third element of the exception, the original exception type from Facebook.
