@@ -1,0 +1,20 @@
+=head1 NAME
+
+Facebook::Graph Cookbook
+
+=head1 DESCRIPTION
+
+The goal of this document is to provide a set of common recipies for success. The L<Facebook::Graph> API is relatively easy to use, but there are just enough tricks to it that it can throw you off if you don't have a little insider information. Hopefully this document will help you overcome those hurdles.
+
+=head1 RECIPIES
+
+=over
+
+=item L<Facebook::Graph::Cookbook::Recipe1>
+
+Shows you how to set up a privileged application.
+
+=back
+
+
+=cut

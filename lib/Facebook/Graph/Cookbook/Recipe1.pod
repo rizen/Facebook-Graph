@@ -1,0 +1,193 @@
+=head1 NAME
+
+Facebook::Graph::Cookbook::Recipe1 - Building Privileged Applications
+
+=head1 DESCRIPTION
+
+Let's build a privileged Facebook application from nothing.
+
+=head2 Things To Think About
+
+Though templating systems such as L<Template::Toolkit> and web frameworks such as L<Dancer> and content management systems such as WebGUI L<http://www.webgui.org/> are out of scope for this document, when you build your own application, you should definitely consider using them.
+
+For simplicity sake, in this recipe we'll be storing important information directly in the code. This is a terrible practice. Instead use a config file system like L<Config::JSON> to store your settings.
+
+=head2 Assumptions
+
+This recipe assumes that you know and have L<Plack> installed and that you have a Facebook (L<http://www.facebook.com>) account.
+
+
+=head1 RECIPE
+
+=head2 Step 1: Set up the developer application on Facebook.
+
+Go to L<http://apps.facebook.com/developer>.
+
+Click "Allow".
+
+=head2 Step 2: Create your application.
+
+Go to L<http://www.facebook.com/developers/createapp.php> or click "Set Up New Application" from the developer application.
+
+Fill in an application name. The only restriction is that it can't use a Facebook trademark or be similar to official Facebook application names.
+
+Agree to the terms of servce.
+
+Click "Create Application".
+
+=head2 Step 3: The Connect tab.
+
+After creating your application, go to the "Connect" tab.
+
+Fill in the "Connect URL" field. It should be something like C<https://www.yourapplication.com/facebook/>. It is the base URL to where you'll be deploying your application. The trailing slash is required.
+
+Click "save".
+
+=head2 Step 4: Note your application settings.
+
+You either want to make note of your "Application ID" and your "Application Secret" or bookmark this page so you can come back to it. You'll need these later.
+
+=head2 Step 5: Create app.psgi.
+
+Create a file called C<app.psgi>. Start it off like this:
+
+ use strict;
+ use Plack::App::URLMap;
+ use Plack::Request;
+ use Facebook::Graph;
+ use URI;
+
+ my $urlmap = Plack::App::URLMap->new;
+ 
+ # your code will go here
+
+ $urlmap->to_app;
+
+All the code we have you add should go in the C<# your code will go here> block, in the order that we have you add it. 
+ 
+=head2 Step 6: Create your Facebook::Graph object.
+
+Now we can finally start building L<Facebook::Graph> into our app.
+
+ my $fb = Facebook::Graph->new(
+    postback    => 'https://www.yourapplication.com/facebook/postback',
+    app_id      => 'Put Your Application ID Here',
+    secret      => 'Put Your Application Secret Here',
+ );
+ 
+Now you need the URL you entered in step 3, and the application ID and secret you got in step 4.
+
+On the end of the url, add C<postback>. This could be anything really, but it needs to be separate from the Connect URL.
+
+=head2 Step 7: Create your application's connect page.
+
+Now we need to create the authorization redirect. This is where we tell Facebook what permissions we want. There is a complete list of permissions documented at L<http://developers.facebook.com/docs/authentication/permissions>.
+
+If we only wanted basic permissions we can leave the C<extend_permissions> call out. But for this app let's say we want access to the user's email address and we want to be able to interact with the user's account even when they aren't online.
+
+ my $connect = sub {
+    my $env = shift;
+    my $request = Plack::Request->new( $env );
+    my $response = $request->new_response;
+    $response->redirect(
+        $fb
+        ->authorize
+        ->extend_permissions( qw(email offline_access) )
+        ->uri_as_string
+    );
+    return $response->finalize;
+ };
+
+ $urlmap->map("/facebook" => $connect);
+
+We map the subroutine we created to C</facebook> because we'll likely have other things we want to display at C</>. If we wanted to display something else at C</facebook> we could have mapped this function to C</facebook/authorize>. It really doesn't matter what URL we use here, all that matters is that when we want our users to authenticate against Facebook, this is the URL that we're going to send them to in our application.
+
+=head2 Step 8: Create the Facebook access token postback page.
+
+Our connect/authorization page will redirect the user to Facebook to authorize our app. Now we need to create the page that the user will be redirected back to from Facebook. This is the C<postback> that we created in step 6.
+
+ my $postback = sub {
+    my $env = shift;
+    my $request = Plack::Request->new( $env );
+
+    # turn our authorization code into an access token
+    $fb->request_access_token($request->param('code'));
+
+    # store our access token to a database, a cookie, or pass it throuh the URL
+    my $uri = URI->new('https://www.yourapplication.com/search');
+    $uri->query_form( access_token => $fb->access_token );
+
+    my $response = $request->new_response;
+    $response->redirect( $uri->as_string );
+    return $response->finalize;
+ };
+
+ $urlmap->map("/facebook/postback" => $postback);
+
+It's really stupid of us to pass our access token along the URL especially since we requested C<offline_access>. We're only doing it here to demonstrate the usage of it. If you're requesting offline access, you should keep the access token locked away in a secure database. If you want to pass it along the URL, or store it in a cookie, you should B<not> request C<offline_access>.
+
+=head2 Step 9: Let's do something already!
+
+So now that we finally have an access token we can start making privileged requests. That works like this:
+
+ my $search = sub {
+    my $env = shift;
+    my $request = Plack::Request->new( $env );
+
+    # display a search
+    my $out = '<html>
+    <body>
+    <form>
+    <input type="hidden" name="access_token" value="'. $request->param('access_token') .'
+    <input type="text" name="q" value="'. $request->param('q') .'">
+    <input type="submit" value="Search">
+    </form>
+    <pre>
+    ';
+
+    # display the results if a search is made
+    if ($request->param('q')) {
+        my $response = $fb->query
+            ->search($request->param('q'), 'user')
+            ->limit_results(10)
+            ->request;
+        $out .= $response->as_json;
+    }
+
+    # close everything up
+    $out .= '
+    </pre>
+    </body>
+    </html>
+    ';
+
+    my $response = $request->new_response;
+    $response->status(200);
+    $response->content_type('text/html');
+    $response->body($out);
+    return $response->finalize;
+ };
+
+ $urlmap->map("/search" => $search);
+
+
+=head2 Step 10: Start the application and let's test this puppy out.
+
+ plackup app.psgi
+ 
+Now we point our browser to:
+
+ https://www.yourapplication.com/facebook
+ 
+Voila! You have created an authenticated Facebook app. If you would like to see this full program check out C<eg/recipe1.psgi> inside this distribution of L<Facebook::Graph>.
+
+
+=head1 CAVEATS
+
+You should never design an application using all the poor stuff we've done here, like using a shared L<Facebook::Graph> object, not using a Framework/CMS or at least L<Plack::Builder>, not using a templating system, passing the offline access token through the URL, etc. We've made comments about these things as we did them to warn you. These choices were made here B<only> because this is example code who's primary purpose is to show you how to use L<Facebook::Graph>, and not best practices for web development. 
+
+=head1 SEE ALSO
+
+For more recipes, check out the L<Facebook::Graph::Cookbook>.
+
+=cut

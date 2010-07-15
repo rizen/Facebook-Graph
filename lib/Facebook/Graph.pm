@@ -245,7 +245,7 @@ This module throws exceptions when it encounters a problem. The exceptions are a
 
 =head1 TODO
 
-I still need to add publishing of content, deleting of content, impersonation, and analytics to have a feature complete API. In addition, a cookbook should be written, and a lot more tests as well.
+I still need to add publishing of content, deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
 
 
 =head1 PREREQS
