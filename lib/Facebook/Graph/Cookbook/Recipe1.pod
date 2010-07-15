@@ -16,6 +16,7 @@ For simplicity sake, in this recipe we'll be storing important information direc
 
 This recipe assumes that you know and have L<Plack> installed and that you have a Facebook (L<http://www.facebook.com>) account.
 
+You'll also have to be able to point a domain name to a server that is accessible from the Internet. DNS and server configuration are way beyond the scope of this document.
 
 =head1 RECIPE
 
@@ -39,7 +40,7 @@ Click "Create Application".
 
 After creating your application, go to the "Connect" tab.
 
-Fill in the "Connect URL" field. It should be something like C<https://www.yourapplication.com/facebook/>. It is the base URL to where you'll be deploying your application. The trailing slash is required.
+Fill in the "Connect URL" field. It should be something like C<http://www.yourapplication.com/facebook/>. It is the base URL to where you'll be deploying your application. The trailing slash is required.
 
 Click "save".
 
@@ -70,7 +71,7 @@ All the code we have you add should go in the C<# your code will go here> block,
 Now we can finally start building L<Facebook::Graph> into our app.
 
  my $fb = Facebook::Graph->new(
-    postback    => 'https://www.yourapplication.com/facebook/postback',
+    postback    => 'http://www.yourapplication.com/facebook/postback',
     app_id      => 'Put Your Application ID Here',
     secret      => 'Put Your Application Secret Here',
  );
@@ -114,7 +115,7 @@ Our connect/authorization page will redirect the user to Facebook to authorize o
     $fb->request_access_token($request->param('code'));
 
     # store our access token to a database, a cookie, or pass it throuh the URL
-    my $uri = URI->new('https://www.yourapplication.com/search');
+    my $uri = URI->new('http://www.yourapplication.com/search');
     $uri->query_form( access_token => $fb->access_token );
 
     my $response = $request->new_response;
@@ -138,7 +139,7 @@ So now that we finally have an access token we can start making privileged reque
     my $out = '<html>
     <body>
     <form>
-    <input type="hidden" name="access_token" value="'. $request->param('access_token') .'
+    <input type="hidden" name="access_token" value="'. $request->param('access_token') .'">
     <input type="text" name="q" value="'. $request->param('q') .'">
     <input type="submit" value="Search">
     </form>
@@ -147,11 +148,15 @@ So now that we finally have an access token we can start making privileged reque
 
     # display the results if a search is made
     if ($request->param('q')) {
+        $fb->access_token( $request->param('access_token') );
         my $response = $fb->query
             ->search($request->param('q'), 'user')
             ->limit_results(10)
             ->request;
-        $out .= $response->as_json;
+        $out .= eval{$response->as_json};
+        if ($@) {
+            $out .= 'ERROR: '.$@->[1];
+        }
     }
 
     # close everything up
@@ -173,11 +178,13 @@ So now that we finally have an access token we can start making privileged reque
 
 =head2 Step 10: Start the application and let's test this puppy out.
 
- plackup app.psgi
+On your server (the one that www.yourapplication.com points to) run the following command (assuming you're in the folder with app.psgi).
+
+ sudo plackup --port 80 app.psgi
  
 Now we point our browser to:
 
- https://www.yourapplication.com/facebook
+ http://www.yourapplication.com/facebook
  
 Voila! You have created an authenticated Facebook app. If you would like to see this full program check out C<eg/recipe1.psgi> inside this distribution of L<Facebook::Graph>.
 
@@ -189,5 +196,9 @@ You should never design an application using all the poor stuff we've done here,
 =head1 SEE ALSO
 
 For more recipes, check out the L<Facebook::Graph::Cookbook>.
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut

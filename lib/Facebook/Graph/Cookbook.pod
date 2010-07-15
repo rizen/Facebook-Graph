@@ -17,4 +17,8 @@ Shows you how to set up a privileged application.
 =back
 
 
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+
 =cut

@@ -238,9 +238,9 @@ An array reference of session ids from the old Facebook API.
 
 =head1 EXCEPTIONS
 
-This module throws exceptions when it encounters a problem. The exceptions are an array reference where the first element is an HTTP status code and the second element is a human readable string. For example:
+This module throws exceptions when it encounters a problem. The exceptions are an array reference. The first element is an HTTP status code. The second element is a human readable string. The third element is the exception type as identified by the Facebook API, or if something terrible went wrong C<Unknown>. For example:
 
- [400, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.']
+ [400, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'GraphMethodException']
 
 
 =head1 TODO

@@ -59,7 +59,7 @@ my $search = sub {
     my $out = '<html>
     <body>
     <form>
-    <input type="hidden" name="access_token" value="'. $request->param('access_token') .'
+    <input type="hidden" name="access_token" value="'. $request->param('access_token') .'">
     <input type="text" name="q" value="'. $request->param('q') .'">
     <input type="submit" value="Search">
     </form>
@@ -68,11 +68,15 @@ my $search = sub {
 
     # display the results if a search is made
     if ($request->param('q')) {
+        $fb->access_token( $request->param('access_token') );
         my $response = $fb->query
             ->search($request->param('q'), 'user')
             ->limit_results(10)
             ->request;
-        $out .= $response->as_json;
+        $out .= eval{$response->as_json};
+        if ($@) {
+            $out .= 'ERROR: '.$@->[1];
+        }
     }
 
     # close everything up

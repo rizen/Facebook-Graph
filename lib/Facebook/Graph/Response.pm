@@ -20,10 +20,12 @@ has as_json => (
         else {
             my $message = $response->message;
             my $error = eval { JSON->new->decode($response->content) };
+            my $type = 'Unkown';
             unless ($@) {
                 $message = $error->{error}{type} . ' - ' . $error->{error}{message};
+                $type = $error->{error}{type};
             }
-            confess [$response->code, 'Could not execute request ('.$response->request->uri->as_string.'): '.$message];
+            confess [$response->code, 'Could not execute request ('.$response->request->uri->as_string.'): '.$message, $type];
         }
     },
 );
