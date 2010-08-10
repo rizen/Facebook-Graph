@@ -1,4 +1,4 @@
-package Facebook::Graph::Publish::Feed;
+package Facebook::Graph::Publish::Post;
 
 use Any::Moose;
 use Facebook::Graph::Response;
@@ -140,17 +140,17 @@ __PACKAGE__->meta->make_immutable;
 
 =head1 NAME
 
-Facebook::Graph::Publish::Feed - Publish to a user's wall.
+Facebook::Graph::Publish::Post - Publish to a user's wall.
 
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
 
- $fb->publish_feed
+ $fb->publish_post
     ->set_message('I like beer.')
     ->publish;
 
- my $response = $fb->publish_feed
+ my $response = $fb->publish_post
     ->set_message('I like Perl.')
     ->set_picture_uri('http://www.perl.org/i/camel_head.png')
     ->set_link_uri('http://www.perl.org/')
@@ -164,7 +164,7 @@ Facebook::Graph::Publish::Feed - Publish to a user's wall.
 
 This module gives you quick and easy access to publish to a user's Facebook feed.
 
-B<NOTE:> Facebook seems to use these terms interchangibly: Feed, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
+B<NOTE:> Facebook seems to use these terms interchangibly: Feed, Post, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
 
 =head1 METHODS
 
@@ -185,6 +185,8 @@ A string of text.
 =head2 set_picture_uri ( uri )
 
 Sets the URI of a picture to be displayed in the message.
+
+B<BUG:> I'm doing everything according to Facebook's API as far as I can tell, yet pictures don't seem to get attached to posts. Not sure why. Email me if you know.
 
 =head3 uri
 

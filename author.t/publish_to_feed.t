@@ -17,7 +17,7 @@ use 5.010;
 #say $response->as_json;
 
 
-$response = $fb->publish_feed
+$response = $fb->publish_post
     ->set_message('TESTING: I like Perl.')
     ->set_picture_uri('http://www.perl.org/i/camel_head.png')
     ->set_link_uri('http://www.perl.org/')

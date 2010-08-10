@@ -79,7 +79,7 @@ sub picture {
     return Facebook::Graph::Picture->new( object_name => $object_name );
 }
 
-sub publish_feed {
+sub publish_post {
     my ($self) = @_;
     my %params;
     if ($self->has_access_token) {
@@ -88,7 +88,7 @@ sub publish_feed {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
-    return Facebook::Graph::Publish::Feed->new( %params );
+    return Facebook::Graph::Publish::Post->new( %params );
 }
 
 
@@ -231,9 +231,9 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 
 
 
-=head2 publish_feed ( )
+=head2 publish_post ( )
 
-Creates a L<Facebook::Graph::Publish::Feed> object, which can be used to publish data to a user's feed/wall.
+Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish data to a user's feed/wall.
 
 
 
