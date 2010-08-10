@@ -2,40 +2,11 @@ package Facebook::Graph::Response;
 
 use Any::Moose;
 use JSON;
-use Digest::SHA qw(hmac_sha256);
-use MIME::Base64::URLSafe;
 
 has response => (
     is      => 'ro',
     required=> 1,
 );
-
-has secret => (
-    is          => 'ro',
-    required    => 0,
-    predicate   => 'has_secret',
-);
-
-sub parse_signed_request {
-    my ($self, $signed_request) = @_;
-
-    my ($encoded_sig, $payload) = split(/\./, $signed_request);
-
-	my $sig = urlsafe_b64decode($encoded_sig);
-    my $data = decode_json(urlsafe_b64decode($payload));
-
-    if (uc($data->{'algorithm'}) ne "HMAC-SHA256") {
-        print "Unknown algorithm. Expected HMAC-SHA256";
-        return -1;
-    }
-
-    my $expected_sig = hmac_sha256($payload, $self->secret);
-    if ($sig ne $expected_sig) {
-        print "Bad Signed JSON signature!";
-        return -1;
-    }
-    return $data;
-}
 
 has as_json => (
     is      => 'ro',

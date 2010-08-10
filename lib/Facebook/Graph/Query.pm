@@ -5,12 +5,6 @@ use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
 
-has secret => (
-    is          => 'ro',
-    required    => 0,
-    predicate   => 'has_secret',
-);
-
 has access_token => (
     is          => 'ro',
     predicate   => 'has_access_token',
@@ -176,11 +170,7 @@ sub request {
     my ($self, $uri) = @_;
     $uri ||= $self->uri_as_string;
     my $response = LWP::UserAgent->new->get($uri);
-    my %params = (response => $response);
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Response->new(%params);
+    return Facebook::Graph::Response->new(response => $response);
 }
 
 no Any::Moose;

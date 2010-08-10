@@ -12,8 +12,7 @@ has app_id => (
 );
 
 has secret => (
-    is          => 'ro',
-    predicate   => 'has_secret',
+    is      => 'ro',
 );
 
 has postback => (
@@ -67,9 +66,6 @@ sub query {
     my %params;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
-    }
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
     }
     return Facebook::Graph::Query->new(%params);
 }
@@ -279,11 +275,8 @@ L<JSON>
 L<LWP>
 L<URI>
 L<Crypt::SSLeay>
-L<MIME::Base64::URLSafe>
-L<Digest::SHA>
 
 B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
-
 
 =head1 SUPPORT
 
