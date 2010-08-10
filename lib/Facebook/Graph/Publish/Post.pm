@@ -164,7 +164,7 @@ Facebook::Graph::Publish::Post - Publish to a user's wall.
 
 This module gives you quick and easy access to publish to a user's Facebook feed.
 
-B<NOTE:> Facebook seems to use these terms interchangibly: Feed, Post, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
+B<NOTE:> Facebook seems to use these terms interchangibly: Feed, Post, Link, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
 
 =head1 METHODS
 
