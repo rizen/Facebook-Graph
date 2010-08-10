@@ -78,6 +78,17 @@ sub picture {
     return Facebook::Graph::Picture->new( object_name => $object_name );
 }
 
+sub publish_feed {
+    my ($self) = @_;
+    my %params;
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Feed->new( %params );
+}
 
 
 no Any::Moose;
@@ -216,6 +227,14 @@ Returns a L<Facebook::Graph::Picture> object, which can be used to generate the 
 =head3 id
 
 An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
+
+
+
+=head2 publish_feed ( )
+
+Creates a L<Facebook::Graph::Publish::Feed> object, which can be used to publish data to a user's feed/wall.
+
+
 
 
 

@@ -1,6 +1,7 @@
 0.0500 August 10, 2010
  - Added signed request support for canvas applications. Thanks to Rainer Größlinger.
  - New prereqs: Digest::SHA and MIME::Base64::URLSafe.
+ - Added feed/wall publishing.
 
 0.0402 July 15, 2010
  - Fixed a pod error.
