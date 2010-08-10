@@ -40,7 +40,7 @@ has picture_uri => (
 
 sub set_picture_uri {
     my ($self, $picture) = @_;
-    $self->picture($picture);
+    $self->picture_uri($picture);
     return $self;
 }
 
@@ -147,16 +147,16 @@ Facebook::Graph::Publish::Feed - Publish to a user's wall.
  my $fb = Facebook::Graph->new;
 
  $fb->publish_feed
-    ->message('I like beer.')
+    ->set_message('I like beer.')
     ->publish;
 
  my $response = $fb->publish_feed
-    ->message('I like Perl.')
+    ->set_message('I like Perl.')
     ->set_picture_uri('http://www.perl.org/i/camel_head.png')
     ->set_link_uri('http://www.perl.org/')
     ->set_link_name('Perl.org')
     ->set_link_caption('Perl is a programming language.')
-    ->set_description('A link to the Perl web site.')
+    ->set_link_description('A link to the Perl web site.')
     ->publish;
 
 

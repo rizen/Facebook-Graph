@@ -10,10 +10,21 @@ die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" u
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
 my $response = $fb->publish_feed
-  ->set_message('Testing')
-  ->publish;
+  ->set_message('Testing');
+#  ->publish;
 use 5.010;
 
+#say $response->as_json;
+
+
+$response = $fb->publish_feed
+    ->set_message('TESTING: I like Perl.')
+    ->set_picture_uri('http://www.perl.org/i/camel_head.png')
+    ->set_link_uri('http://www.perl.org/')
+    ->set_link_name('Perl.org')
+    ->set_link_caption('Perl is a programming language.')
+    ->set_link_description('A link to the Perl web site.')
+    ->publish;
 say $response->as_json;
 
 #ok(ref $sarah eq 'HASH', 'got a hash ref back');
