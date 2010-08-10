@@ -100,40 +100,33 @@ sub to {
     return $self;
 }
 
-sub uri_as_string {
+sub publish {
     my ($self) = @_;
-    my %query;
+    my %post;
     if ($self->has_access_token) {
-        $query{access_token} = $self->access_token;
+        $post{access_token} = $self->access_token;
     }
     if ($self->has_message) {
-        $query{message} = $self->message;
+        $post{message} = $self->message;
     }
     if ($self->has_link_uri) {
-        $query{link} = $self->link_uri;
+        $post{link} = $self->link_uri;
     }
     if ($self->has_link_name) {
-        $query{name} = $self->link_name;
+        $post{name} = $self->link_name;
     }
     if ($self->has_link_caption) {
-        $query{caption} = $self->link_caption;
+        $post{caption} = $self->link_caption;
     }
     if ($self->has_link_description) {
-        $query{description} = $self->link_description;
+        $post{description} = $self->link_description;
     }
     if ($self->has_picture_uri) {
-        $query{picture} = $self->picture_uri;
+        $post{picture} = $self->picture_uri;
     }
     my $uri = $self->uri;
     $uri->path($self->object_name.'/feed');
-    $uri->query_form(%query);
-    return $uri->as_string;
-}
-
-sub publish {
-    my ($self, $uri) = @_;
-    $uri ||= $self->uri_as_string;
-    my $response = LWP::UserAgent->new->get($uri);
+    my $response = LWP::UserAgent->new->post($uri, \%post);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
@@ -234,17 +227,11 @@ Sets a longer description of the site you're linking to. Can also be a portion o
 A text string.
 
 
-
-=head2 uri_as_string ()
-
-Returns a URI string based upon all the methods you've called so far . Mainly useful for debugging. Usually you want to call C<request> and have it post the data and fetch a response for you.
-
-
 =head2 publish ( )
 
-Posts the data and returns a L<Facebook::Graph::Response> object.
+Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain the id of the message:
 
-
+ {"id":"1647395831_130068550371568"}
 
 =head1 LEGAL
 

@@ -12,8 +12,8 @@ $fb->access_token($ENV{FB_ACCESS_TOKEN});
 my $response = $fb->publish_feed
   ->set_message('Testing')
   ->publish;
-
 use 5.010;
+
 say $response->as_json;
 
 #ok(ref $sarah eq 'HASH', 'got a hash ref back');
