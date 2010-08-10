@@ -1,4 +1,4 @@
-use Test::More tests => 4;
+use Test::More tests => 6;
 use lib '../lib';
 
 use_ok('Facebook::Graph');
@@ -9,12 +9,12 @@ die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" u
 
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
-my $response = $fb->publish_feed
-  ->set_message('Testing');
-#  ->publish;
-use 5.010;
-
-#say $response->as_json;
+my $response = $fb->publish_post
+  ->set_message('Testing')
+  ->publish;
+my $out = $response->as_hashref;
+ok(ref $out eq 'HASH', 'got a hash back on simple post') or debug($response->as_json);
+ok(exists $out->{id}, 'we got back an id on simple post');
 
 
 $response = $fb->publish_post
@@ -25,8 +25,7 @@ $response = $fb->publish_post
     ->set_link_caption('Perl is a programming language.')
     ->set_link_description('A link to the Perl web site.')
     ->publish;
-say $response->as_json;
+ok(ref $out eq 'HASH', 'got a hash back on complex post') or debug($response->as_json);
+ok(exists $out->{id}, 'we got back an id on complex post');
 
-#ok(ref $sarah eq 'HASH', 'got a hash ref back');
-#ok(exists $sarah->{about}, 'got sarah');
 
