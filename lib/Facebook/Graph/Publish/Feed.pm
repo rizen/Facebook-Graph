@@ -23,6 +23,7 @@ has object_name => (
 
 has message => (
     is          => 'rw',
+    predicate   => 'has_message',
 );
 
 sub set_message {
@@ -34,6 +35,7 @@ sub set_message {
 
 has picture_uri => (
     is          => 'rw',
+    predicate   => 'has_picture_uri',
 );
 
 sub set_picture_uri {
@@ -45,6 +47,7 @@ sub set_picture_uri {
 
 has link_uri => (
     is          => 'rw',
+    predicate   => 'has_link_uri',
 );
 
 sub set_link_uri {
@@ -56,6 +59,7 @@ sub set_link_uri {
 
 has link_name => (
     is          => 'rw',
+    predicate   => 'has_link_name',
 );
 
 sub set_link_name {
@@ -67,6 +71,7 @@ sub set_link_name {
 
 has link_caption => (
     is          => 'rw',
+    predicate   => 'has_link_caption',
 );
 
 sub set_link_caption {
@@ -78,6 +83,7 @@ sub set_link_caption {
 
 has link_description => (
     is          => 'rw',
+    predicate   => 'has_link_description',
 );
 
 sub set_link_description {
@@ -100,35 +106,26 @@ sub uri_as_string {
     if ($self->has_access_token) {
         $query{access_token} = $self->access_token;
     }
-    if ($self->has_limit) {
-        $query{limit} = $self->limit;
-        if ($self->has_offset) {
-            $query{offset} = $self->offset;
-        }
+    if ($self->has_message) {
+        $query{message} = $self->message;
     }
-    if ($self->has_search_query) {
-        $query{q} = $self->search_query;
-        if ($self->has_search_type) {
-            $query{type} = $self->search_type;
-        }
+    if ($self->has_link_uri) {
+        $query{link} = $self->link_uri;
     }
-    if ($self->has_until) {
-        $query{until} = $self->until;
+    if ($self->has_link_name) {
+        $query{name} = $self->link_name;
     }
-    if ($self->has_since) {
-        $query{since} = $self->since;
+    if ($self->has_link_caption) {
+        $query{caption} = $self->link_caption;
     }
-    if ($self->has_metadata) {
-        $query{metadata} = $self->metadata;
+    if ($self->has_link_description) {
+        $query{description} = $self->link_description;
     }
-    if ($self->has_fields) {
-        $query{fields} = join(',', @{$self->fields});
-    }
-    if ($self->has_ids) {
-        $query{ids} = join(',', @{$self->ids});
+    if ($self->has_picture_uri) {
+        $query{picture} = $self->picture_uri;
     }
     my $uri = $self->uri;
-    $uri->path($self->object_name);
+    $uri->path($self->object_name.'/feed');
     $uri->query_form(%query);
     return $uri->as_string;
 }

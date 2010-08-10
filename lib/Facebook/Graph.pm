@@ -5,6 +5,7 @@ use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
+use Facebook::Graph::Publish::Feed;
 
 has app_id => (
     is      => 'ro',
