@@ -12,6 +12,8 @@ use Facebook::Graph::Publish::Note;
 use Facebook::Graph::Publish::Link;
 use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
+use Facebook::Graph::Publish::RSVPAttending;
+use Facebook::Graph::Publish::RSVPDeclined;
 
 has app_id => (
     is      => 'ro',
@@ -170,6 +172,34 @@ sub rsvp_maybe {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::RSVPMaybe->new( %params );
+}
+
+sub rsvp_attending {
+    my ($self, $object_name) = @_;
+    my %params = (
+        object_name => $object_name,
+    );
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::RSVPAttending->new( %params );
+}
+
+sub rsvp_declined {
+    my ($self, $object_name) = @_;
+    my %params = (
+        object_name => $object_name,
+    );
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::RSVPDeclined->new( %params );
 }
 
 
@@ -359,6 +389,23 @@ RSVP as 'maybe' to an event.
 
 The id of an event.
 
+=head2 rsvp_attending ( id )
+
+RSVP as 'attending' to an event.
+
+=head3 id
+
+The id of an event.
+
+=head2 rsvp_declined ( id )
+
+RSVP as 'declined' to an event.
+
+=head3 id
+
+The id of an event.
+
+
 
 =head2 convert_sessions ( sessions )
 
@@ -389,7 +436,7 @@ This module throws exceptions when it encounters a problem. The exceptions are a
 
 =head1 TODO
 
-I still need to add publishing of content, deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
+I still need to add deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
 
 
 =head1 PREREQS
