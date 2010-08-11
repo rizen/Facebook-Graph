@@ -26,6 +26,8 @@ Marks a post as something you like.
 
 B<ATTENTION:> You must have the C<publish_stream> privilege to use this module.
 
+B<BUG:> Facebook keeps telling me I don't have privileges to like anything, so I'm not sure if there's something hosed with my account or my interpretation of their API. If someone figures out how to make this work, let me know and I'll update the API to make it work.
+
 =head1 METHODS
 
 

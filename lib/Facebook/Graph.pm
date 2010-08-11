@@ -8,6 +8,7 @@ use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
+use Facebook::Graph::Publish::Note;
 
 has app_id => (
     is      => 'ro',
@@ -116,6 +117,18 @@ sub add_comment {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Comment->new( %params );
+}
+
+sub add_note {
+    my ($self) = @_;
+    my %params;
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Note->new( %params );
 }
 
 
@@ -273,6 +286,18 @@ Creates a L<Facebook::Graph::Publish::Like> object to tell everyone about a post
 The id of a post you like.
 
 
+=head2 add_comment ( id )
+
+Creates a L<Facebook::Graph::Publish::Comment> object that you can use to comment on a note.
+
+=head3 id
+
+The id of the post you want to comment on.
+
+
+=head2 add_note ( )
+
+Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish notes.
 
 
 

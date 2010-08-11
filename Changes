@@ -2,6 +2,7 @@
  - Fixed a runtime error created in 0.0500.
  - Added likes publishing.
  - Added comment publishing.
+ - Added note publishing.
 
 0.0500 August 10, 2010
  - Added feed/wall publishing.
