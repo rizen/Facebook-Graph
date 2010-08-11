@@ -6,13 +6,15 @@ use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
+use Facebook::Graph::Publish::Like;
 
 has app_id => (
     is      => 'ro',
 );
 
 has secret => (
-    is      => 'ro',
+    is          => 'ro',
+    predicate   => 'has_secret',
 );
 
 has postback => (
@@ -75,7 +77,7 @@ sub picture {
     return Facebook::Graph::Picture->new( object_name => $object_name );
 }
 
-sub publish_post {
+sub add_post {
     my ($self) = @_;
     my %params;
     if ($self->has_access_token) {
@@ -86,6 +88,21 @@ sub publish_post {
     }
     return Facebook::Graph::Publish::Post->new( %params );
 }
+
+sub add_like {
+    my ($self, $object_name) = @_;
+    my %params = (
+        object_name => $object_name,
+    );
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Like->new( %params );
+}
+
 
 
 no Any::Moose;
@@ -227,9 +244,19 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 
 
 
-=head2 publish_post ( )
+=head2 add_post ( )
 
 Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish data to a user's feed/wall.
+
+
+=head2 add_like ( id )
+
+Creates a L<Facebook::Graph::Publish::Like> object to tell everyone about a post you like.
+
+=head3 id
+
+The id of a post you like.
+
 
 
 

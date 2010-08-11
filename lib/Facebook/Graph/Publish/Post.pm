@@ -1,25 +1,9 @@
 package Facebook::Graph::Publish::Post;
 
 use Any::Moose;
-use Facebook::Graph::Response;
-with 'Facebook::Graph::Role::Uri';
-use LWP::UserAgent;
+extends 'Facebook::Graph::Publish';
 
-has secret => (
-    is          => 'ro',
-    required    => 0,
-    predicate   => 'has_secret',
-);
-
-has access_token => (
-    is          => 'ro',
-    predicate   => 'has_access_token',
-);
-
-has object_name => (
-    is          => 'rw',
-    default     => 'me',
-);
+use constant object_path => '/feed';
 
 has message => (
     is          => 'rw',
@@ -31,7 +15,6 @@ sub set_message {
     $self->message($message);
     return $self;
 }
-
 
 has picture_uri => (
     is          => 'rw',
@@ -92,47 +75,33 @@ sub set_link_description {
     return $self;
 }
 
-
-
-sub to {
-    my ($self, $object_name) = @_;
-    $self->object_name($object_name);
-    return $self;
-}
-
-sub publish {
-    my ($self) = @_;
-    my %post;
+around get_post_params => sub {
+    my ($orig, $self) = @_;
+    my $post = $orig->($self);
     if ($self->has_access_token) {
-        $post{access_token} = $self->access_token;
+        $post->{access_token} = $self->access_token;
     }
     if ($self->has_message) {
-        $post{message} = $self->message;
+        $post->{message} = $self->message;
     }
     if ($self->has_link_uri) {
-        $post{link} = $self->link_uri;
+        $post->{link} = $self->link_uri;
     }
     if ($self->has_link_name) {
-        $post{name} = $self->link_name;
+        $post->{name} = $self->link_name;
     }
     if ($self->has_link_caption) {
-        $post{caption} = $self->link_caption;
+        $post->{caption} = $self->link_caption;
     }
     if ($self->has_link_description) {
-        $post{description} = $self->link_description;
+        $post->{description} = $self->link_description;
     }
     if ($self->has_picture_uri) {
-        $post{picture} = $self->picture_uri;
+        $post->{picture} = $self->picture_uri;
     }
-    my $uri = $self->uri;
-    $uri->path($self->object_name.'/feed');
-    my $response = LWP::UserAgent->new->post($uri, \%post);
-    my %params = (response => $response);
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Response->new(%params);
-}
+    return $post;
+};
+
 
 no Any::Moose;
 __PACKAGE__->meta->make_immutable;
@@ -164,7 +133,9 @@ Facebook::Graph::Publish::Post - Publish to a user's wall.
 
 This module gives you quick and easy access to publish to a user's Facebook feed.
 
-B<NOTE:> Facebook seems to use these terms interchangibly: Feed, Post, Link, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
+B<ATTENTION:> You must have the C<publish_stream> privilege to use this module.
+
+B<TIP:> Facebook seems to use these terms interchangibly: Feed, Post, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
 
 =head1 METHODS
 
@@ -231,7 +202,7 @@ A text string.
 
 =head2 publish ( )
 
-Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain the id of the message:
+Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain the id:
 
  {"id":"1647395831_130068550371568"}
 
