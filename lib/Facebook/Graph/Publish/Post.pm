@@ -115,11 +115,11 @@ Facebook::Graph::Publish::Post - Publish to a user's wall.
 
  my $fb = Facebook::Graph->new;
 
- $fb->publish_post
+ $fb->add_post
     ->set_message('I like beer.')
     ->publish;
 
- my $response = $fb->publish_post
+ my $response = $fb->add_post
     ->set_message('I like Perl.')
     ->set_picture_uri('http://www.perl.org/i/camel_head.png')
     ->set_link_uri('http://www.perl.org/')
