@@ -10,6 +10,7 @@ use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
 use Facebook::Graph::Publish::Note;
 use Facebook::Graph::Publish::Link;
+use Facebook::Graph::Publish::Event;
 
 has app_id => (
     is      => 'ro',
@@ -144,6 +145,17 @@ sub add_link {
     return Facebook::Graph::Publish::Link->new( %params );
 }
 
+sub add_event {
+    my ($self) = @_;
+    my %params;
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Event->new( %params );
+}
 
 
 no Any::Moose;
@@ -318,6 +330,10 @@ Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish
 Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
 
+=head2 add_event( )
+
+Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
+
 
 
 
@@ -360,6 +376,8 @@ L<JSON>
 L<LWP>
 L<URI>
 L<Crypt::SSLeay>
+L<DateTime>
+L<DateTime::Format::Strptime>
 
 B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
 
