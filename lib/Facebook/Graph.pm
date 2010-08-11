@@ -11,6 +11,7 @@ use Facebook::Graph::Publish::Comment;
 use Facebook::Graph::Publish::Note;
 use Facebook::Graph::Publish::Link;
 use Facebook::Graph::Publish::Event;
+use Facebook::Graph::Publish::RSVPMaybe;
 
 has app_id => (
     is      => 'ro',
@@ -156,6 +157,21 @@ sub add_event {
     }
     return Facebook::Graph::Publish::Event->new( %params );
 }
+
+sub rsvp_maybe {
+    my ($self, $object_name) = @_;
+    my %params = (
+        object_name => $object_name,
+    );
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::RSVPMaybe->new( %params );
+}
+
 
 
 no Any::Moose;
@@ -330,11 +346,18 @@ Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish
 Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
 
-=head2 add_event( )
+=head2 add_event ( )
 
 Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
 
 
+=head2 rsvp_maybe ( id )
+
+RSVP as 'maybe' to an event.
+
+=head3 id
+
+The id of an event.
 
 
 =head2 convert_sessions ( sessions )

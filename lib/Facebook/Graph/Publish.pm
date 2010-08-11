@@ -28,7 +28,12 @@ sub to {
 }
 
 sub get_post_params {
-    return {};
+    my $self = shift;
+    my %post;
+    if ($self->has_access_token) {
+        $post{access_token} = $self->access_token;
+    }
+    return \%post;
 }
 
 sub publish {

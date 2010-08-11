@@ -69,9 +69,6 @@ sub set_end_time {
 around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
-    if ($self->has_access_token) {
-        $post->{access_token} = $self->access_token;
-    }
     if ($self->has_name) {
         $post->{name} = $self->name;
     }
