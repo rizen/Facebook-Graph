@@ -436,7 +436,7 @@ This module throws exceptions when it encounters a problem. The exceptions are a
 
 =head1 TODO
 
-I still need to add deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
+I still need to add publishing albums/photos, deleting of content, impersonation, and analytics to have a feature complete API. Would also like to figure out inbox stuff, but it doesn't seem to be documented. In addition, the module could use a lot more tests.
 
 
 =head1 PREREQS
