@@ -9,6 +9,7 @@ use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
 use Facebook::Graph::Publish::Note;
+use Facebook::Graph::Publish::Link;
 
 has app_id => (
     is      => 'ro',
@@ -129,6 +130,18 @@ sub add_note {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Note->new( %params );
+}
+
+sub add_link {
+    my ($self) = @_;
+    my %params;
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Link->new( %params );
 }
 
 
@@ -298,6 +311,11 @@ The id of the post you want to comment on.
 =head2 add_note ( )
 
 Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish notes.
+
+
+=head2 add_link ( )
+
+Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
 
 
