@@ -31,9 +31,7 @@ B<ATTENTION:> You must have the C<rsvp_event> privilege to use this module.
 
 =head2 publish ( )
 
-Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain the id:
-
- {"id":"1647395831_130068550371568"}
+Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain a string of either 'true' or 'false'.
 
 =head1 LEGAL
 

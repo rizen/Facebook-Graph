@@ -9,7 +9,7 @@ die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" u
 
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
-my $response = $fb->add_like('635277468_144288935595157')
+my $response = $fb->rsvp_maybe('141730949193973')
   ->publish;
 is($response->as_string, 'true', 'we get back a true string');
 

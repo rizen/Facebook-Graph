@@ -21,9 +21,6 @@ sub set_message {
 around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
-    if ($self->has_access_token) {
-        $post->{access_token} = $self->access_token;
-    }
     if ($self->has_message) {
         $post->{message} = $self->message;
     }
