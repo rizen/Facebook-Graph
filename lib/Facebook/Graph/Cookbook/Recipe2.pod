@@ -1,0 +1,98 @@
+=head1 NAME
+
+Facebook::Graph::Cookbook::Recipe2 - Building a Full Web App
+
+=head1 DESCRIPTION
+
+A full working web app for those people who like to start hacking from a working example and make it their own.
+
+=head2 Prerequisite Modules
+
+You'll need to have all of the following modules installed in order to run this app (in addition to L<Facebook::Graph>):
+
+L<DateTime::Format::ICal> L<Dancer> L<Template> L<Data::ICal> L<XML::FeedPP> 
+
+=head2 Assumptions
+
+This recipe assumes that that you have a Facebook (L<http://www.facebook.com>) account.
+
+You'll also have to be able to point a domain name to a server that is accessible from the Internet. DNS and server configuration are way beyond the scope of this document.
+
+In order to edit this web app you're either going to have to know or be willing to learn L<Dancer>. It's a good little web app server. You can find out more at L<http://perldancer.org>.
+
+=head1 RECIPE
+
+=head2 Step 1: Set up the developer application on Facebook.
+
+Go to L<http://apps.facebook.com/developer>.
+
+Click "Allow".
+
+=head2 Step 2: Create your application.
+
+Go to L<http://www.facebook.com/developers/createapp.php> or click "Set Up New Application" from the developer application.
+
+Fill in an application name. The only restriction is that it can't use a Facebook trademark or be similar to official Facebook application names.
+
+Agree to the terms of servce.
+
+Click "Create Application".
+
+=head2 Step 3: The Connect tab.
+
+After creating your application, go to the "Connect" tab.
+
+Fill in the "Connect URL" field. It should be C<http://www.yourapplication.com/>. It is the base URL to where you'll be deploying your application. The trailing slash is required.
+
+Click "save".
+
+=head2 Step 4: Note your application settings.
+
+You either want to make note of your "Application ID" and your "Application Secret" or bookmark this page so you can come back to it. You'll need these later.
+
+=head2 Step 5: Copy files.
+
+If you don't already have it downloaded, download a tarball of Facebook::Graph and extract it:
+
+ tar xfz Facebook-Graph-0.0700.tar.gz
+
+And copy the files from C<eg/recipe2> where ever you want to deploy your app. For this example we'll assume you want to deploy from C</opt/webapp>.
+
+ mkdir -p /opt/webapp
+ cp -Rfp Facebook-Graph/eg/recipe2/* /opt/webapp
+ 
+=head2 Step 6: Configure your app.
+
+Before we can run the app we need to edit the config file.
+
+ cd /opt/webapp
+ vi config.yml
+
+Specifically we need to set the C<app_id> and C<secret> fields with information from our Facebook application settings page. And we need to update the C<postback> with the domain pointing to our server. 
+
+=head2 Step 7: Start it.
+
+To start the app just type the following command:
+
+ cd /opt/webapp
+ perl app.pl
+
+=head2 Step 8: Play with it.
+
+Go use the web app. See what it does. Point your browser to:
+
+ http://www.yourapplication.com/
+
+=head2 Step 9: Start tinkering.
+
+Now that you know you have a working app, start tinkering. Make it do what you want it to do.
+
+=head1 SEE ALSO
+
+For more recipes, check out the L<Facebook::Graph::Cookbook>.
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+
+=cut

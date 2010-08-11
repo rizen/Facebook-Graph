@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>MadMongers Demo App</title>
+<style type="text/css">
+.menu {
+    font-size: 15px;
+    padding: 0;
+    margin: 0;
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    width: 125px;
+}
+.menu li {
+    list-style-type: none;
+}
+.menu li a {
+    display: block;
+    border: 1px solid #aaaaaa;
+    background-color: #aaaaaa;
+    border-left: 5px solid #800000;
+    padding-left: 5px;
+    margin-bottom: 1px;
+    text-decoration: none;
+}
+a { 
+  color: #800000;
+}
+.content {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    margin-left: 130px;
+    width: 600px;
+}
+</style>
+</head>
+<body>
+<ul class="menu">
+    <li><a href="/friends">Friends</a></li>
+    <li><a href="/rss-importer">RSS Importer</a></li>
+    <li><a href="/ical-importer">iCal Importer</a></li>
+    <li><a href="/">Home</a></li>
+    <li><a href="http://www.facebook.com/">Facebook</a></li>
+</ul>
+<div class="content">

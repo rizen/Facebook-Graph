@@ -1,0 +1,12 @@
+[% INCLUDE header.tt %]
+
+<h1>iCal Importer</h1>
+This utility will import an iCal (ics) feed to your Facebook event calendar.
+
+<form action="/ical-importer" method="post">
+iCal Feed/File URI: 
+<input type="text" name="ical_uri">
+<input type="submit">
+</form>
+
+[% INCLUDE footer.tt response = response %]

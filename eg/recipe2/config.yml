@@ -1,0 +1,12 @@
+port: 80
+session: "YAML"
+session_dir: "/tmp/dancer-sessions"
+template: template_toolkit
+engines:
+    template_toolkit:
+        start_tag: '[%'
+        stop_tag: '%]'
+facebook:
+    postback: "http://www.yourapplication.com/facebook/postback/"
+    app_id: "XXXXXXXXXXXXXXXX"
+    secret: "XXXXXXXXXXXXXXXXXXXXXXXXXXX"

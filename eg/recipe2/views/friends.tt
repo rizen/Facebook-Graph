@@ -1,0 +1,10 @@
+[% INCLUDE header.tt %]
+
+<h1>Friends</h1>
+<ul>
+[% FOREACH friend IN friends %]
+	<li>[% friend.name %]</li>
+[% END %]
+</li>
+
+[% INCLUDE footer.tt response = response %]

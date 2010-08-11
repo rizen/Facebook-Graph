@@ -1,0 +1,6 @@
+[% INCLUDE header.tt %]
+
+<h1>iCal Importer</h1>
+Import complete. <a href="http://www.facebook.com/">View Facebook to see your import.</a>
+
+[% INCLUDE footer.tt response = response %]

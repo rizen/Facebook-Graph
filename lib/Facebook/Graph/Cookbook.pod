@@ -12,7 +12,11 @@ The goal of this document is to provide a set of common recipies for success. Th
 
 =item L<Facebook::Graph::Cookbook::Recipe1>
 
-Shows you how to set up a privileged application.
+Shows you how to set up a privileged application using nothing more than L<Plack>. This is very much a step by step tutorial.
+
+=item L<Facebook::Graph::Cookbook::Recipe2>
+
+A fully functional Facebook::Graph app that publishes data to Facebook and reads data from it. Uses a full application server and lots of other modules. This is a working example, without a lot of explaination.
 
 =back
 

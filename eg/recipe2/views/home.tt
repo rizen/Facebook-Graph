@@ -1,0 +1,5 @@
+[% INCLUDE header.tt %]
+
+Welcome, [% name %].
+
+[% INCLUDE footer.tt response = response %]
