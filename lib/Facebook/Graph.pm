@@ -7,6 +7,7 @@ use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Like;
+use Facebook::Graph::Publish::Comment;
 
 has app_id => (
     is      => 'ro',
@@ -101,6 +102,20 @@ sub add_like {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Like->new( %params );
+}
+
+sub add_comment {
+    my ($self, $object_name) = @_;
+    my %params = (
+        object_name => $object_name,
+    );
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Comment->new( %params );
 }
 
 
