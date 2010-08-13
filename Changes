@@ -1,5 +1,7 @@
-0.0700 August 12, 2010
+0.0700 August 13, 2010
  - Added recipe #2 to the cookbook.
+ - Added signed request support for canvas applications. Thanks to Rainer Größlinger.
+ - New prereqs: Digest::SHA and MIME::Base64::URLSafe.
 
 0.0600 August 11, 2010
  - Fixed a runtime error created in 0.0500.
