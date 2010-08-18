@@ -1,3 +1,6 @@
+0.0701 August 17, 2010
+ - Added a link to the talk I gave at MadMongers about Facebook::Graph. It could be useful to people getting started with Facebook::Graph.
+
 0.0700 August 13, 2010
  - Added recipe #2 to the cookbook.
  - Added signed request support for canvas applications. Thanks to Rainer Größlinger.
