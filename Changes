@@ -1,3 +1,7 @@
+0.0702 September 1, 2010
+ - Facebook changed their API slightly and it broke stuff, so that is now fixed.
+ - Added link to the cookbook from the main page.
+
 0.0701 August 17, 2010
  - Added a link to the talk I gave at MadMongers about Facebook::Graph. It could be useful to people getting started with Facebook::Graph.
 

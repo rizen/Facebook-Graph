@@ -27,5 +27,5 @@ is($sarah->{type}, 'user', 'she is a user');
 my $error_query = eval { $fb->query->select_fields('')->request->as_json };
 is(ref $@, 'ARRAY', 'exception thrown is an array');
 is($@->[0], 400, 'exception inherits http status code');
-is($@->[1], 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
+is($@->[1], 'Could not execute request (https://graph.facebook.com?fields=): OAuthInvalidRequestException - Unsupported get request.', 'exception gives good detail');
 
