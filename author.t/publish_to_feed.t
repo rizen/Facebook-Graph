@@ -9,7 +9,7 @@ die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" u
 
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
-my $response = $fb->publish_post
+my $response = $fb->add_post
   ->set_message('Testing')
   ->publish;
 my $out = $response->as_hashref;
@@ -17,7 +17,7 @@ ok(ref $out eq 'HASH', 'got a hash back on simple post') or debug($response->as_
 ok(exists $out->{id}, 'we got back an id on simple post');
 
 
-$response = $fb->publish_post
+$response = $fb->add_post
     ->set_message('TESTING: I like Perl.')
     ->set_picture_uri('http://www.perl.org/i/camel_head.png')
     ->set_link_uri('http://www.perl.org/')

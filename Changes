@@ -1,5 +1,6 @@
 0.0703 2010-09-26
  - Documented Response's as_string method.
+ - Facebook changed their damn API yet again, so that is now fixed, AGAIN!
 
 0.0702 September 1, 2010
  - Facebook changed their API slightly and it broke stuff, so that is now fixed.
