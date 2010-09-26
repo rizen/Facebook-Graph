@@ -486,6 +486,7 @@ L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
 L<Digest::SHA>
+L<URI::Encode>
 
 B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
 

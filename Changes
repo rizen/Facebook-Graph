@@ -1,3 +1,6 @@
+0.0704 2010-09-26
+ - Fixed a problem with access token encoding. 
+
 0.0703 2010-09-26
  - Documented Response's as_string method.
  - Facebook changed their damn API yet again, so that is now fixed, AGAIN!
