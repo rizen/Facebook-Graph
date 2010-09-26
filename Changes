@@ -1,3 +1,6 @@
+0.0705 2010-09-26
+ - Missed a spot in 0.0704.
+
 0.0704 2010-09-26
  - Fixed a problem with access token encoding. 
 
