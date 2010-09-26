@@ -72,6 +72,10 @@ Returns the response from Facebook as a JSON string.
 
 Returns the response from Facebook as a hash reference.
 
+=head2 as_string ()
+
+No processing what so ever. Just returns the raw body string that was received from Facebook.
+
 =head2 response ()
 
 Direct access to the L<HTTP::Response> object.
