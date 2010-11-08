@@ -64,6 +64,17 @@ sub set_end_time {
     return $self;
 }
 
+has page_id => (
+    is          => 'rw',
+    predicate   => 'has_page_id'
+);
+
+sub set_page_id {
+    my ($self, $page_id) = @_;
+    $self->page_id($page_id);
+    return $self;
+}
+
 
 
 around get_post_params => sub {
@@ -77,6 +88,9 @@ around get_post_params => sub {
     }
     if ($self->has_location) {
         $post->{location} = $self->location;
+    }
+    if ($self->has_page_id) {
+        $post->{page_id} = $self->page_id;
     }
     my $strp = DateTime::Format::Strptime->new(pattern => '%FT %T%z');
     if ($self->has_start_time) {

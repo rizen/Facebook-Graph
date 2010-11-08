@@ -174,8 +174,12 @@ sub add_link {
 }
 
 sub add_event {
-    my ($self) = @_;
+    my ($self, $page_id) = @_;
     my %params;
+    %params = (
+        object_name => $page_id,
+        page_id => $page_id
+    ) if $page_id;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
