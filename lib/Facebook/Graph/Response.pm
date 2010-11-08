@@ -34,7 +34,8 @@ has as_json => (
                 $message = $error->{error}{type} . ' - ' . $error->{error}{message};
                 $type = $error->{error}{type};
             }
-            confess [$response->code, 'Could not execute request ('.$response->request->uri->as_string.'): '.$message, $type];
+            return JSON->new->encode($error);
+#            confess [$response->code, 'Could not execute request ('.$response->request->uri->as_string.'): '.$message, $type];
         }
     },
 );
