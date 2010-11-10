@@ -199,19 +199,19 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
  my $perl_page = $fb->find('16665510298')
     ->include_metadata
     ->request
-    ->to_hashref;
+    ->as_hashref;
  
  my $sarah_bownds = $fb->find('sarahbownds')
     ->select_fields(qw(id name))
     ->request
-    ->to_hashref;
+    ->as_hashref;
 
  # this one would require an access token
  my $new_car_posts = $fb->query
     ->search('car', 'my_news')
     ->where_since('yesterday')
     ->request
-    ->to_hashref;
+    ->as_hashref;
 
 
 =head1 DESCRIPTION
@@ -224,7 +224,7 @@ This module presents a programatic approach to building the queries necessary to
     ->where_since('yesterday')
     ->limit_results(25)
     ->request
-    ->to_hashref;
+    ->as_hashref;
     
 The above query, if you were read it like text, says: "Give me the user ids and full names of all users named Dave that have been created since yesterday, and limit the result set to the first 25."
 
