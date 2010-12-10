@@ -33,10 +33,10 @@ around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
     if ($self->has_message) {
-        $post->{message} = $self->message;
+        push @$post, {message => $self->message};
     }
     if ($self->has_link_uri) {
-        $post->{link} = $self->link_uri;
+        push @$post, {link => $self->link_uri};
     }
     return $post;
 };

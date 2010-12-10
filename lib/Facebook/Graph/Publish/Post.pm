@@ -75,26 +75,140 @@ sub set_link_description {
     return $self;
 }
 
+has target_countries => (
+    is          => 'rw',
+    lazy        => 1,
+    isa         => 'ArrayRef',
+    predicate   => 'has_target_countries',
+);
+
+sub set_target_countries {
+    my ($self, $source) = @_;
+    $self->target_countries($source);
+    return $self;
+}
+
+has target_cities => (
+    is          => 'rw',
+    lazy        => 1,
+    isa         => 'ArrayRef',
+    predicate   => 'has_target_cities',
+);
+
+sub set_target_cities {
+    my ($self, $source) = @_;
+    $self->target_cities($source);
+    return $self;
+}
+
+has target_regions => (
+    is          => 'rw',
+    lazy        => 1,
+    isa         => 'ArrayRef',
+    predicate   => 'has_target_regions',
+);
+
+sub set_target_regions {
+    my ($self, $source) = @_;
+    $self->target_regions($source);
+    return $self;
+}
+
+has target_locales => (
+    is          => 'rw',
+    lazy        => 1,
+    isa         => 'ArrayRef',
+    predicate   => 'has_target_locales',
+);
+
+sub set_target_locales {
+    my ($self, $source) = @_;
+    $self->target_locales($source);
+    return $self;
+}
+
+has source => (
+    is          => 'rw',
+    predicate   => 'has_source',
+);
+
+sub set_source {
+    my ($self, $source) = @_;
+    $self->source($source);
+    return $self;
+}
+
+has actions => (
+    is          => 'rw',
+    lazy        => 1,
+    isa         => 'ArrayRef',
+    predicate   => 'has_actions',
+);
+
+sub set_actions {
+    my ($self, $actions) = @_;
+    $self->actions($actions);
+    return $self;
+}
+
+sub add_action {
+    my ($self, $name, $link) = @_;
+    my $actions = $self->actions;
+    push @$actions, { name => $name, link => $link };
+    $self->actions($actions);
+    return $self;
+}
+
+has privacy => (
+    is          => 'rw',
+    predicate   => 'has_privacy',
+);
+
+has privacy_options => (
+    is          => 'rw',
+    isa         => 'HashRef',
+);
+
+sub set_privacy {
+    my ($self, $privacy, $options) = @_;
+    $self->privacy($privacy);
+    $self->privacy_options($options);
+    return $self;
+}
+
 around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
     if ($self->has_message) {
-        $post->{message} = $self->message;
+        push @$post, {message => $self->message };
     }
     if ($self->has_link_uri) {
-        $post->{link} = $self->link_uri;
+        push @$post, {link => $self->link_uri};
     }
     if ($self->has_link_name) {
-        $post->{name} = $self->link_name;
+        push @$post, {name => $self->link_name};
     }
     if ($self->has_link_caption) {
-        $post->{caption} = $self->link_caption;
+        push @$post, {caption => $self->link_caption};
     }
     if ($self->has_link_description) {
-        $post->{description} = $self->link_description;
+        push @$post, {description => $self->link_description};
     }
     if ($self->has_picture_uri) {
-        $post->{picture} = $self->picture_uri;
+        push @$post, {picture => $self->picture_uri};
+    }
+    if ($self->has_source) {
+        push @$post, {source => $self->source};
+    }
+    if ($self->has_actions) {
+        foreach my $action (@{$self->actions}) {
+            push @$post, JSON->new->encode($action);
+        }
+    }
+    if ($self->has_privacy) {
+        my %privacy = %{$self->privacy_options};
+        $privacy{value} = $self->privacy;
+        push @$post, {privacy => JSON->new->encode(\%privacy)};
     }
     return $post;
 };
@@ -154,8 +268,6 @@ A string of text.
 
 Sets the URI of a picture to be displayed in the message.
 
-B<BUG:> I'm doing everything according to Facebook's API as far as I can tell, yet pictures don't seem to get attached to posts. Not sure why. Email me if you know.
-
 =head3 uri
 
 A URI to a picture.
@@ -195,6 +307,129 @@ Sets a longer description of the site you're linking to. Can also be a portion o
 =head3 description
 
 A text string.
+
+
+=head2 set_source ( uri )
+
+Sets a source URI for a flash or video file.
+
+=head3 uri
+
+The URI you wish to set. For example if you wanted to include a YouTube video:
+
+ $post->set_source('http://www.youtube.com/watch?v=efsJRdJ6dog');
+
+
+=head2 set_actions ( actions )
+
+Sets a list of actions (or links) that should go in the post as things people can do with the post. This allows for integration of the post with third party sites.
+
+=head3 actions
+
+An array reference of hash references containing C<name> / C<link> pairs.
+
+ $post->actions([
+    {
+        name    => 'Click Me!',
+        link    => 'http://www.somesite.com/click',
+    },
+    ...
+ ]);
+
+=head2 add_action ( name, link )
+
+Adds an action to the list of actions set either by previously calling C<add_action> or by calling C<set_actions>.
+
+=head3 name
+
+The name of the action (the clickable label).
+
+=head3 link
+
+The URI of the action.
+
+
+
+=head2 set_privacy ( setting, options )
+
+A completely optional privacy setting. 
+
+=head3 setting
+
+The privacy setting. Choose from: EVERYONE, CUSTOM, ALL_FRIENDS, NETWORKS_FRIENDS, and FRIENDS_OF_FRIENDS. See L<http://developers.facebook.com/docs/reference/api/post> for changes in this list.
+
+=head3 options
+
+A hash reference of options to tweak the privacy setting. Some options are required depending on what privacy setting you chose. See L<http://developers.facebook.com/docs/reference/api/post> for details.
+
+ $post->set_privacy('CUSTOM', { friends => 'SOME_FRIENDS', allow => [qw( 119393 993322 )] });
+
+=over
+
+=item friends
+
+A string that must be one of EVERYONE, NETWORKS_FRIENDS, FRIENDS_OF_FRIENDS, ALL_FRIENDS, SOME_FRIENDS, SELF, or NO_FRIENDS.
+
+=item networks
+
+An array reference of network ids.
+
+=item allow
+
+An array reference of user ids.
+
+=item deny.
+
+An array reference of user ids.
+
+=back
+
+
+=head2 set_target_countries ( countries )
+
+Makes a post only available to viewers in certain countries.
+
+ $post->set_target_countries( ['US'] );
+ 
+=head3 countries
+
+An array reference of two letter country codes (upper case). You can find a list of country codes in the list of city ids here: L<http://developers.facebook.com/attachment/all_cities_final.csv>.
+
+
+=head2 set_target_regions ( regions )
+
+Makes a post only available to viewers in certain regions.
+
+ $post->set_target_regions( [6,53] );
+ 
+=head3 regions
+
+An array reference of region numbers however Facebook defines that. I've got no idea because their documentation sucks. I'm not even sure what a region is. Is it a region of a country? Of a continent? No idea. I do know it is an integer, but that's about it.
+
+
+
+=head2 set_target_cities ( cities )
+
+Makes a post only available to viewers in certain cities.
+
+ $post->set_target_cities( [2547804] );
+ 
+=head3 cities
+
+An array reference of cities ids. In the example above I've listed Madison, WI. You can find a list of their cities here: L<http://developers.facebook.com/attachment/all_cities_final.csv>
+
+
+
+=head2 set_target_locales ( locales )
+
+Makes a post only available to viewers in certain locales.
+
+ $post->set_target_locales( [6] );
+ 
+=head3 locales
+
+An array reference of locales ids. You can find their list of locales here: L<http://developers.facebook.com/attachment/locales_final.csv>
+
 
 
 =head2 publish ( )

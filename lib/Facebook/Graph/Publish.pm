@@ -30,11 +30,11 @@ sub to {
 
 sub get_post_params {
     my $self = shift;
-    my %post;
+    my @post;
     if ($self->has_access_token) {
-        $post{access_token} = uri_decode($self->access_token);
+        push @post, {access_token => uri_decode($self->access_token) };
     }
-    return \%post;
+    return \@post;
 }
 
 sub publish {
