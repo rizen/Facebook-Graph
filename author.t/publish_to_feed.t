@@ -1,4 +1,4 @@
-use Test::More tests => 6;
+use Test::More tests => 8;
 use lib '../lib';
 
 use_ok('Facebook::Graph');
@@ -29,3 +29,9 @@ ok(ref $out eq 'HASH', 'got a hash back on complex post') or debug($response->as
 ok(exists $out->{id}, 'we got back an id on complex post');
 
 
+$response = $fb->add_post(176943642329328)
+  ->set_message('Testing')
+  ->publish;
+$out = $response->as_hashref;
+ok(ref $out eq 'HASH', 'got a hash back on simple post to community page') or debug($response->as_json);
+ok(exists $out->{id}, 'we got back an id on simple post to community page');

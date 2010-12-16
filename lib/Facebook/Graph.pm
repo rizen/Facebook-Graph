@@ -111,8 +111,11 @@ sub picture {
 }
 
 sub add_post {
-    my ($self) = @_;
+    my ($self, $object_name) = @_;
     my %params;
+    if ($self->has_access_token) {
+        $params{object_name} = $object_name;
+    }
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
