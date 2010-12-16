@@ -5,12 +5,18 @@
   set_target_locales to Facebook::Graph::Publish::Post.
  - Changed get_post_params() in Facebook::Graph::Publish to return an array ref
   instead of a hash ref.
+ - Now requires Exception::Class.
  
  NOTE: This version is not backward compatible with previous versions because
  the get_post_params() method in Facebook::Graph::Publish now returns an array
  ref rather than a hash ref. However, if you didn't extend this module, then you
  likely aren't calling this method anywhere, so for you the module will remain
  backward compatible. This is the reason for the major version number increase.
+
+ NOTE2: This version is not backward compatible with previous versions because
+ we are no longer throwing array based exceptions. Instead the exceptions are
+ Exception::Class based. If you don't care about exception formatting then this 
+ module will still be backward compatible for you.
 
 0.0705 2010-09-26
  - Missed a spot in 0.0704.

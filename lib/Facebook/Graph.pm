@@ -17,6 +17,7 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
+use Facebook::Graph::Exception;
 
 has app_id => (
     is      => 'ro',
@@ -46,12 +47,12 @@ sub parse_signed_request {
     my $data = JSON->new->decode(urlsafe_b64decode($payload));
 
     if (uc($data->{'algorithm'}) ne "HMAC-SHA256") {
-        confess [430, "Unknown algorithm. Expected HMAC-SHA256"];
+        Facebook::Graph::Exception::General->throw( error => "Unknown algorithm. Expected HMAC-SHA256");
     }
 
     my $expected_sig = hmac_sha256($payload, $self->secret);
     if ($sig ne $expected_sig) {
-        confess [431, "Bad Signed JSON signature!"];
+        Facebook::Graph::Exception::General->throw( error => "Bad Signed JSON signature!");
     }
     return $data;
 }
@@ -465,14 +466,12 @@ B<NOTE:> To get this passed to your app you must enable it in your migration set
 
 =head1 EXCEPTIONS
 
-This module throws exceptions when it encounters a problem. The exceptions are an array reference. The first element is an HTTP status code. The second element is a human readable string. The third element is the exception type as identified by the Facebook API, or if something terrible went wrong C<Unknown>. For example:
-
- [400, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'GraphMethodException']
+This module throws exceptions when it encounters a problem. See L<Facebook::Graph::Exception> for details.
 
 
 =head1 TODO
 
-I still need to add publishing albums/photos, deleting of content, impersonation, and analytics to have a feature complete API. Would also like to figure out inbox stuff, but it doesn't seem to be documented. In addition, the module could use a lot more tests.
+I still need to add publishing albums/photos, deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
 
 
 =head1 PREREQS
@@ -487,6 +486,7 @@ L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
 L<Digest::SHA>
 L<URI::Encode>
+L<Exception::Class>
 
 B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
 
