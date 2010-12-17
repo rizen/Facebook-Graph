@@ -1,5 +1,6 @@
-[% INCLUDE header.tt %]
-
 Welcome, [% name %].
 
-[% INCLUDE footer.tt response = response %]
+[% IF response %]
+	<h3>Facebook Response</h3>
+	<textarea style="width: 500px; height: 250px;">[% response %]</textarea>
+[% END %]

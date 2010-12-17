@@ -1,5 +1,3 @@
-[% INCLUDE header.tt %]
-
 <h1>RSS Importer</h1>
 This utility will import an RSS feed to your Facebook news feed.
 
@@ -8,5 +6,8 @@ RSS Feed URI:
 <input type="text" name="rss_uri">
 <input type="submit">
 </form>
+[% IF response %]
+	<h3>Facebook Response</h3>
+	<textarea style="width: 500px; height: 250px;">[% response %]</textarea>
+[% END %]
 
-[% INCLUDE footer.tt response = response %]

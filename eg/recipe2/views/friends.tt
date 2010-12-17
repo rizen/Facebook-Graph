@@ -1,5 +1,3 @@
-[% INCLUDE header.tt %]
-
 <h1>Friends</h1>
 <ul>
 [% FOREACH friend IN friends %]
@@ -7,4 +5,7 @@
 [% END %]
 </li>
 
-[% INCLUDE footer.tt response = response %]
+[% IF response %]
+	<h3>Facebook Response</h3>
+	<textarea style="width: 500px; height: 250px;">[% response %]</textarea>
+[% END %]

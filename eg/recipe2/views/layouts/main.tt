@@ -1,5 +1,6 @@
 <html>
 <head>
+<meta http-equiv="Content-type" content="text/html; charset=[% settings.charset %]" />
 <title>MadMongers Demo App</title>
 <style type="text/css">
 .menu {
@@ -44,3 +45,7 @@ a {
     <li><a href="http://www.facebook.com/">Facebook</a></li>
 </ul>
 <div class="content">
+[% content %]
+</div>
+</body>
+</html>

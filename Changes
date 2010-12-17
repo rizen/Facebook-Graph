@@ -1,4 +1,5 @@
 1.0000 2010-12-09
+ - Updated recipe2 example to use more modern Dancer features.
  - Merged POD patch from fayland.
  - Added set_source(), set_privacy(), set_actions(), add_actions(),
   set_target_countries(), set_target_cities(), set_target_regions(), and
