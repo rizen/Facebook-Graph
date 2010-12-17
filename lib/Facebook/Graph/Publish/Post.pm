@@ -186,35 +186,35 @@ around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
     if ($self->has_message) {
-        push @$post, {message => $self->message };
+        push @$post, message => $self->message;
     }
     if ($self->has_link_uri) {
-        push @$post, {link => $self->link_uri};
+        push @$post, link => $self->link_uri;
     }
     if ($self->has_link_name) {
-        push @$post, {name => $self->link_name};
+        push @$post, name => $self->link_name;
     }
     if ($self->has_link_caption) {
-        push @$post, {caption => $self->link_caption};
+        push @$post, caption => $self->link_caption;
     }
     if ($self->has_link_description) {
-        push @$post, {description => $self->link_description};
+        push @$post, description => $self->link_description;
     }
     if ($self->has_picture_uri) {
-        push @$post, {picture => $self->picture_uri};
+        push @$post, picture => $self->picture_uri;
     }
     if ($self->has_source) {
-        push @$post, {source => $self->source};
+        push @$post, source => $self->source;
     }
     if ($self->has_actions) {
         foreach my $action (@{$self->actions}) {
-            push @$post, JSON->new->encode($action);
+            push @$post, actions => JSON->new->encode($action);
         }
     }
     if ($self->has_privacy) {
         my %privacy = %{$self->privacy_options};
         $privacy{value} = $self->privacy;
-        push @$post, {privacy => JSON->new->encode(\%privacy)};
+        push @$post, privacy => JSON->new->encode(\%privacy);
     }
     return $post;
 };

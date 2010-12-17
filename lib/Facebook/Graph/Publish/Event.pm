@@ -70,20 +70,20 @@ around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
     if ($self->has_name) {
-        push @$post, {name => $self->name};
+        push @$post, name => $self->name;
     }
     if ($self->has_description) {
-        push @$post, {description => $self->description};
+        push @$post, description => $self->description;
     }
     if ($self->has_location) {
-        push @$post, {location => $self->location};
+        push @$post, location => $self->location;
     }
     my $strp = DateTime::Format::Strptime->new(pattern => '%FT %T%z');
     if ($self->has_start_time) {
-        push @$post, {start_time => $strp->format_datetime($self->start_time)};
+        push @$post, start_time => $strp->format_datetime($self->start_time);
     }
     if ($self->has_end_time) {
-        push @$post, {end_time => $strp->format_datetime($self->end_time)};
+        push @$post, end_time => $strp->format_datetime($self->end_time);
     }
     return $post;
 };

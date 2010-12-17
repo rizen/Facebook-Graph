@@ -33,10 +33,10 @@ around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
     if ($self->has_message) {
-        push @$post, {message => $self->message};
+        push @$post, message => $self->message;
     }
     if ($self->has_subject) {
-        push @$post, {subject => $self->subject};
+        push @$post, subject => $self->subject;
     }
     return $post;
 };
