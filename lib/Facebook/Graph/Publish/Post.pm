@@ -77,6 +77,7 @@ sub set_link_description {
 
 has target_countries => (
     is          => 'rw',
+    default     => sub {[]},
     lazy        => 1,
     isa         => 'ArrayRef',
     predicate   => 'has_target_countries',
@@ -90,6 +91,7 @@ sub set_target_countries {
 
 has target_cities => (
     is          => 'rw',
+    default     => sub {[]},
     lazy        => 1,
     isa         => 'ArrayRef',
     predicate   => 'has_target_cities',
@@ -103,6 +105,7 @@ sub set_target_cities {
 
 has target_regions => (
     is          => 'rw',
+    default     => sub {[]},
     lazy        => 1,
     isa         => 'ArrayRef',
     predicate   => 'has_target_regions',
@@ -116,6 +119,7 @@ sub set_target_regions {
 
 has target_locales => (
     is          => 'rw',
+    default     => sub {[]},
     lazy        => 1,
     isa         => 'ArrayRef',
     predicate   => 'has_target_locales',
@@ -140,6 +144,7 @@ sub set_source {
 
 has actions => (
     is          => 'rw',
+    default     => sub {[]},
     lazy        => 1,
     isa         => 'ArrayRef',
     predicate   => 'has_actions',
@@ -167,6 +172,7 @@ has privacy => (
 has privacy_options => (
     is          => 'rw',
     isa         => 'HashRef',
+    default     => sub {{}},
 );
 
 sub set_privacy {
