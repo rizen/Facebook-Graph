@@ -69,6 +69,9 @@ sub set_end_time {
 around get_post_params => sub {
     my ($orig, $self) = @_;
     my $post = $orig->($self);
+    unless ($self->object_name eq 'me') {
+        push @$post, page_id => $self->object_name;
+    }
     if ($self->has_name) {
         push @$post, name => $self->name;
     }

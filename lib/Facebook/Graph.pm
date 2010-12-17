@@ -113,7 +113,7 @@ sub picture {
 sub add_post {
     my ($self, $object_name) = @_;
     my %params;
-    if ($self->has_access_token) {
+    if ($object_name) {
         $params{object_name} = $object_name;
     }
     if ($self->has_access_token) {
@@ -178,8 +178,11 @@ sub add_link {
 }
 
 sub add_event {
-    my ($self) = @_;
+    my ($self, $object_name) = @_;
     my %params;
+    if ($object_name) {
+        $params{object_name} = $object_name;
+    }
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -374,9 +377,13 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 
 
 
-=head2 add_post ( )
+=head2 add_post ( [ id ] )
 
 Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish data to a user's feed/wall.
+
+=head3 id
+
+Optionally provide an object id to place it on. Requires that you have administrative access to that page/object.
 
 
 =head2 add_like ( id )
@@ -407,9 +414,14 @@ Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish
 Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
 
-=head2 add_event ( )
+=head2 add_event ( [id] )
 
 Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
+
+=head3 id
+
+Optionally provide an object id to place it on. Requires that you have administrative access to that page/object.
+
 
 
 =head2 rsvp_maybe ( id )

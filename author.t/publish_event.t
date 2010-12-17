@@ -1,4 +1,4 @@
-use Test::More tests => 4;
+use Test::More tests => 8;
 use lib '../lib';
 
 use_ok('Facebook::Graph');
@@ -19,4 +19,27 @@ my $response = $fb->add_event
 my $out = $response->as_hashref;
 ok(ref $out eq 'HASH', 'got a hash back') or debug($response->as_json);
 ok(exists $out->{id}, 'we got back an id');
+
+$response = $fb->add_event(176943642329328)
+  ->set_start_time(DateTime->new(year => 2012, month => 1, day => 1))
+  ->set_end_time(DateTime->new(year => 2012, month => 1, day => 2))
+  ->set_name('The Apocalypse')
+  ->set_description('The date that idiots believe the end of the world is coming.')
+  ->set_location('The Whole World!')
+  ->publish;
+$out = $response->as_hashref;
+ok(ref $out eq 'HASH', 'got a hash back from community page') or debug($response->as_json);
+ok(exists $out->{id}, 'we got back an id from community page');
+
+
+$response = $fb->add_event(182872885058638)
+  ->set_start_time(DateTime->new(year => 2012, month => 1, day => 1))
+  ->set_end_time(DateTime->new(year => 2012, month => 1, day => 2))
+  ->set_name('The Apocalypse')
+  ->set_description('The date that idiots believe the end of the world is coming.')
+  ->set_location('The Whole World!')
+  ->publish;
+$out = $response->as_hashref;
+ok(ref $out eq 'HASH', 'got a hash back from official page') or debug($response->as_json);
+ok(exists $out->{id}, 'we got back an id from official page');
 
