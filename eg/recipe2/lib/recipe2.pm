@@ -52,5 +52,50 @@ get '/rss-importer' => sub {
     template 'rss-importer.tt';
 };
 
+post '/rss-importer' => sub {
+    my $fb = Facebook::Graph->new( config->{facebook} );
+    $fb->access_token(session->{access_token});
+    my $feed = XML::FeedPP->new(request->params->{rss_uri});
+    foreach my $item ($feed->get_item) {
+        $fb->add_post
+            ->set_message('Created by RSS Feed Importer')
+            ->set_link_uri($item->link)
+            ->set_link_name($item->title)
+            ->set_link_description($item->description)
+            ->publish;
+    }
+    template 'rss-importer-post.tt';
+};
+
+get '/ical-importer' => sub {
+    template 'ical-importer.tt';
+};
+
+post '/ical-importer' => sub {
+    my $fb = Facebook::Graph->new( config->{facebook} );
+    $fb->access_token(session->{access_token});
+
+    # download ical feed
+    my $ical = LWP::UserAgent->new
+	->get(request->params->{ical_uri})
+	->content;
+
+    # process ical into calendar
+    my $calendar = Data::ICal->new( data => $ical );
+
+    # post events
+    foreach my $entry (@{$calendar->entries}) {
+       $fb->add_event
+           ->set_name($entry->properties->{summary}[0]->value)
+           ->set_location($entry->properties->{location}[0]->value)
+           ->set_description($entry->properties->{description}[0]->value)
+           ->set_start_time(DateTime::Format::ICal->parse_datetime($entry->properties->{dtstart}[0]->value))
+           ->set_end_time(DateTime::Format::ICal->parse_datetime($entry->properties->{dtend}[0]->value))
+           ->publish;
+    }
+
+    template 'ical-importer-post.tt';
+};
+
 
 true;
