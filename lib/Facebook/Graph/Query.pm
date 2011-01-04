@@ -87,10 +87,10 @@ sub find {
 sub search {
     my ($self, $query, $type) = @_;
     $self->search_query($query);
-    return $self->list($type);
+    return ($type) ? $self->from($type) : $self;
 }
 
-sub list {
+sub from {
     my ($self, $type) = @_;
     if ($type eq 'my_news') {
         $self->object_name('me/home');
