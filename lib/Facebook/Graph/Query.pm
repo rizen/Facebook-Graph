@@ -86,6 +86,12 @@ sub find {
 
 sub search {
     my ($self, $query, $type) = @_;
+    $self->search_query($query);
+    return $self->list($type);
+}
+
+sub list {
+    my ($self, $type) = @_;
     if ($type eq 'my_news') {
         $self->object_name('me/home');
     }
@@ -93,7 +99,6 @@ sub search {
         $self->object_name('search');
         $self->search_type($type);
     }
-    $self->search_query($query);
     return $self;
 }
 
@@ -207,6 +212,15 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
     ->as_hashref;
 
  # this one would require an access token
+ my $new_years_posts = $fb->query
+    ->from('posts')
+    ->where_since('1 January 2011')
+    ->where_until('2 January 2011')
+    ->limit(25)
+    ->request
+    ->as_hashref;
+
+ # this one would require an access token
  my $new_car_posts = $fb->query
     ->search('car', 'my_news')
     ->where_since('yesterday')
@@ -244,17 +258,15 @@ B<Example:> For user "Sarah Bownds" you could use either her profile id C<sarahb
 
 
 
-=head2 search ( query, type )
+=head2 from ( context )
 
-Perform a keyword search on a group of items.
 
-=head3 query
 
-They keywords to search by.
+If you prefer to search by keyword see the C<search> method.
 
-=head3 type
+=head3 context
 
-One of the following types:
+One of the following contexts:
 
 =over
 
@@ -281,6 +293,23 @@ All events.
 =item group
 
 All groups.
+
+
+
+
+=head2 search ( query, context )
+
+Perform a keyword search on a group of items. 
+
+If you prefer not to search by keyword see the C<from> method.
+
+=head3 query
+
+They keywords to search by.
+
+=head3 context
+
+See the C<context> param in the C<from> method.
 
 =back
 

@@ -1,3 +1,7 @@
+1.0100 2011-01-04
+ - Added Facebook::Graph::Query::from. Inspired by a pull request from Dan 
+  Magnuszewski.
+
 1.0000 2010-12-09
  - Updated recipe2 example to use more modern Dancer features.
  - Merged POD patch from fayland.
