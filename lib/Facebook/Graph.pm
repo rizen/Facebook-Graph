@@ -1,7 +1,6 @@
 package Facebook::Graph;
 
 use Any::Moose;
-use Digest::SHA qw(hmac_sha256);
 use MIME::Base64::URLSafe;
 use JSON;
 use Facebook::Graph::AccessToken;
@@ -40,7 +39,7 @@ has access_token => (
 
 sub parse_signed_request {
     my ($self, $signed_request) = @_;
-
+    require Digest::SHA;
     my ($encoded_sig, $payload) = split(/\./, $signed_request);
 
 	my $sig = urlsafe_b64decode($encoded_sig);
@@ -50,7 +49,7 @@ sub parse_signed_request {
         Facebook::Graph::Exception::General->throw( error => "Unknown algorithm. Expected HMAC-SHA256");
     }
 
-    my $expected_sig = hmac_sha256($payload, $self->secret);
+    my $expected_sig = Digest::SHA::hmac_sha256($payload, $self->secret);
     if ($sig ne $expected_sig) {
         Facebook::Graph::Exception::General->throw( error => "Bad Signed JSON signature!");
     }
