@@ -498,12 +498,14 @@ L<Crypt::SSLeay>
 L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
-L<Digest::SHA>
 L<URI::Encode>
 L<Exception::Class>
 
 B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
 
+=head2 Optional
+
+L<Digest::SHA> is used for signed requests. If you don't plan on using the signed request feature, then you do not need to install Digest::SHA.
 
 =head1 SUPPORT
 
