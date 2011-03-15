@@ -35,7 +35,7 @@ has longitude => (
 
 sub set_longitude {
     my ($self, $value) = @_;
-    $self->longitude($longitude);
+    $self->longitude($value);
     return $self;
 }
 
@@ -47,7 +47,7 @@ has latitude => (
 
 sub set_latitude {
     my ($self, $value) = @_;
-    $self->latitude($latitude);
+    $self->latitude($value);
     return $self;
 }
 
@@ -61,7 +61,7 @@ has tags => (
 
 sub set_tags {
     my ($self, $value) = @_;
-    $self->tags($longitude);
+    $self->tags($value);
     return $self;
 }
 
