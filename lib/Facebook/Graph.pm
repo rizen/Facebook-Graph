@@ -8,6 +8,7 @@ use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
+use Facebook::Graph::Publish::Checkin;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
 use Facebook::Graph::Publish::Note;
@@ -122,6 +123,21 @@ sub add_post {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Post->new( %params );
+}
+
+sub add_checkin {
+    my ($self, $object_name) = @_;
+    my %params;
+    if ($object_name) {
+        $params{object_name} = $object_name;
+    }
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Checkin->new( %params );
 }
 
 sub add_like {
@@ -383,6 +399,15 @@ Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish
 =head3 id
 
 Optionally provide an object id to place it on. Requires that you have administrative access to that page/object.
+
+
+=head2 add_checkin ( [ id ] )
+
+Creates a L<Facebook::Graph::Publish::Checkin> object, which can be used to publish a checkin to a location.
+
+=head3 id
+
+Optionally provide an user id to check in. Requires that you have administrative access to that user.
 
 
 =head2 add_like ( id )
