@@ -274,6 +274,12 @@ Or better yet:
     ->as_hashref;
     
  my $sarahs_picture_uri = $fb->picture('sarahbownds')->get_large->uri_as_string;
+
+Or fetching a response from a URI you already have:
+
+ my $response = $fb->query
+    ->request('https://graph.facebook.com/btaylor')
+    ->as_hashref;
  
  
 =head2 Building A Privileged App

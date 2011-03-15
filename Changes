@@ -1,6 +1,7 @@
 1.0200 2011-03-15
  - Made Digest::SHA an optional component. Thanks to Mark Carey.
  - Added the ability to publish checkins to Facebook.
+ - Documented an easy way to take a relationship URL passed back from Facebook and turn it into a Facebook::Graph::Response object.
 
 1.0100 2011-01-04
  - Added Facebook::Graph::Query::from. Inspired by a pull request from Dan 
