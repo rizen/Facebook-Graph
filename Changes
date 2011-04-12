@@ -1,3 +1,6 @@
+
+ - 'properties' in Post graph
+
 1.0200 2011-03-15
  - Made Digest::SHA an optional component. Thanks to Mark Carey.
  - Added the ability to publish checkins to Facebook.
