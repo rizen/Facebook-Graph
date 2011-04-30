@@ -1,6 +1,7 @@
 1.0300 2001-04-30
  - Merged 'properties' in Post graph from Fayland Lam.
  - Now require LWP 6 to eliminate SSL problems with CPAN Testers, and just because that's the way everybody should be moving anyway.
+ - Now using Ouch instead of Exception::Class.
 
 1.0200 2011-03-15
  - Made Digest::SHA an optional component. Thanks to Mark Carey.

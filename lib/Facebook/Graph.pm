@@ -17,7 +17,7 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
-use Facebook::Graph::Exception;
+use Ouch;
 
 has app_id => (
     is      => 'ro',
@@ -47,12 +47,12 @@ sub parse_signed_request {
     my $data = JSON->new->decode(urlsafe_b64decode($payload));
 
     if (uc($data->{'algorithm'}) ne "HMAC-SHA256") {
-        Facebook::Graph::Exception::General->throw( error => "Unknown algorithm. Expected HMAC-SHA256");
+        ouch '500', 'Unknown algorithm. Expected HMAC-SHA256';
     }
 
     my $expected_sig = Digest::SHA::hmac_sha256($payload, $self->secret);
     if ($sig ne $expected_sig) {
-        Facebook::Graph::Exception::General->throw( error => "Bad Signed JSON signature!");
+        ouch '500', 'Bad Signed JSON signature!';
     }
     return $data;
 }
@@ -511,7 +511,16 @@ B<NOTE:> To get this passed to your app you must enable it in your migration set
 
 =head1 EXCEPTIONS
 
-This module throws exceptions when it encounters a problem. See L<Facebook::Graph::Exception> for details.
+This module throws exceptions when it encounters a problem. It uses L<Ouch> to throw the exception, and the Exception typically takes 3 parts: code, message, and a data portion that is the URI that was originally requested. For example:
+
+ eval { $fb->call_some_method };
+ if (kiss 500) {
+   say "error: ". $@->message;
+   say "uri: ".$@->data;
+ }
+ else {
+   throw $@; # rethrow the error
+ }
 
 
 =head1 TODO
@@ -531,7 +540,7 @@ L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
 L<URI::Encode>
-L<Exception::Class>
+L<Ouch>
 
 =head2 Optional
 
