@@ -524,15 +524,14 @@ I still need to add publishing albums/photos, deleting of content, impersonation
 L<Any::Moose>
 L<JSON>
 L<LWP>
+L<LWP::Protocol::https>
+L<Mozilla::CA>
 L<URI>
-L<Crypt::SSLeay>
 L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
 L<URI::Encode>
 L<Exception::Class>
-
-B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
 
 =head2 Optional
 
