@@ -41,7 +41,7 @@ sub publish {
     my ($self) = @_;
     my $uri = $self->uri;
     $uri->path($self->object_name.$self->object_path);
-    my $response = LWP::UserAgent->new->post($uri, $self->get_post_params);
+    my $response = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0 })->post($uri, $self->get_post_params);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
@@ -59,7 +59,7 @@ Facebook::Graph::Publish - A base class for publishing various things to faceboo
 
 =head1 DESCRIPTION
 
-This module shouldn't be used by you directly for any purpose. 
+This module shouldn't be used by you directly for any purpose.
 
 =head1 LEGAL
 

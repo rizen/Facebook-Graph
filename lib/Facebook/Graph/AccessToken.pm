@@ -40,7 +40,7 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    my $response = LWP::UserAgent->new->get($self->uri_as_string);
+    my $response = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0 })->get($self->uri_as_string);
     return Facebook::Graph::AccessToken::Response->new(response => $response);
 }
 
