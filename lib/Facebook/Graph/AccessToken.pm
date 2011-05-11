@@ -25,6 +25,12 @@ has code => (
     required=> 1,
 );
 
+has lwp_opts => (
+    is          => 'rw',
+    predicate   => 'has_lwp_opts',
+    default     => sub { { } },
+);
+
 sub uri_as_string {
     my ($self) = @_;
     my $uri = $self->uri;
@@ -40,7 +46,7 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    my $response = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0 })->get($self->uri_as_string);
+    my $response = LWP::UserAgent->new(%{ $self->lwp_opts })->get($self->uri_as_string);
     return Facebook::Graph::AccessToken::Response->new(response => $response);
 }
 

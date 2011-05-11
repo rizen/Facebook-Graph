@@ -37,6 +37,12 @@ has access_token => (
     predicate   => 'has_access_token',
 );
 
+has lwp_opts => (
+    is          => 'rw',
+    predicate   => 'has_lwp_opts',
+    default     => sub { { } },
+);
+
 
 sub parse_signed_request {
     my ($self, $signed_request) = @_;
@@ -64,6 +70,7 @@ sub request_access_token {
         postback        => $self->postback,
         secret          => $self->secret,
         app_id          => $self->app_id,
+        lwp_opts        => $self->lwp_opts,
     )->request;
     $self->access_token($token->token);
     return $token;
@@ -74,13 +81,14 @@ sub convert_sessions {
     return Facebook::Graph::Session->new(
         secret          => $self->secret,
         app_id          => $self->app_id,
+        lwp_opts        => $self->lwp_opts,
         sessions        => $sessions,
         )
         ->request
         ->as_hashref;
 }
 
-sub authorize { 
+sub authorize {
     my ($self) = @_;
     return Facebook::Graph::Authorize->new(
         app_id          => $self->app_id,
@@ -102,6 +110,9 @@ sub query {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Query->new(%params);
 }
 
@@ -122,6 +133,9 @@ sub add_post {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::Post->new( %params );
 }
 
@@ -137,6 +151,9 @@ sub add_checkin {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::Checkin->new( %params );
 }
 
@@ -150,6 +167,9 @@ sub add_like {
     }
     if ($self->has_secret) {
         $params{secret} = $self->secret;
+    }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
     }
     return Facebook::Graph::Publish::Like->new( %params );
 }
@@ -165,6 +185,9 @@ sub add_comment {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::Comment->new( %params );
 }
 
@@ -177,6 +200,9 @@ sub add_note {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::Note->new( %params );
 }
 
@@ -188,6 +214,9 @@ sub add_link {
     }
     if ($self->has_secret) {
         $params{secret} = $self->secret;
+    }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
     }
     return Facebook::Graph::Publish::Link->new( %params );
 }
@@ -204,6 +233,9 @@ sub add_event {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::Event->new( %params );
 }
 
@@ -217,6 +249,9 @@ sub rsvp_maybe {
     }
     if ($self->has_secret) {
         $params{secret} = $self->secret;
+    }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
     }
     return Facebook::Graph::Publish::RSVPMaybe->new( %params );
 }
@@ -232,6 +267,9 @@ sub rsvp_attending {
     if ($self->has_secret) {
         $params{secret} = $self->secret;
     }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
+    }
     return Facebook::Graph::Publish::RSVPAttending->new( %params );
 }
 
@@ -245,6 +283,9 @@ sub rsvp_declined {
     }
     if ($self->has_secret) {
         $params{secret} = $self->secret;
+    }
+    if ($self->has_lwp_opts) {
+        $params{lwp_opts} = $self->lwp_opts;
     }
     return Facebook::Graph::Publish::RSVPDeclined->new( %params );
 }
@@ -263,7 +304,7 @@ Facebook::Graph - A fast and easy way to integrate your apps with Facebook.
  my $fb = Facebook::Graph->new;
  my $sarah_bownds = $fb->fetch('sarahbownds');
  my $perl_page = $fb->fetch('16665510298');
- 
+
 Or better yet:
 
  my $sarah_bownds = $fb->query
@@ -272,7 +313,7 @@ Or better yet:
     ->select_fields(qw( id name picture ))
     ->request
     ->as_hashref;
-    
+
  my $sarahs_picture_uri = $fb->picture('sarahbownds')->get_large->uri_as_string;
 
 Or fetching a response from a URI you already have:
@@ -280,8 +321,8 @@ Or fetching a response from a URI you already have:
  my $response = $fb->query
     ->request('https://graph.facebook.com/btaylor')
     ->as_hashref;
- 
- 
+
+
 =head2 Building A Privileged App
 
  my $fb = Facebook::Graph->new(
@@ -303,11 +344,11 @@ Handle the Facebook authorization code postback:
 
  my $q = Plack::Request->new($env);
  $fb->request_access_token($q->query_param('code'));
- 
+
 Or if you already had the access token:
 
  $fb->access_token($token);
- 
+
 Get some info:
 
  my $user = $fb->fetch('me');
@@ -353,6 +394,17 @@ The URI that Facebook should post your authorization code back to. Required if y
 
 B<NOTE:> It must be a sub URI of the URI that you put in the Application Settings > Connect > Connect URL field of your application's profile on Facebook.
 
+=item lwp_opts
+
+A hash ref for the options to pass to LWP::UserAgent when one is created. This is the hash that one would give to LWP::UserAgent->new(). For example:
+
+  my $fb = Facebook::Graph->new(
+    app_id => 'your_id',
+    secret => 'your_app_secret',
+    lwp_opts => { ssl_opts => { verify_hostname => 0 } }
+  );
+
+
 =back
 
 
@@ -380,7 +432,7 @@ Creates a L<Facebook::Graph::Query> object, which can be used to fetch and searc
 Returns a hash reference of an object from facebook. A quick way to grab an object from Facebook. These two statements are identical:
 
  my $sarah = $fb->fetch('sarahbownds');
- 
+
  my $sarah = $fb->query->find('sarahbownds')->request->as_hashref;
 
 =head3 id

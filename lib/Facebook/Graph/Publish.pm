@@ -22,6 +22,12 @@ has object_name => (
     default     => 'me',
 );
 
+has lwp_opts => (
+    is          => 'rw',
+    predicate   => 'has_lwp_opts',
+    default     => sub { { } },
+);
+
 sub to {
     my ($self, $object_name) = @_;
     $self->object_name($object_name);
@@ -41,7 +47,7 @@ sub publish {
     my ($self) = @_;
     my $uri = $self->uri;
     $uri->path($self->object_name.$self->object_path);
-    my $response = LWP::UserAgent->new(ssl_opts => { verify_hostname => 0 })->post($uri, $self->get_post_params);
+    my $response = LWP::UserAgent->new(%{ $self->lwp_opts })->post($uri, $self->get_post_params);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
