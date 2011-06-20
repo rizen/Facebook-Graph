@@ -25,6 +25,10 @@ has code => (
     required=> 1,
 );
 
+has ua => (
+    is => 'rw',
+);
+
 sub uri_as_string {
     my ($self) = @_;
     my $uri = $self->uri;
@@ -40,7 +44,7 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    my $response = LWP::UserAgent->new->get($self->uri_as_string);
+    my $response = ($self->ua || LWP::UserAgent->new)->get($self->uri_as_string);
     return Facebook::Graph::AccessToken::Response->new(response => $response);
 }
 
