@@ -71,6 +71,9 @@ has since => (
     predicate   => 'has_since',
 );
 
+has ua => (
+    is => 'rw',
+);
 
 sub limit_results {
     my ($self, $limit) = @_;
@@ -181,7 +184,7 @@ sub uri_as_string {
 sub request {
     my ($self, $uri) = @_;
     $uri ||= $self->uri_as_string;
-    my $response = LWP::UserAgent->new->get($uri);
+    my $response = ($self->ua || LWP::UserAgent->new)->get($uri);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
