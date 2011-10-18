@@ -1,4 +1,7 @@
-1.0300 2001-04-30
+1.0301 2011-10-18
+ - Merged custom user agent. Thanks to typester.
+
+1.0300 2011-04-30
  - Merged 'properties' in Post graph from Fayland Lam.
  - Now require LWP 6 to eliminate SSL problems with CPAN Testers, and just because that's the way everybody should be moving anyway.
  - Now using Ouch instead of Exception::Class.
