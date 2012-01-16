@@ -1,3 +1,6 @@
+1.0320 2012-01-15
+- Added date_format option into find query
+
 1.0301 2011-10-18
  - Merged custom user agent. Thanks to typester.
 
