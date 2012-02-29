@@ -8,6 +8,7 @@ use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
+use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
@@ -133,6 +134,21 @@ sub add_post {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Post->new( %params );
+}
+
+sub add_photo {
+    my ($self, $object_name) = @_;
+    my %params = ( ua => $self->ua );
+    if ($object_name) {
+        $params{object_name} = $object_name;
+    }
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Photo->new( %params );
 }
 
 sub add_checkin {
