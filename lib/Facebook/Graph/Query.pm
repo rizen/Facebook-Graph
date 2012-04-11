@@ -46,6 +46,12 @@ has offset => (
     predicate   => 'has_offset',
 );
 
+has datef => (
+    is          => 'rw',
+    predicate   => 'has_datef',
+);
+
+
 has search_query => (
     is          => 'rw',
     predicate   => 'has_search_query',
@@ -79,6 +85,12 @@ sub limit_results {
     my ($self, $limit) = @_;
     $self->limit($limit);
     return $self;    
+}
+
+sub date_format {
+    my ($self, $date_format) = @_;
+    $self->datef($date_format);
+    return $self;
 }
 
 sub find {
@@ -154,6 +166,9 @@ sub uri_as_string {
             $query{offset} = $self->offset;
         }
     }
+    if ($self->has_datef) {
+        $query{date_format} = $self->datef;
+    }
     if ($self->has_search_query) {
         $query{q} = $self->search_query;
         if ($self->has_search_type) {
@@ -220,6 +235,7 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
     ->where_since('1 January 2011')
     ->where_until('2 January 2011')
     ->limit(25)
+    ->date_format('U')
     ->request
     ->as_hashref;
 
@@ -321,6 +337,10 @@ See the C<context> param in the C<from> method.
 =head2 limit_results ( amount )
 
 The result set will only return a certain number of records when this is set. Useful for paging result sets. Returns C<$self> for method chaining.
+
+=head2 date_format ( format )
+
+The result set dates will be formated in the defined formats.  Specify the format by reference the PHP date format spec: L<http://php.net/manual/en/function.date.php>. (eg. ->date_format('U')->) Useful for getting epoch for datatime. Returns C<$self> for method chaining.
 
 =head3 amount
 
