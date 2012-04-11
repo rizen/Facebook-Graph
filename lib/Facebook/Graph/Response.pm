@@ -4,7 +4,12 @@ use Any::Moose;
 use JSON;
 use Ouch;
 
-has response => (
+has body => (
+    is      => 'ro',
+    required=> 1,
+);
+
+has headers => (
     is      => 'ro',
     required=> 1,
 );
