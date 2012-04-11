@@ -103,6 +103,11 @@ sub fetch {
     return $self->query->find($object_name)->request->as_hashref;
 }
 
+sub fql {
+    my ($self, $query) = @_;
+    return $self->query->find('fql')->search($query)->request->as_hashref;
+}
+
 sub query {
     my ($self) = @_;
     my %params = ( ua => $self->ua );
