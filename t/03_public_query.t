@@ -22,8 +22,8 @@ die $@->[1] if $@;
 ok(ref $sarah eq 'HASH', 'got a hash ref back');
 is($sarah->{id}, '767598108', 'got sarah');
 is($sarah->{name}, 'Sarah Bownds', 'know her name');
-is(scalar(keys %{$sarah}), 4, 'only fetched the things i asked for');
-is($sarah->{type}, 'user', 'she is a user');
+is(scalar(keys %{$sarah}), 3, 'only fetched the things i asked for');
+is($sarah->{metadata}{type}, 'user', 'she is a user');
 
 eval { $fb->query->select_fields('')->request->as_json };
 is($@->code, 400, 'exception inherits http status code');
