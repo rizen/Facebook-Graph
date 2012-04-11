@@ -388,6 +388,10 @@ The URI that Facebook should post your authorization code back to. Required if y
 
 B<NOTE:> It must be a sub URI of the URI that you put in the Application Settings > Connect > Connect URL field of your application's profile on Facebook.
 
+=item ua
+
+This allows you to pass in your own L<LWP::UserAgent> object. By default Facebook::Graph will just create one on the fly.
+
 =back
 
 
@@ -574,7 +578,6 @@ L<URI>
 L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
-L<URI::Encode>
 L<Ouch>
 
 =head2 Optional

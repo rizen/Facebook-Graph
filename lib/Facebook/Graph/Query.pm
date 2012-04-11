@@ -4,7 +4,7 @@ use Any::Moose;
 use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
-use URI::Encode qw(uri_decode);
+use URI::Escape;
 
 has secret => (
     is          => 'ro',
@@ -158,7 +158,7 @@ sub uri_as_string {
     my ($self) = @_;
     my %query;
     if ($self->has_access_token) {
-        $query{access_token} = uri_decode($self->access_token);
+        $query{access_token} = uri_unescape($self->access_token);
     }
     if ($self->has_limit) {
         $query{limit} = $self->limit;

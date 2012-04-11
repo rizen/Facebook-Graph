@@ -4,7 +4,7 @@ use Any::Moose;
 use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
-use URI::Encode qw(uri_decode);
+use URI::Escape;
 
 has secret => (
     is          => 'ro',
@@ -36,7 +36,7 @@ sub get_post_params {
     my $self = shift;
     my @post;
     if ($self->has_access_token) {
-        push @post, access_token => uri_decode($self->access_token);
+        push @post, access_token => uri_unescape($self->access_token);
     }
     return \@post;
 }

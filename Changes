@@ -2,6 +2,9 @@
  - Added a date format option to find. Thanks to jwieland.
  - Added better FQL handling. Thanks to vielmath.
  - Added photo publishing. Thanks to c0decafe.
+ - Documented the "ua" parameter on Facebook::Graph->new(). 
+ - Replaced URI::Encode with URI::Escape.
+ - Fixed a failing test due to changes in the Facebook API.
 
 1.0301 2011-10-18
  - Merged custom user agent. Thanks to typester.
