@@ -1,3 +1,8 @@
+1.0400 2012-04-11
+ - Added a date format option to find. Thanks to jwieland.
+ - Added better FQL handling. Thanks to vielmath.
+ - Added photo publishing. Thanks to c0decafe.
+
 1.0301 2011-10-18
  - Merged custom user agent. Thanks to typester.
 
