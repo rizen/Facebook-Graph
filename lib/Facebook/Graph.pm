@@ -18,6 +18,7 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
+use Facebook::Graph::BatchRequests;
 use Ouch;
 use LWP::UserAgent;
 
@@ -91,7 +92,7 @@ sub convert_sessions {
         ->as_hashref;
 }
 
-sub authorize { 
+sub authorize {
     my ($self) = @_;
     return Facebook::Graph::Authorize->new(
         app_id          => $self->app_id,
@@ -119,6 +120,12 @@ sub query {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Query->new(%params);
+}
+
+sub batch_requests {
+    my ($self) = @_;
+    my %params = ( ua => $self->ua, access_token => $self->access_token );
+    return Facebook::Graph::BatchRequests->new(%params);
 }
 
 sub picture {
@@ -298,7 +305,7 @@ Facebook::Graph - A fast and easy way to integrate your apps with Facebook.
  my $fb = Facebook::Graph->new;
  my $sarah_bownds = $fb->fetch('sarahbownds');
  my $perl_page = $fb->fetch('16665510298');
- 
+
 Or better yet:
 
  my $sarah_bownds = $fb->query
@@ -307,7 +314,7 @@ Or better yet:
     ->select_fields(qw( id name picture ))
     ->request
     ->as_hashref;
-    
+
  my $sarahs_picture_uri = $fb->picture('sarahbownds')->get_large->uri_as_string;
 
 Or fetching a response from a URI you already have:
@@ -315,8 +322,8 @@ Or fetching a response from a URI you already have:
  my $response = $fb->query
     ->request('https://graph.facebook.com/btaylor')
     ->as_hashref;
- 
- 
+
+
 =head2 Building A Privileged App
 
  my $fb = Facebook::Graph->new(
@@ -338,11 +345,11 @@ Handle the Facebook authorization code postback:
 
  my $q = Plack::Request->new($env);
  $fb->request_access_token($q->query_param('code'));
- 
+
 Or if you already had the access token:
 
  $fb->access_token($token);
- 
+
 Get some info:
 
  my $user = $fb->fetch('me');
@@ -419,7 +426,7 @@ Creates a L<Facebook::Graph::Query> object, which can be used to fetch and searc
 Returns a hash reference of an object from facebook. A quick way to grab an object from Facebook. These two statements are identical:
 
  my $sarah = $fb->fetch('sarahbownds');
- 
+
  my $sarah = $fb->query->find('sarahbownds')->request->as_hashref;
 
 =head3 id
