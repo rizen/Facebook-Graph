@@ -10,19 +10,23 @@ The goal of this document is to provide a set of common recipies for success. Th
 
 =over
 
-=item L<Facebook::Graph::Cookbook::Recipe1>
+=item L<Facebook::Graph::Cookbook::Recipe1> - Privileged App
 
 Shows you how to set up a privileged application using nothing more than L<Plack>. This is very much a step by step tutorial.
 
-=item L<Facebook::Graph::Cookbook::Recipe2>
+=item L<Facebook::Graph::Cookbook::Recipe2> - Working Example
 
 A fully functional Facebook::Graph app that publishes data to Facebook and reads data from it. Uses a full application server and lots of other modules. This is a working example, without a lot of explaination.
+
+=item L<Facebook::Graph::Cookbook::Recipe3> - Impersonation
+
+Shows you how to post as all the different pages under your control. 
 
 =back
 
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut

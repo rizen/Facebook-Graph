@@ -4,7 +4,7 @@ use Any::Moose;
 use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
-use URI::Encode qw(uri_decode);
+use URI::Escape;
 
 has secret => (
     is          => 'ro',
@@ -46,6 +46,12 @@ has offset => (
     predicate   => 'has_offset',
 );
 
+has datef => (
+    is          => 'rw',
+    predicate   => 'has_datef',
+);
+
+
 has search_query => (
     is          => 'rw',
     predicate   => 'has_search_query',
@@ -71,11 +77,20 @@ has since => (
     predicate   => 'has_since',
 );
 
+has ua => (
+    is => 'rw',
+);
 
 sub limit_results {
     my ($self, $limit) = @_;
     $self->limit($limit);
     return $self;    
+}
+
+sub date_format {
+    my ($self, $date_format) = @_;
+    $self->datef($date_format);
+    return $self;
 }
 
 sub find {
@@ -143,13 +158,16 @@ sub uri_as_string {
     my ($self) = @_;
     my %query;
     if ($self->has_access_token) {
-        $query{access_token} = uri_decode($self->access_token);
+        $query{access_token} = uri_unescape($self->access_token);
     }
     if ($self->has_limit) {
         $query{limit} = $self->limit;
         if ($self->has_offset) {
             $query{offset} = $self->offset;
         }
+    }
+    if ($self->has_datef) {
+        $query{date_format} = $self->datef;
     }
     if ($self->has_search_query) {
         $query{q} = $self->search_query;
@@ -181,7 +199,7 @@ sub uri_as_string {
 sub request {
     my ($self, $uri) = @_;
     $uri ||= $self->uri_as_string;
-    my $response = LWP::UserAgent->new->get($uri);
+    my $response = ($self->ua || LWP::UserAgent->new)->get($uri);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
@@ -217,6 +235,7 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
     ->where_since('1 January 2011')
     ->where_until('2 January 2011')
     ->limit(25)
+    ->date_format('U')
     ->request
     ->as_hashref;
 
@@ -319,6 +338,10 @@ See the C<context> param in the C<from> method.
 
 The result set will only return a certain number of records when this is set. Useful for paging result sets. Returns C<$self> for method chaining.
 
+=head2 date_format ( format )
+
+The result set dates will be formated in the defined formats.  Specify the format by reference the PHP date format spec: L<http://php.net/manual/en/function.date.php>. (eg. ->date_format('U')->) Useful for getting epoch for datatime. Returns C<$self> for method chaining.
+
 =head3 amount
 
 An integer representing the number of records to be returned.
@@ -401,6 +424,6 @@ Optionally pass in your own URI string and all the other options will be ignored
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut

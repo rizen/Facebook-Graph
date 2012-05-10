@@ -4,7 +4,7 @@ use Any::Moose;
 use Facebook::Graph::Response;
 with 'Facebook::Graph::Role::Uri';
 use LWP::UserAgent;
-use URI::Encode qw(uri_decode);
+use URI::Escape;
 
 has secret => (
     is          => 'ro',
@@ -22,6 +22,10 @@ has object_name => (
     default     => 'me',
 );
 
+has ua => (
+    is => 'rw',
+);
+
 sub to {
     my ($self, $object_name) = @_;
     $self->object_name($object_name);
@@ -32,7 +36,7 @@ sub get_post_params {
     my $self = shift;
     my @post;
     if ($self->has_access_token) {
-        push @post, access_token => uri_decode($self->access_token);
+        push @post, access_token => uri_unescape($self->access_token);
     }
     return \@post;
 }
@@ -41,7 +45,7 @@ sub publish {
     my ($self) = @_;
     my $uri = $self->uri;
     $uri->path($self->object_name.$self->object_path);
-    my $response = LWP::UserAgent->new->post($uri, $self->get_post_params);
+    my $response = ($self->ua || LWP::UserAgent->new)->post($uri, $self->get_post_params);
     my %params = (response => $response);
     if ($self->has_secret) {
         $params{secret} = $self->secret;
@@ -63,6 +67,6 @@ This module shouldn't be used by you directly for any purpose.
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut

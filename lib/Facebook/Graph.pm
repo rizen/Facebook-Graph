@@ -8,6 +8,7 @@ use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
 use Facebook::Graph::Publish::Post;
+use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
@@ -17,7 +18,8 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
-use Facebook::Graph::Exception;
+use Ouch;
+use LWP::UserAgent;
 
 has app_id => (
     is      => 'ro',
@@ -37,6 +39,13 @@ has access_token => (
     predicate   => 'has_access_token',
 );
 
+has ua => (
+    is      => 'rw',
+    lazy    => 1,
+    default => sub {
+        LWP::UserAgent->new;
+    },
+);
 
 sub parse_signed_request {
     my ($self, $signed_request) = @_;
@@ -47,12 +56,12 @@ sub parse_signed_request {
     my $data = JSON->new->decode(urlsafe_b64decode($payload));
 
     if (uc($data->{'algorithm'}) ne "HMAC-SHA256") {
-        Facebook::Graph::Exception::General->throw( error => "Unknown algorithm. Expected HMAC-SHA256");
+        ouch '500', 'Unknown algorithm. Expected HMAC-SHA256';
     }
 
     my $expected_sig = Digest::SHA::hmac_sha256($payload, $self->secret);
     if ($sig ne $expected_sig) {
-        Facebook::Graph::Exception::General->throw( error => "Bad Signed JSON signature!");
+        ouch '500', 'Bad Signed JSON signature!';
     }
     return $data;
 }
@@ -64,6 +73,7 @@ sub request_access_token {
         postback        => $self->postback,
         secret          => $self->secret,
         app_id          => $self->app_id,
+        ua              => $self->ua,
     )->request;
     $self->access_token($token->token);
     return $token;
@@ -75,6 +85,7 @@ sub convert_sessions {
         secret          => $self->secret,
         app_id          => $self->app_id,
         sessions        => $sessions,
+        ua              => $self->ua,
         )
         ->request
         ->as_hashref;
@@ -93,9 +104,14 @@ sub fetch {
     return $self->query->find($object_name)->request->as_hashref;
 }
 
+sub fql {
+    my ($self, $query) = @_;
+    return $self->query->find('fql')->search($query)->request->as_hashref;
+}
+
 sub query {
     my ($self) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -112,7 +128,7 @@ sub picture {
 
 sub add_post {
     my ($self, $object_name) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -125,9 +141,24 @@ sub add_post {
     return Facebook::Graph::Publish::Post->new( %params );
 }
 
+sub add_photo {
+    my ($self, $object_name) = @_;
+    my %params = ( ua => $self->ua );
+    if ($object_name) {
+        $params{object_name} = $object_name;
+    }
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+    return Facebook::Graph::Publish::Photo->new( %params );
+}
+
 sub add_checkin {
     my ($self, $object_name) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -144,6 +175,7 @@ sub add_like {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
+        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -170,7 +202,7 @@ sub add_comment {
 
 sub add_note {
     my ($self) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -182,7 +214,7 @@ sub add_note {
 
 sub add_link {
     my ($self) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -194,7 +226,7 @@ sub add_link {
 
 sub add_event {
     my ($self, $object_name) = @_;
-    my %params;
+    my %params = ( ua => $self->ua );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -211,6 +243,7 @@ sub rsvp_maybe {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
+        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -225,6 +258,7 @@ sub rsvp_attending {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
+        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -239,6 +273,7 @@ sub rsvp_declined {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
+        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -352,6 +387,10 @@ The application secret that you get from Facebook after registering your applica
 The URI that Facebook should post your authorization code back to. Required if you'll be calling the C<request_access_token> or C<authorize> methods.
 
 B<NOTE:> It must be a sub URI of the URI that you put in the Application Settings > Connect > Connect URL field of your application's profile on Facebook.
+
+=item ua
+
+This allows you to pass in your own L<LWP::UserAgent> object. By default Facebook::Graph will just create one on the fly.
 
 =back
 
@@ -511,7 +550,16 @@ B<NOTE:> To get this passed to your app you must enable it in your migration set
 
 =head1 EXCEPTIONS
 
-This module throws exceptions when it encounters a problem. See L<Facebook::Graph::Exception> for details.
+This module throws exceptions when it encounters a problem. It uses L<Ouch> to throw the exception, and the Exception typically takes 3 parts: code, message, and a data portion that is the URI that was originally requested. For example:
+
+ eval { $fb->call_some_method };
+ if (kiss 500) {
+   say "error: ". $@->message;
+   say "uri: ".$@->data;
+ }
+ else {
+   throw $@; # rethrow the error
+ }
 
 
 =head1 TODO
@@ -524,15 +572,13 @@ I still need to add publishing albums/photos, deleting of content, impersonation
 L<Any::Moose>
 L<JSON>
 L<LWP>
+L<LWP::Protocol::https>
+L<Mozilla::CA>
 L<URI>
-L<Crypt::SSLeay>
 L<DateTime>
 L<DateTime::Format::Strptime>
 L<MIME::Base64::URLSafe>
-L<URI::Encode>
-L<Exception::Class>
-
-B<NOTE:> This module requires SSL to function, but on some systems L<Crypt::SSLeay> can be difficult to install. You may optionally choose to install L<IO::Socket::SSL> instead and it will provide the same function. Unfortunately that means you'll need to C<force> Facebook::Graph to install if you do not have C<Crypt::SSLeay> installed.
+L<Ouch>
 
 =head2 Optional
 
@@ -563,7 +609,7 @@ JT Smith <jt_at_plainblack_dot_com>
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
 

@@ -3,7 +3,7 @@ package Facebook::Graph::AccessToken::Response;
 use Any::Moose;
 use URI;
 use URI::QueryParam;
-use Facebook::Graph::Exception;
+use Ouch;
 
 has response => (
     is      => 'ro',
@@ -20,14 +20,7 @@ has token => (
             return URI->new('?'.$response->content)->query_param('access_token');
         }
         else {
-            Facebook::Graph::Exception::RPC->throw(
-                error               => 'Could not fetch access token: '.$response->message,
-                uri                 => $response->request->uri->as_string,
-                http_code           => $response->code,
-                http_message        => $response->message,
-                facebook_message    => 'Could not fetch access token.',
-                facebook_type       => 'None',
-            );
+            ouch $response->code, 'Could not fetch access token: '.$response->message, $response->request->uri->as_string;
         }
     }
 );
@@ -42,14 +35,7 @@ has expires => (
             return URI->new('?'.$response->content)->query_param('expires');
         }
         else {
-            Facebook::Graph::Exception::RPC->throw(
-                error               => 'Could not fetch access token: '.$response->message,
-                uri                 => $response->request->uri->as_string,
-                http_code           => $response->code,
-                http_message        => $response->message,
-                facebook_message    => 'Could not fetch access token.',
-                facebook_type       => 'None',
-            );
+            ouch $response->code, 'Could not fetch access token: '.$response->message, $response->request->uri->as_string;
         }
     }
 );
@@ -81,7 +67,7 @@ Direct access to the L<HTTP::Response> object.
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
 

@@ -1,0 +1,56 @@
+=head1 NAME
+
+Facebook::Graph::Cookbook::Recipe3 - Impersonation
+
+=head1 DESCRIPTION
+
+Building an application that can post as another page under my control.
+
+=head2 Assumptions
+
+We're assuming you've already learned the basics of Facebook::Graph through the other recipies and have already set up your application access token.
+
+=head1 RECIPE
+
+ use Facebook::Graph;
+ use Ouch;
+ use Config::JSON;
+
+ # init
+ my $fb_config = Config::JSON->new('/path/to/my.conf')->get('facebook');
+ my $fb = Facebook::Graph->new($fb_config);
+
+ # get list of available my pages and access tokens
+ my $pages = $fb->query->find('me/accounts')->include_metadata->request->as_hashref->{data};
+ my $token;
+
+ # identify the specific page i want to post to
+ foreach my $page (@{$pages}) {
+     $token = $page->{access_token} if $page->{id} eq $fb_config->{page_id};
+ }   
+ unless (defined $token) {
+     ouch 504, "Couldn't post to Facebook.";
+ }   
+
+ # post
+ $fb->access_token($token);
+ my $response_id = $fb->add_post
+     ->set_message($message);
+     ->set_link_name($link_name)
+     ->set_link_uri($link_uri)
+     ->set_link_description($link_description)
+     ->set_picture_uri($picture_uri)
+     ->publish
+     ->as_hashref
+     ->{id};
+
+
+=head1 SEE ALSO
+
+For more recipes, check out the L<Facebook::Graph::Cookbook>.
+
+=head1 LEGAL
+
+Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+
+=cut

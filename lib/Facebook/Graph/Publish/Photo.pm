@@ -1,9 +1,9 @@
-package Facebook::Graph::Publish::Comment;
+package Facebook::Graph::Publish::Photo;
 
 use Any::Moose;
 extends 'Facebook::Graph::Publish';
 
-use constant object_path => '/comments';
+use constant object_path => '/photos';
 
 has message => (
     is          => 'rw',
@@ -16,58 +16,60 @@ sub set_message {
     return $self;
 }
 
+has source => (
+    is          => 'rw',
+    predicate   => 'has_source',
+);
 
+sub set_source {
+    my ($self, $source) = @_;
+    $self->source($source);
+    return $self;
+}
 
 around get_post_params => sub {
     my ($orig, $self) = @_;
+
     my $post = $orig->($self);
+
     if ($self->has_message) {
         push @$post, message => $self->message;
     }
-    return $post;
-};
 
+    if ($self->has_source) {
+        push @$post, source => [$self->source];
+    }
+
+    return Content_Type => 'form-data', Content => $post;
+};
 
 no Any::Moose;
 __PACKAGE__->meta->make_immutable;
 
-
 =head1 NAME
 
-Facebook::Graph::Publish::Comment - Publish a comment on a post.
+Facebook::Graph::Publish::Photo - Publish Photos
 
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
 
- $fb->add_comment($comment_id)
-    ->set_message('Why so serious?')
+ $fb->add_photo()
+ 	->set_source('/tmp/photo.jpg')
+ 	->set_message('Photo!')
     ->publish;
-
 
 =head1 DESCRIPTION
 
-This module gives you quick and easy access to publish comments on posts.
+Publish a Photo
 
 B<ATTENTION:> You must have the C<publish_stream> privilege to use this module.
 
 =head1 METHODS
 
-=head2 set_message ( message )
-
-Sets the text to post to the wall.
-
-=head3 message
-
-A string of text.
-
-
-
 =head2 publish ( )
 
-Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain the id:
-
- {"id":"1647395831_130068550371568"}
+Posts the data and returns a L<Facebook::Graph::Response> object. The response object should contain a string of either 'true' or 'false'.
 
 =head1 LEGAL
 
