@@ -5,6 +5,7 @@ use Ouch;
 use_ok('Facebook::Graph');
 my $fb = Facebook::Graph->new;
 isa_ok($fb, 'Facebook::Graph');
+my $event_id = 317497264976561;
 
 my $sarah_query = $fb->query
     ->find('sarahbownds')
@@ -29,16 +30,16 @@ eval { $fb->query->select_fields('')->request->as_json };
 is($@->code, 400, 'exception inherits http status code');
 is($@->message, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
 
-# https://www.facebook.com/events/113515098748988/
+# https://www.facebook.com/events/$event_id/
 my $f8_event = $fb->query
-  ->find('113515098748988')
+  ->find($event_id)
   ->request
   ->as_hashref;
 
 like($f8_event->{start_time}, qr/\d\d\d\d-\d\d-\d\dT/, '(Default) Date Format: ISO8601' );
 
 $f8_event = $fb->query
-  ->find('113515098748988')
+  ->find($event_id)
   ->date_format('U')
   ->request
   ->as_hashref;
