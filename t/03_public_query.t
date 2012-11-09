@@ -1,4 +1,4 @@
-use Test::More tests => 14;
+use Test::More tests => 12;
 use lib '../lib';
 use Ouch;
 
@@ -29,18 +29,3 @@ eval { $fb->query->select_fields('')->request->as_json };
 is($@->code, 400, 'exception inherits http status code');
 is($@->message, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
 
-# https://www.facebook.com/events/113515098748988/
-my $f8_event = $fb->query
-  ->find('113515098748988')
-  ->request
-  ->as_hashref;
-
-like($f8_event->{start_time}, qr/\d\d\d\d-\d\d-\d\dT/, '(Default) Date Format: ISO8601' );
-
-$f8_event = $fb->query
-  ->find('113515098748988')
-  ->date_format('U')
-  ->request
-  ->as_hashref;
-
-like($f8_event->{start_time}, qr/\d\d\d\d\d\d\d\d\d\d/, 'Date Format: epoch' );
