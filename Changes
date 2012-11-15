@@ -1,3 +1,4 @@
+
 1.0401 2012-05-07
  - Added impersonation recipe.
 
@@ -5,7 +6,7 @@
  - Added a date format option to find. Thanks to jwieland.
  - Added better FQL handling. Thanks to vielmath.
  - Added photo publishing. Thanks to c0decafe.
- - Documented the "ua" parameter on Facebook::Graph->new(). 
+ - Documented the "ua" parameter on Facebook::Graph->new().
  - Replaced URI::Encode with URI::Escape.
  - Fixed a failing test due to changes in the Facebook API.
 
@@ -23,13 +24,13 @@
  - Documented an easy way to take a relationship URL passed back from Facebook and turn it into a Facebook::Graph::Response object.
 
 1.0100 2011-01-04
- - Added Facebook::Graph::Query::from. Inspired by a pull request from Dan 
+ - Added Facebook::Graph::Query::from. Inspired by a pull request from Dan
   Magnuszewski.
 
 1.0000 2010-12-09
  - Updated recipe2 example to use more modern Dancer features.
  - Merged POD patch from fayland.
- - Can now post posts and events directly to other pages you control without 
+ - Can now post posts and events directly to other pages you control without
   switching access tokens.
  - Added set_source(), set_privacy(), set_actions(), add_actions(),
   set_target_countries(), set_target_cities(), set_target_regions(), and
@@ -37,7 +38,7 @@
  - Changed get_post_params() in Facebook::Graph::Publish to return an array ref
   instead of a hash ref.
  - Now requires Exception::Class.
- 
+
  NOTE: This version is not backward compatible with previous versions because
  the get_post_params() method in Facebook::Graph::Publish now returns an array
  ref rather than a hash ref. However, if you didn't extend this module, then you
@@ -46,14 +47,14 @@
 
  NOTE2: This version is not backward compatible with previous versions because
  we are no longer throwing array based exceptions. Instead the exceptions are
- Exception::Class based. If you don't care about exception formatting then this 
+ Exception::Class based. If you don't care about exception formatting then this
  module will still be backward compatible for you.
 
 0.0705 2010-09-26
  - Missed a spot in 0.0704.
 
 0.0704 2010-09-26
- - Fixed a problem with access token encoding. 
+ - Fixed a problem with access token encoding.
 
 0.0703 2010-09-26
  - Documented Response's as_string method.
