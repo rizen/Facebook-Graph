@@ -1,3 +1,7 @@
+1.0500 2012-11-15
+ - Added batch requests. Thanks to fayland.
+ - Fix: Facebook no longer allows public queries. Thanks to spazm.
+ - Added authentication test
 
 1.0401 2012-05-07
  - Added impersonation recipe.

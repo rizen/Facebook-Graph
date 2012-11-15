@@ -9,3 +9,5 @@ my $sarah = $fb->fetch('sarahbownds');
 ok(ref $sarah eq 'HASH', 'got a hash ref back');
 is($sarah->{id}, '767598108', 'got sarah');
 
+use Data::Dumper;
+note Dumper $sarah;
