@@ -2,7 +2,9 @@
  - Added batch requests. Thanks to fayland.
  - Fix: Facebook no longer allows public queries. Thanks to spazm.
  - Added authentication test.
- - Fixed some other tests.
+ - Fixed some other failing tests due to Facebook changes.
+ - Started making Facebook::Graph async. Still working deciding on callback API, so left out true async in this release.
+ - WARNING: "ua" method no longer available from Facebook::Graph.
 
 1.0401 2012-05-07
  - Added impersonation recipe.

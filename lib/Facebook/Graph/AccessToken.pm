@@ -2,8 +2,8 @@ package Facebook::Graph::AccessToken;
 
 use Any::Moose;
 use Facebook::Graph::AccessToken::Response;
+use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
-use LWP::UserAgent;
 
 has app_id => (
     is      => 'ro',
@@ -25,10 +25,6 @@ has code => (
     required=> 1,
 );
 
-has ua => (
-    is => 'rw',
-);
-
 sub uri_as_string {
     my ($self) = @_;
     my $uri = $self->uri;
@@ -44,8 +40,9 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    my $response = ($self->ua || LWP::UserAgent->new)->get($self->uri_as_string);
-    return Facebook::Graph::AccessToken::Response->new(response => $response);
+    return Facebook::Graph::AccessToken::Response->new(
+        response => Facebook::Graph::Request->new->get($self->uri_as_string)->recv->response
+    );
 }
 
 no Any::Moose;

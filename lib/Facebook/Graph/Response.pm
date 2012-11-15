@@ -5,7 +5,8 @@ use JSON;
 use Ouch;
 
 has response => (
-    is      => 'ro',
+    is      => 'rw',
+    isa     => 'HTTP::Response',
     required=> 1,
 );
 
@@ -56,8 +57,7 @@ Facebook::Graph::Response - Handling of a Facebook::Graph response documents.
 
 =head1 DESCRIPTION
 
-You'll be given one of these as a result of calling the C<request> method on a C<Facebook::Graph::Query> or others.
-
+You'll be given one of these as a result of calling the C<request> method on a L<Facebook::Graph::Query> or others, or C<publish> on any of the L<Facebook::Graph::Publish> modules.
 
 =head1 METHODS
 

@@ -20,7 +20,7 @@ A fully functional Facebook::Graph app that publishes data to Facebook and reads
 
 =item L<Facebook::Graph::Cookbook::Recipe3> - Impersonation
 
-Shows you how to post as all the different pages under your control. 
+Shows you how to post as all the different pages under your control.
 
 =back
 

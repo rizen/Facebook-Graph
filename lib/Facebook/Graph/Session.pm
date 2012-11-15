@@ -1,9 +1,8 @@
 package Facebook::Graph::Session;
 
 use Any::Moose;
-use Facebook::Graph::Response;
+use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
-use LWP::UserAgent;
 
 has app_id => (
     is      => 'ro',
@@ -18,10 +17,6 @@ has secret => (
 has sessions => (
     is      => 'ro',
     required=> 1,
-);
-
-has ua => (
-    is => 'rw',
 );
 
 sub uri_as_string {
@@ -39,8 +34,7 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    my $response = ($self->ua || LWP::UserAgent->new)->get($self->uri_as_string);
-    return Facebook::Graph::Response->new(response => $response);
+    return Facebook::Graph::Request->new->get($self->uri_as_string)->recv;
 }
 
 no Any::Moose;

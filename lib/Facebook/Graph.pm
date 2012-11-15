@@ -20,7 +20,6 @@ use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
 use Facebook::Graph::BatchRequests;
 use Ouch;
-use LWP::UserAgent;
 
 has app_id => (
     is      => 'ro',
@@ -38,14 +37,6 @@ has postback => (
 has access_token => (
     is          => 'rw',
     predicate   => 'has_access_token',
-);
-
-has ua => (
-    is      => 'rw',
-    lazy    => 1,
-    default => sub {
-        LWP::UserAgent->new;
-    },
 );
 
 sub parse_signed_request {
@@ -74,7 +65,6 @@ sub request_access_token {
         postback        => $self->postback,
         secret          => $self->secret,
         app_id          => $self->app_id,
-        ua              => $self->ua,
     )->request;
     $self->access_token($token->token);
     return $token;
@@ -86,7 +76,6 @@ sub convert_sessions {
         secret          => $self->secret,
         app_id          => $self->app_id,
         sessions        => $sessions,
-        ua              => $self->ua,
         )
         ->request
         ->as_hashref;
@@ -112,7 +101,7 @@ sub fql {
 
 sub query {
     my ($self) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -124,7 +113,7 @@ sub query {
 
 sub batch_requests {
     my ($self) = @_;
-    my %params = ( ua => $self->ua, access_token => $self->access_token );
+    my %params = ( access_token => $self->access_token );
     return Facebook::Graph::BatchRequests->new(%params);
 }
 
@@ -135,7 +124,7 @@ sub picture {
 
 sub add_post {
     my ($self, $object_name) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -150,7 +139,7 @@ sub add_post {
 
 sub add_photo {
     my ($self, $object_name) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -165,7 +154,7 @@ sub add_photo {
 
 sub add_checkin {
     my ($self, $object_name) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -182,7 +171,6 @@ sub add_like {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
-        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -209,7 +197,7 @@ sub add_comment {
 
 sub add_note {
     my ($self) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -221,7 +209,7 @@ sub add_note {
 
 sub add_link {
     my ($self) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -233,7 +221,7 @@ sub add_link {
 
 sub add_event {
     my ($self, $object_name) = @_;
-    my %params = ( ua => $self->ua );
+    my %params = ( );
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -250,7 +238,6 @@ sub rsvp_maybe {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
-        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -265,7 +252,6 @@ sub rsvp_attending {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
-        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -280,7 +266,6 @@ sub rsvp_declined {
     my ($self, $object_name) = @_;
     my %params = (
         object_name => $object_name,
-        ua          => $self->ua,
     );
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
@@ -317,11 +302,19 @@ Or better yet:
 
  my $sarahs_picture_uri = $fb->picture('sarahbownds')->get_large->uri_as_string;
 
+You can also do asynchronous calls like this:
+
+ my $sarah = $fb->query->find('sarahbownds'); 		# making request in background here
+ # ... do stuff here ...
+ my $hashref = $sarah->as_hashref;			# handling the response here
+
+
 Or fetching a response from a URI you already have:
 
- my $response = $fb->query
+ my $hashref = $fb->query
     ->request('https://graph.facebook.com/btaylor')
     ->as_hashref;
+    
 
 
 =head2 Building A Privileged App
@@ -394,10 +387,6 @@ The application secret that you get from Facebook after registering your applica
 The URI that Facebook should post your authorization code back to. Required if you'll be calling the C<request_access_token> or C<authorize> methods.
 
 B<NOTE:> It must be a sub URI of the URI that you put in the Application Settings > Connect > Connect URL field of your application's profile on Facebook.
-
-=item ua
-
-This allows you to pass in your own L<LWP::UserAgent> object. By default Facebook::Graph will just create one on the fly.
 
 =back
 
@@ -578,9 +567,7 @@ I still need to add publishing albums/photos, deleting of content, impersonation
 
 L<Any::Moose>
 L<JSON>
-L<LWP>
-L<LWP::Protocol::https>
-L<Mozilla::CA>
+L<AnyEvent::HTTP::LWP::UserAgent>
 L<URI>
 L<DateTime>
 L<DateTime::Format::Strptime>

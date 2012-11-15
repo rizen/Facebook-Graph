@@ -1,9 +1,8 @@
 package Facebook::Graph::BatchRequests;
 
 use Any::Moose;
-use LWP::UserAgent;
-use JSON;
 use Ouch;
+use Facebook::Graph::Request;
 
 has access_token => (
     is          => 'ro',
@@ -14,10 +13,6 @@ has requests => (
     is          => 'rw',
     isa         => 'ArrayRef',
     default     => sub { [] },
-);
-
-has ua => (
-    is => 'rw',
 );
 
 sub add_request {
@@ -45,7 +40,8 @@ sub request {
     $self->requests([]); # reset
 
     my $uri = "https://graph.facebook.com";
-    my $resp = ($self->ua || LWP::UserAgent->new)->post($uri, $post);
+    my $resp = Facebook::Graph::Request->new->post($uri, $post)->recv->response;
+    
     unless ($resp->is_success) {
         my $message = $resp->message;
         my $error = eval { $json->decode($resp->content) };
