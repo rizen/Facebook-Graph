@@ -437,6 +437,10 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 
 Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish data to a user's feed/wall.
 
+=head2 add_photo ( [ id ] )
+
+Creates a L<Facebook::Graph::Publish::Photo> object, which can be used to publish a photo to a user's feed/wall.
+
 =head3 id
 
 Optionally provide an object id to place it on. Requires that you have administrative access to that page/object.
