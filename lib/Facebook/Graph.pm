@@ -538,11 +538,11 @@ See also L<Facebook::Graph::Session>.
 An array reference of session ids from the old Facebook API.
 
 
-=head2 parse_signed_request ( signed_request )
+=head2 parse_signed_request ( $signed_request )
 
 Allows the decoding of signed requests for canvas applications to ensure data passed back from Facebook isn't tampered with. You can read more about this at L<http://developers.facebook.com/docs/authentication/canvas>.
 
-=head3 signed_request
+=head3 $signed_request
 
 A signature string passed from Facebook. To capture a signed request your app must be displayed within the Facebook canvas page and then you must pull the query parameter called C<signed_request> from the query string.
 
