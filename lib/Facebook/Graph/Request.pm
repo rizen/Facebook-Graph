@@ -19,9 +19,9 @@ has ua => (
 );
 
 sub post {
-    my ($self, $uri, $params) = @_;
+    my ($self, $uri, @params) = @_;
     my $cv = AnyEvent->condvar;
-    $self->ua->post_async($uri, $params)->cb(sub {
+    $self->ua->post_async($uri, @params)->cb(sub {
         $cv->send(Facebook::Graph::Response->new(response => shift->recv));
     });
     return $cv;

@@ -27,6 +27,17 @@ sub set_source {
     return $self;
 }
 
+has url => (
+    is          => 'rw',
+    predicate   => 'has_url',
+);
+
+sub set_url {
+    my ($self, $url) = @_;
+    $self->url($url);
+    return $self;
+}
+
 around get_post_params => sub {
     my ($orig, $self) = @_;
 
@@ -36,11 +47,13 @@ around get_post_params => sub {
         push @$post, message => $self->message;
     }
 
-    if ($self->has_source) {
+    if ($self->has_url) {
+        push @$post, url => [$self->url];
+    } elsif ($self->has_source) {
         push @$post, source => [$self->source];
     }
 
-    return Content_Type => 'form-data', Content => $post;
+    return $self->has_url ? $post : ( Content_Type => 'form-data', Content => $post );
 };
 
 no Any::Moose;
