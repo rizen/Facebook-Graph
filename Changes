@@ -1,3 +1,11 @@
+1.0502 2013-05-07
+ - Added AnyEvent::TLS as a prereq. Should get rid of the CPAN complaints about not having TLS.
+
+1.0501 2013-05-06
+ - Fixed a version number issue with AnyEvent::HTTP::LWP::UserAgent thanks to Rsrchboy.
+ - Now pulling contributors list from git thanks to Rsrchboy.
+ - Fixed some problems with add_photo() thanks to Sebastian Wernerus.
+
 1.0500 2012-11-15
  - Added batch requests. Thanks to fayland.
  - Fix: Facebook no longer allows public queries. Thanks to spazm.
