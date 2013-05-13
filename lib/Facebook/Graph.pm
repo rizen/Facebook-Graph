@@ -7,6 +7,7 @@ use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
 use Facebook::Graph::Query;
 use Facebook::Graph::Picture;
+use Facebook::Graph::Request;
 use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
@@ -97,6 +98,11 @@ sub fetch {
 sub fql {
     my ($self, $query) = @_;
     return $self->query->find('fql')->search($query)->request->as_hashref;
+}
+
+sub request {
+    my ($self, $uri) = @_;
+    return Facebook::Graph::Request->new->get($uri)->recv;
 }
 
 sub query {
@@ -311,10 +317,7 @@ You can also do asynchronous calls like this:
 
 Or fetching a response from a URI you already have:
 
- my $hashref = $fb->query
-    ->request('https://graph.facebook.com/btaylor')
-    ->as_hashref;
-    
+ my $hashref = $fb->request('https://graph.facebook.com/btaylor')->as_hashref;
 
 
 =head2 Building A Privileged App
@@ -409,6 +412,13 @@ An authorization code string that you should have gotten by going through the C<
 
 Creates a L<Facebook::Graph::Query> object, which can be used to fetch and search data from Facebook.
 
+=head2 request ( uri )
+
+Fetch a Facebook::Graph URI you already have.
+
+=head3 uri
+
+The URI to fetch. For example: https://graph.facebook.com/amazon
 
 =head2 fetch ( id )
 

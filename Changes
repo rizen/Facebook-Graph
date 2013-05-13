@@ -1,3 +1,6 @@
+1.0600 2013-05-13
+ - Added the $fb->request() method.
+
 1.0502 2013-05-07
  - Added AnyEvent::TLS as a prereq. Should get rid of the CPAN complaints about not having TLS.
 
