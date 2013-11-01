@@ -59,7 +59,7 @@ Returns the token string.
 
 =head2 expires ()
 
-Returns the time alotted to this token. If undefined then the token is forever.
+Returns the time allotted to this token. If undefined then the token is forever.
 
 =head2 response ()
 
