@@ -329,7 +329,7 @@ The result set will only return a certain number of records when this is set. Us
 
 =head2 date_format ( format )
 
-The result set dates will be formated in the defined formats.  Specify the format by reference the PHP date format spec: L<http://php.net/manual/en/function.date.php>. (eg. ->date_format('U')->) Useful for getting epoch for datatime. Returns C<$self> for method chaining.
+The result set dates will be formatted in the defined formats.  Specify the format by reference the PHP date format spec: L<http://php.net/manual/en/function.date.php>. (eg. ->date_format('U')->) Useful for getting epoch for datatime. Returns C<$self> for method chaining.
 
 =head3 amount
 
