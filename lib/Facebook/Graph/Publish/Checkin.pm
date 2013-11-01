@@ -143,7 +143,7 @@ The id of a page for a place. For example C<222047056390> is the id of Pete's Pi
 
 =head2 set_latitude ( coord )
 
-Sets sets the coords of your location. See also C<set_longitude>
+Sets the coords of your location. See also C<set_longitude>
 
 =head3 coord
 
@@ -152,7 +152,7 @@ The decimal latitude of your current location.
 
 =head2 set_longitude ( coord )
 
-Sets sets the coords of your location. See also C<set_latitude>
+Sets the coords of your location. See also C<set_latitude>
 
 =head3 coord
 
