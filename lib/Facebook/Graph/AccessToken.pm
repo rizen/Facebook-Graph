@@ -22,19 +22,44 @@ has postback => (
 
 has code => (
     is      => 'ro',
-    required=> 1,
+    required=> 0,
+    predicate=> 'has_code',
 );
+
+has access_token => (
+	is => 'ro',
+	required => 0,
+	predicate => 'has_access_token',
+);
+
+sub BUILD { 
+	my $self = shift;
+	die "Either code or access_token is required" if not $self->has_code and not $self->has_access_token;
+}
 
 sub uri_as_string {
     my ($self) = @_;
     my $uri = $self->uri;
     $uri->path('oauth/access_token');
-    $uri->query_form(
-        client_id       => $self->app_id,
-        client_secret   => $self->secret,
-        redirect_uri    => $self->postback,
-        code            => $self->code,
-    );
+
+	if($self->has_code) {
+		$uri->query_form(
+			client_id       => $self->app_id,
+			client_secret   => $self->secret,
+			redirect_uri    => $self->postback,
+			code            => $self->code,
+		);
+	}
+	else { 
+		$uri->query_form(
+			grant_type 			=> 'fb_exchange_token',
+			client_id       	=> $self->app_id,
+			client_secret   	=> $self->secret,
+			redirect_uri    	=> $self->postback,
+			fb_exchange_token	=> $self->access_token,
+		);
+	}
+
     return $uri->as_string;
 }
 
