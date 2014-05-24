@@ -32,7 +32,7 @@ has secret => (
 );
 
 has postback => (
-    is      => 'ro',
+    is      => 'rw',
 );
 
 has access_token => (
