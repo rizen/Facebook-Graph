@@ -19,6 +19,7 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
+use Facebook::Graph::Publish::PageTab;
 use Facebook::Graph::BatchRequests;
 use Ouch;
 
@@ -255,6 +256,29 @@ sub add_event {
     }
     return Facebook::Graph::Publish::Event->new( %params );
 }
+
+sub add_page_tab {
+    my ($self, $object_name, $app_id) = @_;
+
+	die "page_id and app_id are required" unless $object_name and $app_id;
+
+    my %params = ( );
+    $params{object_name} = $object_name;
+
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+
+	$params{app_id} = $app_id;
+
+    return Facebook::Graph::Publish::PageTab->new( %params );
+}
+
+
 
 sub rsvp_maybe {
     my ($self, $object_name) = @_;
@@ -526,6 +550,10 @@ Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish
 =head2 add_event ( [id] )
 
 Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
+
+=head2 add_page_tab ( page_id, app_id )
+
+Creates a L<Facebook::Graph::Publish::PageTab> object, which can be used to publish an app as a page tab.
 
 =head3 id
 
