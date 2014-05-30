@@ -208,12 +208,12 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
 
  my $fb = Facebook::Graph->new;
  
- my $perl_page = $fb->find('16665510298')
+ my $perl_page = $fb->query->find('16665510298')
     ->include_metadata
     ->request
     ->as_hashref;
  
- my $sarah_bownds = $fb->find('sarahbownds')
+ my $sarah_bownds = $fb->query->find('sarahbownds')
     ->select_fields(qw(id name))
     ->request
     ->as_hashref;
