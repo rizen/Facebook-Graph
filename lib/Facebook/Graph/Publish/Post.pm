@@ -267,7 +267,7 @@ This module gives you quick and easy access to publish to a user's Facebook feed
 
 B<ATTENTION:> You must have the C<publish_stream> privilege to use this module.
 
-B<TIP:> Facebook seems to use these terms interchangibly: Feed, Post, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
+B<TIP:> Facebook seems to use these terms interchangeably: Feed, Post, News, Wall. So if you want to publish to a user's wall, this is the mechanism you use to do that.
 
 =head1 METHODS
 
