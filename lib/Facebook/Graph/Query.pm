@@ -302,6 +302,7 @@ All events.
 
 All groups.
 
+=back
 
 
 
@@ -318,8 +319,6 @@ They keywords to search by.
 =head3 context
 
 See the C<context> param in the C<from> method.
-
-=back
 
 
 
