@@ -88,7 +88,7 @@ Sets the URI to link to.
 
 =head3 uri
 
-A a URI.
+A URI.
 
 
 

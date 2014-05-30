@@ -32,7 +32,7 @@ Go to L<http://www.facebook.com/developers/createapp.php> or click "Set Up New A
 
 Fill in an application name. The only restriction is that it can't use a Facebook trademark or be similar to official Facebook application names.
 
-Agree to the terms of servce.
+Agree to the terms of service.
 
 Click "Create Application".
 

@@ -4,9 +4,9 @@ Facebook::Graph::Cookbook - A cookbook for Facebook::Graph
 
 =head1 DESCRIPTION
 
-The goal of this document is to provide a set of common recipies for success. The L<Facebook::Graph> API is relatively easy to use, but there are just enough tricks to it that it can throw you off if you don't have a little insider information. Hopefully this document will help you overcome those hurdles.
+The goal of this document is to provide a set of common recipes for success. The L<Facebook::Graph> API is relatively easy to use, but there are just enough tricks to it that it can throw you off if you don't have a little insider information. Hopefully this document will help you overcome those hurdles.
 
-=head1 RECIPIES
+=head1 RECIPES
 
 =over
 
@@ -16,7 +16,7 @@ Shows you how to set up a privileged application using nothing more than L<Plack
 
 =item L<Facebook::Graph::Cookbook::Recipe2> - Working Example
 
-A fully functional Facebook::Graph app that publishes data to Facebook and reads data from it. Uses a full application server and lots of other modules. This is a working example, without a lot of explaination.
+A fully functional Facebook::Graph app that publishes data to Facebook and reads data from it. Uses a full application server and lots of other modules. This is a working example, without a lot of explanation.
 
 =item L<Facebook::Graph::Cookbook::Recipe3> - Impersonation
 
