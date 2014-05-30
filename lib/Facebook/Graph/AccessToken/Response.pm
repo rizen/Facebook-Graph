@@ -4,6 +4,7 @@ use Any::Moose;
 use URI;
 use URI::QueryParam;
 use Ouch;
+use JSON;
 
 has response => (
     is      => 'ro',
@@ -20,7 +21,7 @@ has token => (
             return URI->new('?'.$response->content)->query_param('access_token');
         }
         else {
-            ouch $response->code, 'Could not fetch access token: '.$response->message, $response->request->uri->as_string;
+            ouch $response->code, 'Could not fetch access token: '._retrieve_error_message($response), $response->request->uri->as_string;
         }
     }
 );
@@ -35,10 +36,21 @@ has expires => (
             return URI->new('?'.$response->content)->query_param('expires');
         }
         else {
-            ouch $response->code, 'Could not fetch access token: '.$response->message, $response->request->uri->as_string;
+            ouch $response->code, 'Could not fetch access token: '._retrieve_error_message($response), $response->request->uri->as_string;
         }
     }
 );
+
+sub _retrieve_error_message {
+    my $response = shift;
+    my $content = eval { from_json($response->decoded_content) };
+    if ($@) {
+        return $response->message;
+    }
+    else {
+        return $content->{error}{message};
+    }
+}
 
 no Any::Moose;
 __PACKAGE__->meta->make_immutable;

@@ -1,3 +1,9 @@
+1.0700 2014-05-30
+ - POD fixes thanks to dsteinbrunner
+ - fix typos thanks to dsteinbrunner
+ - Added request_extended_access_token thanks to srchulo
+ - Improved error message on access token expiration.
+
 1.0600 2013-05-13
  - Added the $fb->request() method.
 
