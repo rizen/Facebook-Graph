@@ -19,6 +19,7 @@ use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
+use Facebook::Graph::Publish::PageTab;
 use Facebook::Graph::BatchRequests;
 use Ouch;
 
@@ -32,7 +33,7 @@ has secret => (
 );
 
 has postback => (
-    is      => 'ro',
+    is      => 'rw',
 );
 
 has access_token => (
@@ -63,6 +64,22 @@ sub request_access_token {
     my ($self, $code) = @_;
     my $token = Facebook::Graph::AccessToken->new(
         code            => $code,
+        postback        => $self->postback,
+        secret          => $self->secret,
+        app_id          => $self->app_id,
+    )->request;
+    $self->access_token($token->token);
+    return $token;
+}
+
+sub request_extended_access_token {
+    my ($self, $access_token) = @_;
+
+	die "request_extended_access_token requires an access_token" unless $access_token or $self->has_access_token;
+	$access_token = $access_token ? $access_token : $self->access_token;
+
+    my $token = Facebook::Graph::AccessToken->new(
+        access_token    => $access_token,
         postback        => $self->postback,
         secret          => $self->secret,
         app_id          => $self->app_id,
@@ -240,6 +257,29 @@ sub add_event {
     return Facebook::Graph::Publish::Event->new( %params );
 }
 
+sub add_page_tab {
+    my ($self, $object_name, $app_id) = @_;
+
+	die "page_id and app_id are required" unless $object_name and $app_id;
+
+    my %params = ( );
+    $params{object_name} = $object_name;
+
+    if ($self->has_access_token) {
+        $params{access_token} = $self->access_token;
+    }
+
+    if ($self->has_secret) {
+        $params{secret} = $self->secret;
+    }
+
+	$params{app_id} = $app_id;
+
+    return Facebook::Graph::Publish::PageTab->new( %params );
+}
+
+
+
 sub rsvp_maybe {
     my ($self, $object_name) = @_;
     my %params = (
@@ -342,9 +382,17 @@ Handle the Facebook authorization code postback:
  my $q = Plack::Request->new($env);
  $fb->request_access_token($q->query_param('code'));
 
+ #now retrieve extended access token
+ $fb->request_extended_access_token; #extended access token now in $fb->access_token
+
 Or if you already had the access token:
 
  $fb->access_token($token);
+ $fb->request_extended_access_token; 
+
+Or simply:
+
+ $fb->request_extended_access_token($token);
 
 Get some info:
 
@@ -402,6 +450,12 @@ Creates a L<Facebook::Graph::Authorize> object, which can be used to get permiss
 =head2 request_access_token ( code )
 
 Creates a L<Facebook::Graph::AccessToken> object and fetches an access token from Facebook, which will allow everything you do with Facebook::Graph to work within user privileges rather than through the public interface. Returns a L<Facebook::Graph::AccessToken::Response> object, and also sets the C<access_token> property in the Facebook::Graph object.
+
+=head2 request_extended_access_token ( access_token )
+
+Note: access_token is optional. Creates a L<Facebook::Graph::AccessToken> object and fetches an (https://developers.facebook.com/docs/facebook-login/access-tokens/#extending) extended access token from Facebook.
+This method accepts an optional access token. If you have called C<request_access_token> already on the Facebook::Graph object and C<access_token> is set, then you do not have to pass
+in an access token. However, if you have an access token stored from a previous object, you will need to pass it in.
 
 =head3 code
 
@@ -496,6 +550,10 @@ Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish
 =head2 add_event ( [id] )
 
 Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
+
+=head2 add_page_tab ( page_id, app_id )
+
+Creates a L<Facebook::Graph::Publish::PageTab> object, which can be used to publish an app as a page tab.
 
 =head3 id
 
