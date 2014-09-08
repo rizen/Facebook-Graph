@@ -1,4 +1,4 @@
-use Test::More tests => 13;
+use Test::More tests => 16;
 use lib '../lib';
 use Ouch;
 
@@ -11,7 +11,12 @@ my $sarah_query = $fb->query
     ->select_fields(qw(name id))
     ->include_metadata;
 isa_ok($sarah_query, 'Facebook::Graph::Query');
-is($sarah_query->uri_as_string, 'https://graph.facebook.com/sarahbownds?fields=name%2Cid&metadata=1', 'seems to generate uris correctly');
+my $got = URI->new($sarah_query->uri_as_string);
+is($got->scheme, 'https', 'scheme of generated uri');
+is($got->host, 'graph.facebook.com', 'host of generated uri');
+is($got->path, '/sarahbownds', 'path of generated uri');
+my %query = $got->query_form;
+is_deeply(\%query, {fields => 'name,id', metadata => '1'}, 'query of generated uri');
 
 my $sarah_response = $sarah_query->request;
 isa_ok($sarah_response, 'Facebook::Graph::Response');
