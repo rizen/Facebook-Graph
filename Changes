@@ -1,3 +1,8 @@
+1.0800 2014-09-07
+ - Added Facebook::Graph::Feed thanks to hurricup.
+ - Fix failed test 'exception gives good detail' thanks to guillaumeaubert.
+ - More tests.
+
 1.0700 2014-05-30
  - POD fixes thanks to dsteinbrunner
  - fix typos thanks to dsteinbrunner
