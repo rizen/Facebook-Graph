@@ -1,3 +1,6 @@
+1.0801 2014-09-07
+ - Fix for hash randomization thanks to syohex.
+
 1.0800 2014-09-07
  - Added Facebook::Graph::Feed thanks to hurricup.
  - Fix failed test 'exception gives good detail' thanks to guillaumeaubert.
