@@ -21,6 +21,7 @@ use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
 use Facebook::Graph::Publish::PageTab;
 use Facebook::Graph::BatchRequests;
+use Facebook::Graph::Page::Feed;
 use Ouch;
 
 has app_id => (
@@ -159,6 +160,21 @@ sub add_post {
     }
     return Facebook::Graph::Publish::Post->new( %params );
 }
+
+
+sub add_page_feed 
+{
+	my ($self) = @_;
+	my %params = ( );
+	if ($self->has_access_token) {
+		$params{access_token} = $self->access_token;
+	}
+	if ($self->has_secret) {
+		$params{secret} = $self->secret;
+	}
+	return Facebook::Graph::Page::Feed->new( %params );
+};
+
 
 sub add_photo {
     my ($self, $object_name) = @_;

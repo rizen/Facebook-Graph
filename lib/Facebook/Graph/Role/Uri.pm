@@ -4,7 +4,7 @@ use Any::Moose 'Role';
 use URI;
 
 sub uri {
-    return URI->new('https://graph.facebook.com')
+    return URI->new('https://graph.facebook.com/v2.1')
 }
 
 
