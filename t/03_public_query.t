@@ -27,7 +27,7 @@ is($sarah->{metadata}{type}, 'user', 'she is a user');
 
 eval { $fb->query->select_fields('')->request->as_json };
 is($@->code, 400, 'exception inherits http status code');
-is($@->message, 'Could not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.', 'exception gives good detail');
+like($@->message, qr#^\QCould not execute request (https://graph.facebook.com?fields=): GraphMethodException - Unsupported get request.\E#, 'exception gives good detail');
 
 is $fb->request('https://graph.facebook.com/amazon')->as_hashref->{username}, 'Amazon', 'can directly fetch a facebook graph url' ;
 
