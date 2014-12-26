@@ -1,6 +1,6 @@
 package Facebook::Graph::Publish;
 
-use Any::Moose;
+use Moo;
 use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
 use AnyEvent::HTTP::LWP::UserAgent;
@@ -44,10 +44,7 @@ sub publish {
     return Facebook::Graph::Request->new->post($uri, $self->get_post_params)->recv;
 }
 
-
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

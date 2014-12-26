@@ -1,6 +1,6 @@
 package Facebook::Graph::Publish::PageTab;
 
-use Any::Moose;
+use Moo;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/tabs';
@@ -17,8 +17,7 @@ around get_post_params => sub {
     return $post;
 };
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 
 =head1 NAME

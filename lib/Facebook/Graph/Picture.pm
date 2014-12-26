@@ -1,6 +1,6 @@
 package Facebook::Graph::Picture;
 
-use Any::Moose;
+use Moo;
 with 'Facebook::Graph::Role::Uri';
 
 has type => (
@@ -10,7 +10,7 @@ has type => (
 
 has object_name => (
     is          => 'rw',
-    default     => '',
+    default     => sub {''},
 );
 
 sub get_small {
@@ -44,9 +44,7 @@ sub uri_as_string {
 }
 
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

@@ -1,6 +1,6 @@
 package Facebook::Graph;
 
-use Any::Moose;
+use Moo;
 use MIME::Base64::URLSafe;
 use JSON;
 use Facebook::Graph::AccessToken;
@@ -339,9 +339,7 @@ sub rsvp_declined {
 }
 
 
-
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 
@@ -653,7 +651,7 @@ I still need to add publishing albums/photos, deleting of content, impersonation
 
 =head1 PREREQS
 
-L<Any::Moose>
+L<Moo>
 L<JSON>
 L<AnyEvent::HTTP::LWP::UserAgent>
 L<URI>

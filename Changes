@@ -1,3 +1,6 @@
+1.0900 2014-12-25
+ - Replace Any::Moose in favor of Moo.
+
 1.0801 2014-09-07
  - Fix for hash randomization thanks to syohex.
 

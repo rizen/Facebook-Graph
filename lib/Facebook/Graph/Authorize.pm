@@ -1,6 +1,6 @@
 package Facebook::Graph::Authorize;
 
-use Any::Moose;
+use Moo;
 with 'Facebook::Graph::Role::Uri';
 
 has app_id => (
@@ -22,7 +22,7 @@ has permissions => (
 
 has display => (
     is      => 'rw',
-    default => 'page',
+    default => sub { 'page' },
 );
 
 sub extend_permissions {
@@ -53,8 +53,7 @@ sub uri_as_string {
     return $uri->as_string;
 }
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 
 =head1 NAME

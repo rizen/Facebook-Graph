@@ -1,6 +1,6 @@
 package Facebook::Graph::Session;
 
-use Any::Moose;
+use Moo;
 use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
 
@@ -37,9 +37,7 @@ sub request {
     return Facebook::Graph::Request->new->get($self->uri_as_string)->recv;
 }
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

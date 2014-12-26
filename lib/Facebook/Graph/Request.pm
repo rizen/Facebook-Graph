@@ -1,6 +1,6 @@
 package Facebook::Graph::Request;
 
-use Any::Moose;
+use Moo;
 use JSON;
 use Ouch;
 use AnyEvent::HTTP::LWP::UserAgent;
@@ -9,7 +9,7 @@ use Facebook::Graph::Response;
 
 has ua => (
     is      => 'rw',
-    isa     => 'AnyEvent::HTTP::LWP::UserAgent',
+    isa     => sub {ouch(442,"$_[0] is not an HTTP::Response object") unless ref $_[0] eq 'AnyEvent::HTTP::LWP::UserAgent'},
     lazy    => 1,
     default => sub {
         my $ua = AnyEvent::HTTP::LWP::UserAgent->new;
@@ -37,8 +37,7 @@ sub get {
     return $cv;
 }
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 

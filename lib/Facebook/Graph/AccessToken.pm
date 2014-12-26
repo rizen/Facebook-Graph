@@ -1,6 +1,6 @@
 package Facebook::Graph::AccessToken;
 
-use Any::Moose;
+use Moo;
 use Facebook::Graph::AccessToken::Response;
 use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
@@ -70,9 +70,7 @@ sub request {
     );
 }
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

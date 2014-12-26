@@ -1,6 +1,6 @@
 package Facebook::Graph::AccessToken::Response;
 
-use Any::Moose;
+use Moo;
 use URI;
 use URI::QueryParam;
 use Ouch;
@@ -52,8 +52,7 @@ sub _retrieve_error_message {
     }
 }
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 

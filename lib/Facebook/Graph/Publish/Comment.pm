@@ -1,6 +1,6 @@
 package Facebook::Graph::Publish::Comment;
 
-use Any::Moose;
+use Moo;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/comments';
@@ -28,9 +28,7 @@ around get_post_params => sub {
 };
 
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

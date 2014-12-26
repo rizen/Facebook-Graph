@@ -1,6 +1,6 @@
 package Facebook::Graph::Publish::Photo;
 
-use Any::Moose;
+use Moo;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/photos';
@@ -56,8 +56,7 @@ around get_post_params => sub {
     return $self->has_url ? $post : ( Content_Type => 'form-data', Content => $post );
 };
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 

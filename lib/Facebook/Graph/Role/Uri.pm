@@ -1,6 +1,6 @@
 package Facebook::Graph::Role::Uri;
 
-use Any::Moose 'Role';
+use Moo::Role;
 use URI;
 
 sub uri {

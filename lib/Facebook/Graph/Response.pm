@@ -1,12 +1,12 @@
 package Facebook::Graph::Response;
 
-use Any::Moose;
+use Moo;
 use JSON;
 use Ouch;
 
 has response => (
     is      => 'rw',
-    isa     => 'HTTP::Response',
+    isa     => sub {ouch(442,"$_[0] is not an HTTP::Response object") unless ref $_[0] eq 'HTTP::Response'},
     required=> 1,
 );
 
@@ -48,8 +48,7 @@ has as_hashref => (
     },
 );
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 =head1 NAME
 

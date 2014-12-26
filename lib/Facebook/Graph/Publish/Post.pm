@@ -1,6 +1,7 @@
 package Facebook::Graph::Publish::Post;
 
-use Any::Moose;
+use Moo;
+use Ouch;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/feed';
@@ -79,7 +80,7 @@ has target_countries => (
     is          => 'rw',
     default     => sub {[]},
     lazy        => 1,
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_target_countries',
 );
 
@@ -93,7 +94,7 @@ has target_cities => (
     is          => 'rw',
     default     => sub {[]},
     lazy        => 1,
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_target_cities',
 );
 
@@ -107,7 +108,7 @@ has target_regions => (
     is          => 'rw',
     default     => sub {[]},
     lazy        => 1,
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_target_regions',
 );
 
@@ -121,7 +122,7 @@ has target_locales => (
     is          => 'rw',
     default     => sub {[]},
     lazy        => 1,
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_target_locales',
 );
 
@@ -146,7 +147,7 @@ has actions => (
     is          => 'rw',
     default     => sub {[]},
     lazy        => 1,
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_actions',
 );
 
@@ -171,7 +172,7 @@ has privacy => (
 
 has privacy_options => (
     is          => 'rw',
-    isa         => 'HashRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'HASH' },
     default     => sub {{}},
 );
 
@@ -234,10 +235,7 @@ around get_post_params => sub {
     return $post;
 };
 
-
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 

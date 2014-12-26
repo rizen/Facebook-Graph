@@ -1,6 +1,7 @@
 package Facebook::Graph::Publish::Checkin;
 
-use Any::Moose;
+use Moo;
+use Ouch;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/checkins';
@@ -29,7 +30,7 @@ sub set_place {
 
 has longitude => (
     is          => 'rw',
-    isa         => 'Num',
+    isa         => sub { ouch(442,"$_[0] is not a number") unless looks_like_number $_[0] },
     predicate   => 'has_longitude',
 );
 
@@ -41,7 +42,7 @@ sub set_longitude {
 
 has latitude => (
     is          => 'rw',
-    isa         => 'Num',
+    isa         => sub { ouch(442,"$_[0] is not a number") unless looks_like_number $_[0] },
     predicate   => 'has_latitude',
 );
 
@@ -53,7 +54,7 @@ sub set_latitude {
 
 has tags => (
     is          => 'rw',
-    isa         => 'ArrayRef',
+    isa         => sub { ouch(442,"$_[0] is not an Array Reference") unless ref $_[0] eq 'ARRAY' },
     predicate   => 'has_tags',
     lazy        => 1,
     default     => sub {[]},
@@ -84,9 +85,7 @@ around get_post_params => sub {
    return $post;
 };
 
-
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
+1;
 
 
 =head1 NAME

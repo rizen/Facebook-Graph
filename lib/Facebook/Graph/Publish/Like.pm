@@ -1,13 +1,11 @@
 package Facebook::Graph::Publish::Like;
 
-use Any::Moose;
+use Moo;
 extends 'Facebook::Graph::Publish';
 
 use constant object_path => '/likes';
 
-no Any::Moose;
-__PACKAGE__->meta->make_immutable;
-
+1;
 
 =head1 NAME
 
