@@ -480,6 +480,10 @@ An authorization code string that you should have gotten by going through the C<
 
 Creates a L<Facebook::Graph::Query> object, which can be used to fetch and search data from Facebook.
 
+=head2 batch_requests ( uri )
+
+Creates a L<Facebook::Graph::BatchRequests> object, which can be used to send multiple requests in a single HTTP request.
+
 =head2 request ( uri )
 
 Fetch a Facebook::Graph URI you already have.
@@ -500,6 +504,15 @@ Returns a hash reference of an object from facebook. A quick way to grab an obje
 
 An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
 
+=head2 fql ( query )
+
+Returns a hash reference of data result from a fql query. A quick way to grab data directly using fql (Facebook Query Language). These two statements are identical:
+
+ my $name = $fb->fql('SELECT name FROM user WHERE uid = me()');
+
+ my $name = $self->query->find('fql')->search('SELECT name FROM user WHERE uid = me()')->request->as_hashref;
+
+ Facebook Query Language: https://developers.facebook.com/docs/technical-guides/fql/
 
 =head2 picture ( id )
 
@@ -514,6 +527,10 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 =head2 add_post ( [ id ] )
 
 Creates a L<Facebook::Graph::Publish::Post> object, which can be used to publish data to a user's feed/wall.
+
+=head2 add_page_feed ( )
+
+Creates a L<Facebook::Graph::Page::Feed> object, which can be used to add a post to a Facebook page.
 
 =head2 add_photo ( [ id ] )
 
