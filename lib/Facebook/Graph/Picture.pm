@@ -65,6 +65,23 @@ This module allows you to generate the URL needed to fetch a picture for any obj
 
 =head1 METHODS
 
+=head2 new ( [ params ] )
+
+=over
+
+=item params
+
+A hash or hashref of parameters to pass to the constructor.
+
+=over
+
+=item object_name
+
+An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
+
+=item type
+
+Type of picture to return. Valid types are small, square, large
 
 =head2 get_large ( id )
 
