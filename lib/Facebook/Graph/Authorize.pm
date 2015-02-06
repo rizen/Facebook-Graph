@@ -80,6 +80,24 @@ Get an authorization code from Facebook so that you can request an access token 
 
 =head1 METHODS
 
+=head2 new ( [ params ] )
+
+=over
+
+=item params
+
+A hash or hashref of parameters to pass to the constructor.
+
+=over
+
+=item app_id
+
+The application id that you get from Facebook after registering (L<http://developers.facebook.com/setup/>) your application on their site.
+
+=item postback
+
+The URI that Facebook should post your authorization code back to.
+
 =head2 extend_permissions ( permissions )
 
 Ask for extra permissions for your app. By default, if you do not request extended permissions your app will have access to only general information that any Facebook user would have. Returns a reference to self for method chaining.
@@ -89,13 +107,13 @@ Ask for extra permissions for your app. By default, if you do not request extend
 An array of permissions. See L<http://developers.facebook.com/docs/authentication/permissions> for more information about what's available.
 
 
-=head2 set_display ( type )
+=head2 set_display ( display )
 
 Sets the display type for the authorization screen that a user will see.
 
-=head3 type
+=item display
 
-Defaults to C<page>. Valid types are C<page>, C<popup>, C<wap>, and C<touch>. See B<Dialog Form Factors> in L<http://developers.facebook.com/docs/authentication/> for details.
+Display type that defaults to C<page>. Valid types are C<page>, C<popup>, C<wap>, and C<touch>. See B<Dialog Form Factors> in L<http://developers.facebook.com/docs/authentication/> for details.
 
 
 =head2 uri_as_string ( )
