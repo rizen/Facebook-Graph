@@ -95,6 +95,32 @@ Allows you to request an access token from Facebook so you can make privileged r
 
 =head1 METHODS
 
+=head2 new ( [ params ] )
+
+=over
+
+=item params
+
+A hash or hashref of parameters to pass to the constructor.
+
+=over
+
+=item app_id
+
+The application id that you get from Facebook after registering (L<http://developers.facebook.com/setup/>) your application on their site. Required if you'll be calling the C<request_access_token>, C<convert_sessions>, or C<authorize> methods.
+
+=item code
+
+An authorization code string that you should have gotten by going through the C<authorize> process.
+
+=item postback
+
+The URI that Facebook should post your authorization code back to. Required if you'll be calling the C<request_access_token> or C<authorize> methods.
+
+=item secret
+
+The application secret that you get from Facebook after registering your application. Required if you'll be calling the C<request_access_token> or C<convert_sessions> methods.
+
 =head2 uri_as_string ()
 
 Returns the URI that will be called to fetch the token as a string. Mostly useful for debugging and testing.
@@ -102,6 +128,10 @@ Returns the URI that will be called to fetch the token as a string. Mostly usefu
 =head2 request ()
 
 Makes a request to Facebook to fetch an access token. Returns a L<Facebook::Graph::AccessToken::Response> object.
+
+=head2 build ()
+
+Checks for either access_token or code and dies if has neither.
 
 =head1 LEGAL
 

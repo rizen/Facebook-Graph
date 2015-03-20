@@ -81,6 +81,20 @@ send batch requests to save time: L<http://developers.facebook.com/docs/referenc
 
 =head1 METHODS
 
+=head2 new ( [ params ] )
+
+=over
+
+=item params
+
+A hash or hashref of parameters to pass to the constructor.
+
+=over
+
+=item access_token
+
+An access token string used to make Facebook requests as a privileged user.
+
 =head2 add_request
 
 add request, if not HASHREF, will default method as GET and arg as relative_url
