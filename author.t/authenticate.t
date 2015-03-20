@@ -1,5 +1,6 @@
 use Test::More;
 use strict;
+use lib '../lib';
 
 die "You need to set an environment variable for FB_APP_ID && FB_SECRET to test this" unless $ENV{FB_APP_ID} && $ENV{FB_SECRET};
 

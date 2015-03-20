@@ -113,11 +113,6 @@ sub fetch {
     return $self->query->find($object_name)->request->as_hashref;
 }
 
-sub fql {
-    my ($self, $query) = @_;
-    return $self->query->find('fql')->search($query)->request->as_hashref;
-}
-
 sub request {
     my ($self, $uri) = @_;
     return Facebook::Graph::Request->new->get($uri)->recv;
@@ -503,16 +498,6 @@ Returns a hash reference of an object from facebook. A quick way to grab an obje
 =head3 id
 
 An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
-
-=head2 fql ( query )
-
-Returns a hash reference of data result from a fql query. A quick way to grab data directly using fql (Facebook Query Language). These two statements are identical:
-
- my $name = $fb->fql('SELECT name FROM user WHERE uid = me()');
-
- my $name = $self->query->find('fql')->search('SELECT name FROM user WHERE uid = me()')->request->as_hashref;
-
- Facebook Query Language: https://developers.facebook.com/docs/technical-guides/fql/
 
 =head2 picture ( id )
 

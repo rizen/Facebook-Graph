@@ -1,3 +1,7 @@
+1.1000 2015-03-20
+ - More POD thanks to Nathan Handy.
+ - Removed FQL, since it has been removed from the official Facebook Graph API as of version 2.1. 
+
 1.0900 2014-12-25
  - Replace Any::Moose in favor of Moo.
 
