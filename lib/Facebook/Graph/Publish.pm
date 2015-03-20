@@ -40,7 +40,7 @@ sub get_post_params {
 sub publish {
     my ($self) = @_;
     my $uri = $self->uri;
-    $uri->path($self->object_name.$self->object_path);
+    $uri->path($self->generate_versioned_path($self->object_name.$self->object_path));
     return Facebook::Graph::Request->new->post($uri, $self->get_post_params)->recv;
 }
 

@@ -38,7 +38,7 @@ sub uri_as_string {
         $query{type} = $self->type;
     }
     my $uri = $self->uri;
-    $uri->path($self->object_name . '/picture');
+    $uri->path($self->generate_versioned_path($self->object_name . '/picture'));
     $uri->query_form(%query);
     return $uri->as_string;
 }

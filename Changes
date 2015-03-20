@@ -1,6 +1,10 @@
 1.1000 2015-03-20
  - More POD thanks to Nathan Handy.
- - Removed FQL, since it has been removed from the official Facebook Graph API as of version 2.1. 
+ - Upgraded to Facebook Graph v2.2 API, and all the changes that come with it.
+ - Allow for Facebook's versioned URLs.
+ - Removed the following APIs as they are no longer supported in Facebook's Graph v2 API: FQL, publishing notes, publishing events
+ - You can no longer do public queries (queries without an access token).
+ - You can no longer do queries using usernames or object names, you must use object ids.
 
 1.0900 2014-12-25
  - Replace Any::Moose in favor of Moo.

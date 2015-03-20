@@ -12,7 +12,7 @@ my $fb = Facebook::Graph->new(
     );
 isa_ok($fb, 'Facebook::Graph');
 
-my $uri = $fb->authorize->extend_permissions(qw(offline_access read_stream publish_stream))->uri_as_string;
+my $uri = $fb->authorize->extend_permissions(qw(offline_access read_stream publish_stream manage_pages))->uri_as_string;
 
 print "Point your browser here: $uri
 

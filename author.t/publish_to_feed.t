@@ -1,4 +1,4 @@
-use Test::More tests => 10;
+use Test::More tests => 8;
 use lib '../lib';
 
 use_ok('Facebook::Graph');
@@ -37,12 +37,4 @@ $out = $response->as_hashref;
 ok(ref $out eq 'HASH', 'got a hash back on simple post to community page') or diag($response->as_json);
 ok(exists $out->{id}, 'we got back an id on simple post to community page');
 
-
-$response = $fb->add_post(182872885058638)
-  ->set_message('This is me testing')
-    ->set_link_uri('http://www.perl.org/')
-  ->publish;
-$out = $response->as_hashref;
-ok(ref $out eq 'HASH', 'got a hash back on simple post to community page') or diag($response->as_json);
-ok(exists $out->{id}, 'we got back an id on simple post to community page');
 

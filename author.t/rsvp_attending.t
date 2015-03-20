@@ -9,7 +9,7 @@ die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" u
 
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
-my $response = $fb->rsvp_attending('141730949193973')
+my $response = $fb->rsvp_attending('1727225617504143')
   ->publish;
-is($response->as_string, 'true', 'we get back a true string');
+is($response->as_string, '{"success":true}', 'we get back a true string');
 

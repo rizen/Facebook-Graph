@@ -4,7 +4,17 @@ use Moo::Role;
 use URI;
 
 sub uri {
-    return URI->new('https://graph.facebook.com/v2.1')
+    return URI->new('https://graph.facebook.com')
+}
+
+has api_version => (
+    is  => 'rw',
+    default => 'v2.2',
+);
+
+sub generate_versioned_path {
+    my ($self, $path) = @_;
+    return join('/', $self->api_version, $path);
 }
 
 

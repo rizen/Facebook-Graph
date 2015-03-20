@@ -13,9 +13,7 @@ use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
 use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
-use Facebook::Graph::Publish::Note;
 use Facebook::Graph::Publish::Link;
-use Facebook::Graph::Publish::Event;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
@@ -229,18 +227,6 @@ sub add_comment {
     return Facebook::Graph::Publish::Comment->new( %params );
 }
 
-sub add_note {
-    my ($self) = @_;
-    my %params = ( );
-    if ($self->has_access_token) {
-        $params{access_token} = $self->access_token;
-    }
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Publish::Note->new( %params );
-}
-
 sub add_link {
     my ($self) = @_;
     my %params = ( );
@@ -251,21 +237,6 @@ sub add_link {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Link->new( %params );
-}
-
-sub add_event {
-    my ($self, $object_name) = @_;
-    my %params = ( );
-    if ($object_name) {
-        $params{object_name} = $object_name;
-    }
-    if ($self->has_access_token) {
-        $params{access_token} = $self->access_token;
-    }
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Publish::Event->new( %params );
 }
 
 sub add_page_tab {
@@ -343,13 +314,14 @@ Facebook::Graph - A fast and easy way to integrate your apps with Facebook.
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
- my $sarah_bownds = $fb->fetch('sarahbownds');
+ $fb->access_token($token);
+ my $sarah_bownds = $fb->fetch('767598108');
  my $perl_page = $fb->fetch('16665510298');
 
 Or better yet:
 
  my $sarah_bownds = $fb->query
-    ->find('sarahbownds')
+    ->find('767598108')
     ->include_metadata
     ->select_fields(qw( id name picture ))
     ->request
@@ -359,14 +331,14 @@ Or better yet:
 
 You can also do asynchronous calls like this:
 
- my $sarah = $fb->query->find('sarahbownds'); 		# making request in background here
+ my $sarah = $fb->query->find('767598108'); 		# making request in background here
  # ... do stuff here ...
  my $hashref = $sarah->as_hashref;			# handling the response here
 
 
 Or fetching a response from a URI you already have:
 
- my $hashref = $fb->request('https://graph.facebook.com/btaylor')->as_hashref;
+ my $hashref = $fb->request('https://graph.facebook.com/16665510298')->as_hashref;
 
 
 =head2 Building A Privileged App
@@ -407,7 +379,7 @@ Get some info:
 
  my $user = $fb->fetch('me');
  my $friends = $fb->fetch('me/friends');
- my $sarah_bownds = $fb->fetch('sarahbownds');
+ my $perl_page = $fb->fetch('16665510298');
 
 =head1 DESCRIPTION
 
@@ -491,13 +463,13 @@ The URI to fetch. For example: https://graph.facebook.com/amazon
 
 Returns a hash reference of an object from facebook. A quick way to grab an object from Facebook. These two statements are identical:
 
- my $sarah = $fb->fetch('sarahbownds');
+ my $sarah = $fb->fetch('767598108');
 
- my $sarah = $fb->query->find('sarahbownds')->request->as_hashref;
+ my $sarah = $fb->query->find('767598108')->request->as_hashref;
 
 =head3 id
 
-An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
+An object id like C<16665510298> for the Perl page.
 
 =head2 picture ( id )
 
@@ -505,7 +477,7 @@ Returns a L<Facebook::Graph::Picture> object, which can be used to generate the 
 
 =head3 id
 
-An profile id like C<sarahbownds> or an object id like C<16665510298> for the Perl page.
+An object id like C<16665510298> for the Perl page.
 
 
 
@@ -553,19 +525,10 @@ Creates a L<Facebook::Graph::Publish::Comment> object that you can use to commen
 The id of the post you want to comment on.
 
 
-=head2 add_note ( )
-
-Creates a L<Facebook::Graph::Publish::Note> object, which can be used to publish notes.
-
-
 =head2 add_link ( )
 
 Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
-
-=head2 add_event ( [id] )
-
-Creates a L<Facebook::Graph::Publish::Event> object, which can be used to publish events.
 
 =head2 add_page_tab ( page_id, app_id )
 
@@ -645,10 +608,11 @@ This module throws exceptions when it encounters a problem. It uses L<Ouch> to t
    throw $@; # rethrow the error
  }
 
+=head1 CAVEATS
 
-=head1 TODO
+The Facebook Graph API is a constantly moving target. As such some stuff that used to work, may stop working. Keep up to date with their changes here: L<https://developers.facebook.com/docs/apps/upgrading>
 
-I still need to add publishing albums/photos, deleting of content, impersonation, and analytics to have a feature complete API. In addition, the module could use a lot more tests.
+If you were using any version of Facebook::Graph before 1.1000, then you may be used to doing things like creating events through this API, or using a person's username instead of their ID, or making queries without an access token. You can't do any of those things anymore, because as of the Facebook Graph v2.0 API, none of them is supported any longer. 
 
 
 =head1 PREREQS
@@ -683,7 +647,8 @@ L<http://github.com/rizen/Facebook-Graph/issues>
 
 =head1 SEE ALSO
 
-If you're looking for a fully featured Facebook client in Perl I highly recommend L<WWW::Facebook::API>. It does just about everything, it just uses the old Facebook API.
+I highly recommend L<Facebook::OpenGraph>. I may even switch to it myself soon.
+
 
 =head1 AUTHOR
 

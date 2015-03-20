@@ -186,7 +186,7 @@ sub uri_as_string {
         $query{ids} = join(',', @{$self->ids});
     }
     my $uri = $self->uri;
-    $uri->path($self->object_name);
+    $uri->path($self->generate_versioned_path($self->object_name));
     $uri->query_form(%query);
     return $uri->as_string;
 }
