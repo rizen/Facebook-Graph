@@ -107,15 +107,6 @@ Ask for extra permissions for your app. By default, if you do not request extend
 An array of permissions. See L<http://developers.facebook.com/docs/authentication/permissions> for more information about what's available.
 
 
-=head2 set_display ( display )
-
-Sets the display type for the authorization screen that a user will see.
-
-=item display
-
-Display type that defaults to C<page>. Valid types are C<page>, C<popup>, C<wap>, and C<touch>. See B<Dialog Form Factors> in L<http://developers.facebook.com/docs/authentication/> for details.
-
-
 =head2 uri_as_string ( )
 
 Returns a URI string to redirect the user back to Facebook.

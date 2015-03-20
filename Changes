@@ -5,6 +5,7 @@
  - Removed the following APIs as they are no longer supported in Facebook's Graph v2 API: FQL, publishing notes, publishing events
  - You can no longer do public queries (queries without an access token).
  - You can no longer do queries using usernames or object names, you must use object ids.
+ - Removed "display" from Facebook::Graph::Authorize as Facebook no longer supports it.
 
 1.0900 2014-12-25
  - Replace Any::Moose in favor of Moo.
