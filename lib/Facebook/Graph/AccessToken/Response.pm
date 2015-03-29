@@ -18,7 +18,13 @@ has token => (
         my $self = shift;
         my $response = $self->response;
         if ($response->is_success) {
-            return URI->new('?'.$response->content)->query_param('access_token');
+            if ($response->content =~ m/\A { .+ } \z/xm) {
+                # From v2.3 they return JSON object.
+                return JSON->new->decode($response->content)->{access_token};
+            }
+            else {
+                return URI->new('?'.$response->content)->query_param('access_token');
+            }
         }
         else {
             ouch $response->code, 'Could not fetch access token: '._retrieve_error_message($response), $response->request->uri->as_string;
@@ -33,7 +39,13 @@ has expires => (
         my $self = shift;
         my $response = $self->response;
         if ($response->is_success) {
-            return URI->new('?'.$response->content)->query_param('expires');
+            if ($response->content =~ m/\A { .+ } \z/xm) {
+                # From v2.3 they return JSON object.
+                return JSON->new->decode($response->content)->{expires_in};
+            }
+            else {
+                return URI->new('?'.$response->content)->query_param('expires');
+            }
         }
         else {
             ouch $response->code, 'Could not fetch access token: '._retrieve_error_message($response), $response->request->uri->as_string;
