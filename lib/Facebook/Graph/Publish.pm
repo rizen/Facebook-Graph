@@ -3,7 +3,7 @@ package Facebook::Graph::Publish;
 use Moo;
 use Facebook::Graph::Request;
 with 'Facebook::Graph::Role::Uri';
-use AnyEvent::HTTP::LWP::UserAgent;
+use LWP::UserAgent;
 use URI::Escape;
 
 has secret => (
@@ -41,7 +41,7 @@ sub publish {
     my ($self) = @_;
     my $uri = $self->uri;
     $uri->path($self->generate_versioned_path($self->object_name.$self->object_path));
-    return Facebook::Graph::Request->new->post($uri, $self->get_post_params)->recv;
+    return Facebook::Graph::Request->new->post($uri, $self->get_post_params);
 }
 
 1;

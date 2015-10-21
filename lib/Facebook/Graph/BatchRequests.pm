@@ -40,7 +40,7 @@ sub request {
     $self->requests([]); # reset
 
     my $uri = "https://graph.facebook.com";
-    my $resp = Facebook::Graph::Request->new->post($uri, $post)->recv->response;
+    my $resp = Facebook::Graph::Request->new->post($uri, $post)->response;
     
     unless ($resp->is_success) {
         my $message = $resp->message;

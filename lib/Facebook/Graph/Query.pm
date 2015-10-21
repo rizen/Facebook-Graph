@@ -193,7 +193,7 @@ sub uri_as_string {
 
 sub request {
     my ($self) = @_;
-    return Facebook::Graph::Request->new->get($self->uri_as_string)->recv;
+    return Facebook::Graph::Request->new->get($self->uri_as_string);
 }
 
 1;
