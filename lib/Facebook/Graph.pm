@@ -113,7 +113,7 @@ sub fetch {
 
 sub request {
     my ($self, $uri) = @_;
-    return Facebook::Graph::Request->new->get($uri)->recv;
+    return Facebook::Graph::Request->new->get($uri);
 }
 
 sub query {
@@ -619,7 +619,8 @@ If you were using any version of Facebook::Graph before 1.1000, then you may be 
 
 L<Moo>
 L<JSON>
-L<AnyEvent::HTTP::LWP::UserAgent>
+L<LWP::UserAgent>
+L<LWP::Protocol::https>
 L<URI>
 L<DateTime>
 L<DateTime::Format::Strptime>

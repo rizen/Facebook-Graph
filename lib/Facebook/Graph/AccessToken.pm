@@ -66,7 +66,7 @@ sub uri_as_string {
 sub request {
     my ($self) = @_;
     return Facebook::Graph::AccessToken::Response->new(
-        response => Facebook::Graph::Request->new->get($self->uri_as_string)->recv->response
+        response => Facebook::Graph::Request->new->get($self->uri_as_string)->response
     );
 }
 

@@ -3,16 +3,16 @@ package Facebook::Graph::Request;
 use Moo;
 use JSON;
 use Ouch;
-use AnyEvent::HTTP::LWP::UserAgent;
-use AnyEvent;
+use LWP::UserAgent;
+use LWP::Protocol::https;
 use Facebook::Graph::Response;
 
 has ua => (
     is      => 'rw',
-    isa     => sub {ouch(442,"$_[0] is not an HTTP::Response object") unless ref $_[0] eq 'AnyEvent::HTTP::LWP::UserAgent'},
+    isa     => sub {ouch(442,"$_[0] is not an HTTP::Response object") unless ref $_[0] eq 'LWP::UserAgent'},
     lazy    => 1,
     default => sub {
-        my $ua = AnyEvent::HTTP::LWP::UserAgent->new;
+        my $ua = LWP::UserAgent->new;
         $ua->timeout(30);
         return $ua;
     },
@@ -20,21 +20,12 @@ has ua => (
 
 sub post {
     my ($self, $uri, @params) = @_;
-    my $cv = AnyEvent->condvar;
-    $self->ua->post_async($uri, @params)->cb(sub {
-        $cv->send(Facebook::Graph::Response->new(response => shift->recv));
-    });
-    return $cv;
+    return Facebook::Graph::Response->new(response => $self->ua->post($uri, @params));
 }
 
 sub get {
     my ($self, $uri) = @_;
-    my $ua = $self->ua;
-    my $cv = AnyEvent->condvar;
-    $ua->get_async($uri)->cb(sub {
-        $cv->send(Facebook::Graph::Response->new(response => shift->recv));
-    });
-    return $cv;
+    return Facebook::Graph::Response->new(response => $self->ua->get($uri));
 }
 
 1;
@@ -61,7 +52,7 @@ A hash or hashref of parameters to pass to the constructor.
 
 =item ua
 
-An L<AnyEvent::HTTP::LWP::UserAgent> object. It will be created for you if you don't pass one in.
+An L<LWP::UserAgent> object. It will be created for you if you don't pass one in.
 
 =back
 
@@ -79,7 +70,7 @@ A URI string to Facebook.
 
 =item headers
 
-A hash of headers to pass to L<AnyEvent::HTTP::LWP::UserAgent> when making the request.
+A hash of headers to pass to L<LWP::UserAgent> when making the request.
 
 =back
 
