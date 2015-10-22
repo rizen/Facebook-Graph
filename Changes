@@ -1,3 +1,8 @@
+1.1100 2015-10-22
+ - Exposed API so you can pass in extra parameters such as api_version to override some of the defaults.
+ - Allow v2.3 styled /oauth/access_token response thanks to oklahomer.
+ - Switched back to LWP thanks to jussikinnula.
+
 1.1000 2015-03-20
  - More POD thanks to Nathan Handy.
  - Upgraded to Facebook Graph v2.2 API, and all the changes that come with it.

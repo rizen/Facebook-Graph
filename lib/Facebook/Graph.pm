@@ -107,8 +107,8 @@ sub authorize {
 }
 
 sub fetch {
-    my ($self, $object_name) = @_;
-    return $self->query->find($object_name)->request->as_hashref;
+    my ($self, $object_name, %params) = @_;
+    return $self->query->find($object_name, %params)->request->as_hashref;
 }
 
 sub request {
@@ -117,8 +117,7 @@ sub request {
 }
 
 sub query {
-    my ($self) = @_;
-    my %params = ( );
+    my ($self, %params) = @_;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -129,19 +128,19 @@ sub query {
 }
 
 sub batch_requests {
-    my ($self) = @_;
-    my %params = ( access_token => $self->access_token );
+    my ($self, %params) = @_;
+    $params{access_token} = $self->access_token;
     return Facebook::Graph::BatchRequests->new(%params);
 }
 
 sub picture {
-    my ($self, $object_name) = @_;
-    return Facebook::Graph::Picture->new( object_name => $object_name );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
+    return Facebook::Graph::Picture->new( %params );
 }
 
 sub add_post {
-    my ($self, $object_name) = @_;
-    my %params = ( );
+    my ($self, $object_name, %params) = @_;
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -155,10 +154,8 @@ sub add_post {
 }
 
 
-sub add_page_feed 
-{
-	my ($self) = @_;
-	my %params = ( );
+sub add_page_feed {
+	my ($self, %params) = @_;
 	if ($self->has_access_token) {
 		$params{access_token} = $self->access_token;
 	}
@@ -170,8 +167,7 @@ sub add_page_feed
 
 
 sub add_photo {
-    my ($self, $object_name) = @_;
-    my %params = ( );
+    my ($self, $object_name, %params) = @_;
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -185,8 +181,7 @@ sub add_photo {
 }
 
 sub add_checkin {
-    my ($self, $object_name) = @_;
-    my %params = ( );
+    my ($self, $object_name, %params) = @_;
     if ($object_name) {
         $params{object_name} = $object_name;
     }
@@ -200,10 +195,8 @@ sub add_checkin {
 }
 
 sub add_like {
-    my ($self, $object_name) = @_;
-    my %params = (
-        object_name => $object_name,
-    );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -214,10 +207,8 @@ sub add_like {
 }
 
 sub add_comment {
-    my ($self, $object_name) = @_;
-    my %params = (
-        object_name => $object_name,
-    );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -228,8 +219,7 @@ sub add_comment {
 }
 
 sub add_link {
-    my ($self) = @_;
-    my %params = ( );
+    my ($self, %params) = @_;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -240,11 +230,10 @@ sub add_link {
 }
 
 sub add_page_tab {
-    my ($self, $object_name, $app_id) = @_;
+    my ($self, $object_name, $app_id, %params) = @_;
 
 	die "page_id and app_id are required" unless $object_name and $app_id;
 
-    my %params = ( );
     $params{object_name} = $object_name;
 
     if ($self->has_access_token) {
@@ -263,10 +252,8 @@ sub add_page_tab {
 
 
 sub rsvp_maybe {
-    my ($self, $object_name) = @_;
-    my %params = (
-        object_name => $object_name,
-    );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -277,10 +264,8 @@ sub rsvp_maybe {
 }
 
 sub rsvp_attending {
-    my ($self, $object_name) = @_;
-    my %params = (
-        object_name => $object_name,
-    );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -291,10 +276,8 @@ sub rsvp_attending {
 }
 
 sub rsvp_declined {
-    my ($self, $object_name) = @_;
-    my %params = (
-        object_name => $object_name,
-    );
+    my ($self, $object_name, %params) = @_;
+    $params{object_name} = $object_name;
     if ($self->has_access_token) {
         $params{access_token} = $self->access_token;
     }
@@ -380,6 +363,10 @@ Get some info:
  my $user = $fb->fetch('me');
  my $friends = $fb->fetch('me/friends');
  my $perl_page = $fb->fetch('16665510298');
+
+Use a different version of the API:
+
+ my $user = $fb->fetch('me', api_version => 'v2.5');
 
 =head1 DESCRIPTION
 

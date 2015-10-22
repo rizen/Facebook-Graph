@@ -9,7 +9,7 @@ isa_ok($fb, 'Facebook::Graph');
 die "You need to set an environment variable for FB_ACCESS_TOKEN to test this" unless $ENV{FB_ACCESS_TOKEN};
 $fb->access_token($ENV{FB_ACCESS_TOKEN});
 
-my $sarah_query = $fb->query
+my $sarah_query = $fb->query(api_version => 'v2.5')
     ->find('767598108')
     ->select_fields(qw(name id))
     ->include_metadata;
@@ -17,7 +17,7 @@ isa_ok($sarah_query, 'Facebook::Graph::Query');
 my $got = URI->new($sarah_query->uri_as_string);
 is($got->scheme, 'https', 'scheme of generated uri');
 is($got->host, 'graph.facebook.com', 'host of generated uri');
-is($got->path, '/v2.2/767598108', 'path of generated uri');
+is($got->path, '/v2.5/767598108', 'path of generated uri');
 my %query = $got->query_form;
 is_deeply(\%query, {fields => 'name,id', metadata => '1', access_token => $ENV{FB_ACCESS_TOKEN}}, 'query of generated uri');
 

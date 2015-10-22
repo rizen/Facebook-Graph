@@ -12,7 +12,7 @@ my $fb = Facebook::Graph->new(
     );
 isa_ok($fb, 'Facebook::Graph');
 
-my $uri = $fb->authorize->extend_permissions(qw(offline_access read_stream publish_stream manage_pages))->uri_as_string;
+my $uri = $fb->authorize->extend_permissions(qw(read_stream manage_pages))->uri_as_string;
 
 print "Point your browser here: $uri
 
@@ -35,7 +35,7 @@ note "ACCESS TOKEN: ". $fb->access_token;
 
 ok $fb->access_token, 'got an access token';
 
-my $sarah = $fb->fetch('sarahbownds');
+my $sarah = $fb->fetch('767598108');
 ok(exists $sarah->{updated_time}, 'able to make a request using the new token');
 
 
