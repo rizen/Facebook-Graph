@@ -9,7 +9,7 @@ use Facebook::Graph::Response;
 
 has ua => (
     is      => 'rw',
-    isa     => sub {ouch(442,"$_[0] is not an HTTP::Response object") unless ref $_[0] eq 'LWP::UserAgent'},
+    isa     => sub {ouch(442,"$_[0] is not an LWP::UserAgent object") unless ref $_[0] eq 'LWP::UserAgent'},
     lazy    => 1,
     default => sub {
         my $ua = LWP::UserAgent->new;
