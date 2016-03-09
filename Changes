@@ -1,3 +1,6 @@
+1.1101 2016-03-09
+ - Fixes typo in user agent class exception message. (Olaf)
+
 1.1100 2015-10-22
  - Exposed API so you can pass in extra parameters such as api_version to override some of the defaults.
  - Allow v2.3 styled /oauth/access_token response thanks to oklahomer.
