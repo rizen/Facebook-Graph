@@ -11,7 +11,6 @@ use Facebook::Graph::Request;
 use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
-use Facebook::Graph::Publish::Like;
 use Facebook::Graph::Publish::Comment;
 use Facebook::Graph::Publish::Link;
 use Facebook::Graph::Publish::RSVPMaybe;
@@ -194,18 +193,6 @@ sub add_checkin {
     return Facebook::Graph::Publish::Checkin->new( %params );
 }
 
-sub add_like {
-    my ($self, $object_name, %params) = @_;
-    $params{object_name} = $object_name;
-    if ($self->has_access_token) {
-        $params{access_token} = $self->access_token;
-    }
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Publish::Like->new( %params );
-}
-
 sub add_comment {
     my ($self, $object_name, %params) = @_;
     $params{object_name} = $object_name;
@@ -216,17 +203,6 @@ sub add_comment {
         $params{secret} = $self->secret;
     }
     return Facebook::Graph::Publish::Comment->new( %params );
-}
-
-sub add_link {
-    my ($self, %params) = @_;
-    if ($self->has_access_token) {
-        $params{access_token} = $self->access_token;
-    }
-    if ($self->has_secret) {
-        $params{secret} = $self->secret;
-    }
-    return Facebook::Graph::Publish::Link->new( %params );
 }
 
 sub add_page_tab {
@@ -494,15 +470,6 @@ Creates a L<Facebook::Graph::Publish::Checkin> object, which can be used to publ
 Optionally provide an user id to check in. Requires that you have administrative access to that user.
 
 
-=head2 add_like ( id )
-
-Creates a L<Facebook::Graph::Publish::Like> object to tell everyone about a post you like.
-
-=head3 id
-
-The id of a post you like.
-
-
 =head2 add_comment ( id )
 
 Creates a L<Facebook::Graph::Publish::Comment> object that you can use to comment on a note.
@@ -510,11 +477,6 @@ Creates a L<Facebook::Graph::Publish::Comment> object that you can use to commen
 =head3 id
 
 The id of the post you want to comment on.
-
-
-=head2 add_link ( )
-
-Creates a L<Facebook::Graph::Publish::Link> object, which can be used to publish links.
 
 
 =head2 add_page_tab ( page_id, app_id )

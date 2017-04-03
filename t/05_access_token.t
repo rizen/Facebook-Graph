@@ -15,7 +15,7 @@ my $fb = Facebook::Graph->new(
 my $expires = 5183814;
 my $token   = '123456789XXXXXXXXXXX';
 
-subtest 'v2.2 or older' => sub {
+subtest 'v2.8 or older' => sub {
     no warnings 'redefine';
     local *Facebook::Graph::AccessToken::request = sub {
         return Facebook::Graph::AccessToken::Response->new(
@@ -24,7 +24,7 @@ subtest 'v2.2 or older' => sub {
                 'OK',
                 [
                     'Content-Type'         => 'text/plain; charset=UTF-8',
-                    'facebook-api-version' => 'v2.2',
+                    'facebook-api-version' => 'v2.8',
                 ],
                 sprintf('access_token=%s&expires=%d', $token, $expires),
             ),

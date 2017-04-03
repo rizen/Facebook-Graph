@@ -36,7 +36,7 @@ note "ACCESS TOKEN: ". $fb->access_token;
 ok $fb->access_token, 'got an access token';
 
 my $sarah = $fb->fetch('767598108');
-ok(exists $sarah->{updated_time}, 'able to make a request using the new token');
+ok(exists $sarah->{id}, 'able to make a request using the new token');
 
 
 done_testing();

@@ -13,4 +13,4 @@ my $sarah = eval{$fb->fetch(767598108)};
 use Data::Dumper;
 die Dumper($@) if $@;
 ok(ref $sarah eq 'HASH', 'got a hash ref back');
-ok(exists $sarah->{updated_time}, 'got sarah');
+ok(exists $sarah->{id}, 'got sarah');

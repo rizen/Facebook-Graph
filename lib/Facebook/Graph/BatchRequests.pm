@@ -41,7 +41,7 @@ sub request {
 
     my $uri = "https://graph.facebook.com";
     my $resp = Facebook::Graph::Request->new->post($uri, $post)->response;
-    
+
     unless ($resp->is_success) {
         my $message = $resp->message;
         my $error = eval { $json->decode($resp->content) };
