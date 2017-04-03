@@ -165,7 +165,7 @@ sub uri_as_string {
         $query{date_format} = $self->datef;
     }
     if ($self->has_search_query) {
-        $query{q} = $self->search_query;
+        ($self->search_query ? ($query{q} = $self->search_query) : ());
         if ($self->has_search_type) {
             $query{type} = $self->search_type;
         }
