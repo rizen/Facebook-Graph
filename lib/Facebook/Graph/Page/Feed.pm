@@ -1,6 +1,5 @@
 package Facebook::Graph::Page::Feed;
 use strict;
-$Facebook::Graph::Page::Feed::VERSION = '1.0700';
 use Moo;
 extends 'Facebook::Graph::Publish';
 
