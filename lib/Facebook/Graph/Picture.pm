@@ -83,6 +83,10 @@ An profile id like C<sarahbownds> or an object id like C<16665510298> for the Pe
 
 Type of picture to return. Valid types are small, square, large
 
+=back
+
+=back
+
 =head2 get_large ( id )
 
 Get a large picture. 200 pixels wide by a variable height.

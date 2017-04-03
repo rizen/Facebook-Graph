@@ -98,6 +98,10 @@ The application id that you get from Facebook after registering (L<http://develo
 
 The URI that Facebook should post your authorization code back to.
 
+=back
+
+=back
+
 =head2 extend_permissions ( permissions )
 
 Ask for extra permissions for your app. By default, if you do not request extended permissions your app will have access to only general information that any Facebook user would have. Returns a reference to self for method chaining.

@@ -121,6 +121,11 @@ The URI that Facebook should post your authorization code back to. Required if y
 
 The application secret that you get from Facebook after registering your application. Required if you'll be calling the C<request_access_token> or C<convert_sessions> methods.
 
+
+=back
+
+=back
+
 =head2 uri_as_string ()
 
 Returns the URI that will be called to fetch the token as a string. Mostly useful for debugging and testing.

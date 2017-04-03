@@ -1,3 +1,6 @@
+1.1201 2017-04-03
+ - Attempting to overcome some sort of CPAN glitch.
+
 1.1200 2017-04-03
  - Updated to 2.8 Graph API.
  - Removed add_like() as it was removed in the 2.4 API and above.

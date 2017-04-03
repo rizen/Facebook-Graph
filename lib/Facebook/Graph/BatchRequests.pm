@@ -95,6 +95,10 @@ A hash or hashref of parameters to pass to the constructor.
 
 An access token string used to make Facebook requests as a privileged user.
 
+=back
+
+=back
+
 =head2 add_request
 
 add request, if not HASHREF, will default method as GET and arg as relative_url
