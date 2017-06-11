@@ -1,3 +1,6 @@
+1.1203 2017-06-11
+ - Fixed the broken reference to the link module.
+
 1.1202 2017-04-03
  - Found and fixed the conflicting version number that CPAN was complaining about.
 

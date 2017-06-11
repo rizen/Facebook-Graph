@@ -12,7 +12,6 @@ use Facebook::Graph::Publish::Post;
 use Facebook::Graph::Publish::Photo;
 use Facebook::Graph::Publish::Checkin;
 use Facebook::Graph::Publish::Comment;
-use Facebook::Graph::Publish::Link;
 use Facebook::Graph::Publish::RSVPMaybe;
 use Facebook::Graph::Publish::RSVPAttending;
 use Facebook::Graph::Publish::RSVPDeclined;
