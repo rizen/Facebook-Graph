@@ -10,7 +10,7 @@ A full working web app for those people who like to start hacking from a working
 
 You'll need to have all of the following modules installed in order to run this app (in addition to L<Facebook::Graph>):
 
-L<DateTime::Format::ICal> L<Dancer> L<Template> L<Data::ICal> L<XML::FeedPP> 
+L<DateTime::Format::ICal> L<Dancer> L<Template> L<Data::ICal> L<XML::FeedPP>
 
 =head2 Assumptions
 
@@ -60,7 +60,7 @@ And copy the files from C<eg/recipe2> where ever you want to deploy your app. Fo
 
  mkdir -p /opt/webapp
  cp -Rfp Facebook-Graph/eg/recipe2/* /opt/webapp
- 
+
 =head2 Step 6: Configure your app.
 
 Before we can run the app we need to edit the config file.
@@ -68,7 +68,7 @@ Before we can run the app we need to edit the config file.
  cd /opt/webapp
  vi config.yml
 
-Specifically we need to set the C<app_id> and C<secret> fields with information from our Facebook application settings page. And we need to update the C<postback> with the domain pointing to our server. 
+Specifically we need to set the C<app_id> and C<secret> fields with information from our Facebook application settings page. And we need to update the C<postback> with the domain pointing to our server.
 
 =head2 Step 7: Start it.
 

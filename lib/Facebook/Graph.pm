@@ -327,7 +327,7 @@ Handle the Facebook authorization code postback:
 Or if you already had the access token:
 
  $fb->access_token($token);
- $fb->request_extended_access_token; 
+ $fb->request_extended_access_token;
 
 Or simply:
 
@@ -560,7 +560,7 @@ This module throws exceptions when it encounters a problem. It uses L<Ouch> to t
 
 The Facebook Graph API is a constantly moving target. As such some stuff that used to work, may stop working. Keep up to date with their changes here: L<https://developers.facebook.com/docs/apps/upgrading>
 
-If you were using any version of Facebook::Graph before 1.1000, then you may be used to doing things like creating events through this API, or using a person's username instead of their ID, or making queries without an access token. You can't do any of those things anymore, because as of the Facebook Graph v2.0 API, none of them is supported any longer. 
+If you were using any version of Facebook::Graph before 1.1000, then you may be used to doing things like creating events through this API, or using a person's username instead of their ID, or making queries without an access token. You can't do any of those things anymore, because as of the Facebook Graph v2.0 API, none of them is supported any longer.
 
 
 =head1 PREREQS

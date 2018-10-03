@@ -27,10 +27,10 @@ We're assuming you've already learned the basics of Facebook::Graph through the 
  # identify the specific page i want to post to
  foreach my $page (@{$pages}) {
      $token = $page->{access_token} if $page->{id} eq $fb_config->{page_id};
- }   
+ }
  unless (defined $token) {
      ouch 504, "Couldn't post to Facebook.";
- }   
+ }
 
  # post
  $fb->access_token($token);

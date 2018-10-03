@@ -32,7 +32,7 @@ has access_token => (
 	predicate => 'has_access_token',
 );
 
-sub BUILD { 
+sub BUILD {
 	my $self = shift;
 	die "Either code or access_token is required" if not $self->has_code and not $self->has_access_token;
 }
@@ -50,7 +50,7 @@ sub uri_as_string {
 			code            => $self->code,
 		);
 	}
-	else { 
+	else {
 		$uri->query_form(
 			grant_type 			=> 'fb_exchange_token',
 			client_id       	=> $self->app_id,

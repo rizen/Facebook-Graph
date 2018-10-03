@@ -53,7 +53,7 @@ Facebook::Graph::Picture - Get the URI for the picture of any object.
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
- 
+
  my $default_picture =  $fb->picture('16665510298')->uri_as_string;
  my $large_picture = $fb->picture('16665510298')->get_large->uri_as_string;
  my $small_picture = $fb->picture('16665510298')->get_small->uri_as_string;
