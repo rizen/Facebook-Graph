@@ -5,7 +5,7 @@ use Facebook::Graph;
 use URI;
 
 my $urlmap = Plack::App::URLMap->new;
- 
+
 my $fb = Facebook::Graph->new(
     postback    => 'https://www.yourapplication.com/facebook/postback',
     app_id      => 'Put Your Application ID Here',

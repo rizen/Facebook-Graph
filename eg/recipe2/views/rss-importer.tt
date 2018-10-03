@@ -2,7 +2,7 @@
 This utility will import an RSS feed to your Facebook news feed.
 
 <form action="/rss-importer" method="post">
-RSS Feed URI: 
+RSS Feed URI:
 <input type="text" name="rss_uri">
 <input type="submit">
 </form>

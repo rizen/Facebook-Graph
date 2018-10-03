@@ -24,7 +24,7 @@
     margin-bottom: 1px;
     text-decoration: none;
 }
-a { 
+a {
   color: #800000;
 }
 .content {
