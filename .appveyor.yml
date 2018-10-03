@@ -1,0 +1,15 @@
+cache:
+    - C:\Strawberry -> .appveyor_clear_cache.txt
+
+shallow_clone: true
+
+install:
+  - if not exist "C:\Strawberry" cinst strawberryperl
+  - set PATH=C:\strawberry\perl\bin;C:\strawberry\perl\site\bin;C:\strawberry\c\bin;%PATH%
+  - cd %APPVEYOR_BUILD_FOLDER%
+  - cpanm --notest Dist::Zilla
+  - dzil authordeps --missing | cpanm --notest || type C:\Users\appveyor\.cpanm\build.log ; perl -e "exit 1"
+  - dzil listdeps --author --missing | cpanm --notest || type C:\Users\appveyor\.cpanm\build.log ; perl -e "exit 1"
+
+build_script:
+  - dzil test --author --release
