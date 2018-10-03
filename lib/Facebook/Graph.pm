@@ -1,6 +1,7 @@
 package Facebook::Graph;
 
 use Moo;
+use 5.006;
 use MIME::Base64::URLSafe;
 use JSON;
 use Facebook::Graph::AccessToken;
