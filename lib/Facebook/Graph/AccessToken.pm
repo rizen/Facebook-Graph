@@ -140,6 +140,6 @@ Checks for either access_token or code and dies if has neither.
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2017 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
