@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use Test::More tests => 5;
 use lib '../lib';
 

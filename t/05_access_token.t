@@ -1,3 +1,6 @@
+use strict;
+use warnings;
+
 use Test::More tests => 4;
 use lib '../lib';
 use HTTP::Response;
