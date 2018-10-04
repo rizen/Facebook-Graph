@@ -114,7 +114,7 @@ Our connect/authorization page will redirect the user to Facebook to authorize o
     # turn our authorization code into an access token
     $fb->request_access_token($request->param('code'));
 
-    # store our access token to a database, a cookie, or pass it throuh the URL
+    # store our access token to a database, a cookie, or pass it through the URL
     my $uri = URI->new('http://www.yourapplication.com/search');
     $uri->query_form( access_token => $fb->access_token );
 

@@ -236,7 +236,7 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
 
 =head1 DESCRIPTION
 
-This module presents a programatic approach to building the queries necessary to search and retrieve Facebook data. It provides an almost SQL like way of writing queries using code. For example:
+This module presents a programmatic approach to building the queries necessary to search and retrieve Facebook data. It provides an almost SQL like way of writing queries using code. For example:
 
  my $results = $fb
     ->select_fields(qw(id name))
