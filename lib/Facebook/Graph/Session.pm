@@ -71,6 +71,6 @@ Makes a request to Facebook to fetch an access token. Returns a L<Facebook::Grap
 
 =head1 LEGAL
 
-Facebook::Graph is Copyright 2010 - 2012 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
+Facebook::Graph is Copyright 2010 - 2017 Plain Black Corporation (L<http://www.plainblack.com>) and is licensed under the same terms as Perl itself.
 
 =cut
