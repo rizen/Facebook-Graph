@@ -59,13 +59,13 @@ Create a file called C<app.psgi>. Start it off like this:
  use URI;
 
  my $urlmap = Plack::App::URLMap->new;
- 
+
  # your code will go here
 
  $urlmap->to_app;
 
-All the code we have you add should go in the C<# your code will go here> block, in the order that we have you add it. 
- 
+All the code we have you add should go in the C<# your code will go here> block, in the order that we have you add it.
+
 =head2 Step 6: Create your Facebook::Graph object.
 
 Now we can finally start building L<Facebook::Graph> into our app.
@@ -75,7 +75,7 @@ Now we can finally start building L<Facebook::Graph> into our app.
     app_id      => 'Put Your Application ID Here',
     secret      => 'Put Your Application Secret Here',
  );
- 
+
 Now you need the URL you entered in step 3, and the application ID and secret you got in step 4.
 
 On the end of the url, add C<postback>. This could be anything really, but it needs to be separate from the Connect URL.
@@ -181,17 +181,17 @@ So now that we finally have an access token we can start making privileged reque
 On your server (the one that www.yourapplication.com points to) run the following command (assuming you're in the folder with app.psgi).
 
  sudo plackup --port 80 app.psgi
- 
+
 Now we point our browser to:
 
  http://www.yourapplication.com/facebook
- 
+
 Voila! You have created an authenticated Facebook app. If you would like to see this full program check out C<eg/recipe1.psgi> inside this distribution of L<Facebook::Graph>.
 
 
 =head1 CAVEATS
 
-You should never design an application using all the poor stuff we've done here, like using a shared L<Facebook::Graph> object, not using a Framework/CMS or at least L<Plack::Builder>, not using a templating system, passing the offline access token through the URL, etc. We've made comments about these things as we did them to warn you. These choices were made here B<only> because this is example code who's primary purpose is to show you how to use L<Facebook::Graph>, and not best practices for web development. 
+You should never design an application using all the poor stuff we've done here, like using a shared L<Facebook::Graph> object, not using a Framework/CMS or at least L<Plack::Builder>, not using a templating system, passing the offline access token through the URL, etc. We've made comments about these things as we did them to warn you. These choices were made here B<only> because this is example code who's primary purpose is to show you how to use L<Facebook::Graph>, and not best practices for web development.
 
 =head1 SEE ALSO
 

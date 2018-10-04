@@ -79,7 +79,7 @@ has since => (
 sub limit_results {
     my ($self, $limit) = @_;
     $self->limit($limit);
-    return $self;    
+    return $self;
 }
 
 sub date_format {
@@ -115,7 +115,7 @@ sub from {
 sub offset_results {
     my ($self, $offset) = @_;
     $self->offset($offset);
-    return $self;    
+    return $self;
 }
 
 sub include_metadata {
@@ -205,12 +205,12 @@ Facebook::Graph::Query - Simple and fast searching and fetching of Facebook data
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
- 
+
  my $perl_page = $fb->query->find('16665510298')
     ->include_metadata
     ->request
     ->as_hashref;
- 
+
  my $sarah_bownds = $fb->query->find('sarahbownds')
     ->select_fields(qw(id name))
     ->request
@@ -245,7 +245,7 @@ This module presents a programmatic approach to building the queries necessary t
     ->limit_results(25)
     ->request
     ->as_hashref;
-    
+
 The above query, if you were read it like text, says: "Give me the user ids and full names of all users named Dave that have been created since yesterday, and limit the result set to the first 25."
 
 
@@ -306,7 +306,7 @@ All groups.
 
 =head2 search ( query, context )
 
-Perform a keyword search on a group of items. 
+Perform a keyword search on a group of items.
 
 If you prefer not to search by keyword see the C<from> method.
 

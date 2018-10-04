@@ -52,7 +52,7 @@ Facebook::Graph::Publish - A base class for publishing various things to faceboo
 
 =head1 DESCRIPTION
 
-This module shouldn't be used by you directly for any purpose. 
+This module shouldn't be used by you directly for any purpose.
 
 =head1 LEGAL
 

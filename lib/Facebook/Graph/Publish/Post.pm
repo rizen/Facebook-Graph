@@ -371,7 +371,7 @@ The URI of the action.
 
 =head2 set_privacy ( setting, options )
 
-A completely optional privacy setting. 
+A completely optional privacy setting.
 
 =head2 set_properties ( properties )
 
@@ -415,7 +415,7 @@ An array reference of user ids.
 Makes a post only available to viewers in certain countries.
 
  $post->set_target_countries( ['US'] );
- 
+
 =head3 countries
 
 An array reference of two letter country codes (upper case). You can find a list of country codes in the list of city ids here: L<http://developers.facebook.com/attachment/all_cities_final.csv>.
@@ -426,7 +426,7 @@ An array reference of two letter country codes (upper case). You can find a list
 Makes a post only available to viewers in certain regions.
 
  $post->set_target_regions( [6,53] );
- 
+
 =head3 regions
 
 An array reference of region numbers however Facebook defines that. I've got no idea because their documentation sucks. I'm not even sure what a region is. Is it a region of a country? Of a continent? No idea. I do know it is an integer, but that's about it.
@@ -438,7 +438,7 @@ An array reference of region numbers however Facebook defines that. I've got no 
 Makes a post only available to viewers in certain cities.
 
  $post->set_target_cities( [2547804] );
- 
+
 =head3 cities
 
 An array reference of cities ids. In the example above I've listed Madison, WI. You can find a list of their cities here: L<http://developers.facebook.com/attachment/all_cities_final.csv>
@@ -450,7 +450,7 @@ An array reference of cities ids. In the example above I've listed Madison, WI. 
 Makes a post only available to viewers in certain locales.
 
  $post->set_target_locales( [6] );
- 
+
 =head3 locales
 
 An array reference of locales ids. You can find their list of locales here: L<http://developers.facebook.com/attachment/locales_final.csv>
