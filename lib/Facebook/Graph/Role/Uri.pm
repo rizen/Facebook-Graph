@@ -9,7 +9,7 @@ sub uri {
 
 has api_version => (
     is  => 'rw',
-    default => 'v2.8',
+    default => 'v3.1',
 );
 
 sub generate_versioned_path {

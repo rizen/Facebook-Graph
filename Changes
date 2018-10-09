@@ -1,4 +1,6 @@
-1.1205 XXXX-XX-XX
+1.1205 2018-10-08
+ - Incremented API version number to 3.1.
+ - Lots of fixes and additions thanks to Paul Cochrane/
  - Added continuous integration configs for Travis and AppVeyor.
  - Fixed typos in documentation.
  - Added more information to dist metadata.
