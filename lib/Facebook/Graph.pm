@@ -270,6 +270,10 @@ sub rsvp_declined {
 
 Facebook::Graph - A fast and easy way to integrate your apps with Facebook.
 
+=head1 NOTICE OF DEPRECATION
+
+Facebook::Graph brought the world of Facebook to Perl, but as Facebook is massively changing their APIs it is impossible to keep up with a heavy weight module like Facebook::Graph. Instead, we recommend switching to the lighter weight L<Facebook::OpenGraph> module. We won't be removing Facebook::Graph from CPAN, but we won't be adding new features to keep up with all of Facebook's constant changes either.
+
 =head1 SYNOPSIS
 
  my $fb = Facebook::Graph->new;
