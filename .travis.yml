@@ -1,20 +1,26 @@
 sudo: false
 
 language: perl
-
 perl:
-    - "5.26"
-    - "5.24"
-    - "5.22"
-    - "5.20"
-    - "5.18"
-    - "5.16"
-    - "5.14"
-    - "5.12"
+- '5.26'
+- '5.24'
+- '5.22'
+- '5.20'
+- '5.18'
+- '5.16'
+- '5.14'
+- '5.12'
 
 install:
-    - dzil authordeps --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log ; false ; }
-    - dzil listdeps --author --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log ; false ; }
+- dzil authordeps --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log
+  ; false ; }
+- dzil listdeps --author --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log
+  ; false ; }
 
 script:
-    - dzil test --author --release
+- dzil test --author --release
+
+notifications:
+  email: false
+  slack:
+    secure: mcu4sf8qMIWN/DJIqPP5QwCMJxt/BDLq2u4XEwtAR/XxVOr79ZYR3i3PYfHbjAeGVKpqejsCS6bWJ6lax7s7Cw2WET3Pt6AFvCxZzHRqVhwNN3fdxrdOkNdC+gzhl7zr2fdbk7QN+HONCCJ8zlShJ5BBIawWJUrvY8i4ZUK3LrlE59c1oUtyeAh0KxMQVBJLngZNmlP1tlb3ZG2KqMZkHjVijgGioRk8LMCeO+lwFe1SG7nmwXissFWTsMAvjLaSEuABqCQOfv/QuK55eqs9WqpeRDU6sHSq+/NsSAsFoLS+QdU0/pPjpZNuhM9ZUzcZFAxH9S8Te4UEOkUtFj+/C2Gp30swb0bnsq96kEVqEMSasG02+ENGvaQrLCpyRLUatuoc8z8GdefFlQOqbcj7k7Y3u3Kt5ssZpkIY71f9Jmd8Alb8Q6SviTCMeEp53XxBp8zv0C/g1VcWsr20CYXQoWxzpv32AxVlMmQY3ntMFWR3ZIbhCeddc8TsHYQW5uvvqYrUo6iQC/6FYOxVCjM5P1Xme7bEtAlosGHd/CQHS70erUgFCLdchi7Vj3MyBhCH/wy+0EmJ54Cznx3BogObkFHhHUao5oB0y35d0hpw0FmNIDO6RkOflrnIbHtc4APB54PGXC6dhOuuCgtEzPJHGC/2IOYNIB/Y0SAkYNPrzZc=
