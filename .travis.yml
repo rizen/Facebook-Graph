@@ -11,14 +11,12 @@ perl:
 - '5.14'
 - '5.12'
 
-install:
-- dzil authordeps --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log
-  ; false ; }
-- dzil listdeps --author --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log
-  ; false ; }
+  #install:
+  #- dzil authordeps --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log; false ; }
+  #- dzil listdeps --author --missing | cpanm --no-skip-satisfied --notest || { cat ~/.cpanm/build.log; false ; }
 
-script:
-- dzil test --author --release
+  #script:
+  #- dzil test --author --release
 
 notifications:
   email: false
