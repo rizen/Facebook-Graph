@@ -42,8 +42,11 @@
       },
       "runtime" : {
          "requires" : {
+            "Digest::SHA" : "6.02",
             "JSON" : "2.16",
             "LWP::Protocol::https" : "6.06",
+            "MIME::Base64" : "3.15",
+            "Moo" : "0",
             "Ouch" : "0.0400",
             "perl" : "5.012001"
          }

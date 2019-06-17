@@ -288,7 +288,7 @@ If you were using any version of Facebook::Graph before 1.1000, then you may be 
 [URI](https://metacpan.org/pod/URI)
 [DateTime](https://metacpan.org/pod/DateTime)
 [DateTime::Format::Strptime](https://metacpan.org/pod/DateTime::Format::Strptime)
-[MIME::Base64::URLSafe](https://metacpan.org/pod/MIME::Base64::URLSafe)
+[MIME::Base64](https://metacpan.org/pod/MIME::Base64)
 [Ouch](https://metacpan.org/pod/Ouch)
 
 ## Optional
