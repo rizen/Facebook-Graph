@@ -2,7 +2,7 @@ package Facebook::Graph;
 
 use Moo;
 use 5.006;
-use MIME::Base64::URLSafe;
+use MIME::Base64 qw(decode_base64url);
 use JSON;
 use Facebook::Graph::AccessToken;
 use Facebook::Graph::Authorize;
@@ -44,8 +44,8 @@ sub parse_signed_request {
     require Digest::SHA;
     my ($encoded_sig, $payload) = split(/\./, $signed_request);
 
-	my $sig = urlsafe_b64decode($encoded_sig);
-    my $data = JSON->new->decode(urlsafe_b64decode($payload));
+	my $sig = decode_base64url($encoded_sig);
+    my $data = JSON->new->decode(decode_base64url($payload));
 
     if (uc($data->{'algorithm'}) ne "HMAC-SHA256") {
         ouch '500', 'Unknown algorithm. Expected HMAC-SHA256';
@@ -577,7 +577,7 @@ L<LWP::Protocol::https>
 L<URI>
 L<DateTime>
 L<DateTime::Format::Strptime>
-L<MIME::Base64::URLSafe>
+L<MIME::Base64>
 L<Ouch>
 
 =head2 Optional
